@@ -27,8 +27,8 @@ CURRENT_DIR=$(dirname "$(readlink -f $0)")
 Check_Env() {
   if [ ! -e ${CURRENT_DIR}/.env ]; then
     echo -e "\033[31m${CURRENT_DIR}/.env does not exist! \033[0m"
-    echo -e "You can execute the command: `cp ${CURRENT_DIR}/env-example ${CURRENT_DIR}/.env`"
-    echo -e "`vi ${CURRENT_DIR}/.env`, Change to the configuration you want"
+    echo -e "You can execute the command: 'cp ${CURRENT_DIR}/env-example ${CURRENT_DIR}/.env'"
+    echo -e "'vi ${CURRENT_DIR}/.env', Change to the configuration you want"
     exit 1
   fi
 }
@@ -41,7 +41,6 @@ Init_OS() {
     exit 1
   fi
   PLATFORM=$(printf "$ID" | tr '[:upper:]' '[:lower:]')
-  ARCH=$(arch)
   if [[ "${PLATFORM}" =~ ^alpine$ ]]; then
     # Custom profile
     cat >/etc/profile.d/bypanel.sh <<EOF
@@ -284,6 +283,7 @@ Install_Docker() {
     echo "Docker is already installed, skip..."
     echo "Start Docker..."
     if command -v systemctl >/dev/null 2>&1; then
+      systemctl enable docker >/dev/null 2>&1 | tee -a ${CURRENT_DIR}/install.log
       systemctl start docker >/dev/null 2>&1 | tee -a ${CURRENT_DIR}/install.log
     else
       service docker start >/dev/null 2>&1 | tee -a ${CURRENT_DIR}/install.log
