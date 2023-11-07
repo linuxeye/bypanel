@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # Author:  Justo <lj2007331 AT gmail.com>
 # BLOG:  https://linuxeye.com
 #
@@ -27,8 +27,8 @@ CURRENT_DIR=$(dirname "$(readlink -f $0)")
 Check_Env() {
   if [ ! -e ${CURRENT_DIR}/.env ]; then
     echo -e "\033[31m${CURRENT_DIR}/.env does not exist! \033[0m"
-    echo -e "You can execute the command: $(cp ${CURRENT_DIR}/env-example ${CURRENT_DIR}/.env)"
-    echo -e "$(vi ${CURRENT_DIR}/.env), Change to the configuration you want"
+    echo -e "You can execute the command: `cp ${CURRENT_DIR}/env-example ${CURRENT_DIR}/.env`"
+    echo -e "`vi ${CURRENT_DIR}/.env`, Change to the configuration you want"
     exit 1
   fi
 }
@@ -40,8 +40,7 @@ Init_OS() {
     echo -e "\033[31m/etc/os-release does not exist! \033[0m"
     exit 1
   fi
-  PLATFORM=${ID,,}
-  VERSION_MAIN_ID=${VERSION_ID%%.*}
+  PLATFORM=$(printf "$ID" | tr '[:upper:]' '[:lower:]')
   ARCH=$(arch)
   if [[ "${PLATFORM}" =~ ^alpine$ ]]; then
     # Custom profile
@@ -281,13 +280,13 @@ EOF
 }
 
 Install_Docker() {
-  if command docker >/dev/null 2>&1; then
+  if command -v docker >/dev/null 2>&1; then
     echo "Docker is already installed, skip..."
     echo "Start Docker..."
-    if command systemctl --version >/dev/null 2>&1; then
-      systemctl start docker 2>&1 | tee -a ${CURRENT_DIR}/install.log
+    if command -v systemctl >/dev/null 2>&1; then
+      systemctl start docker >/dev/null 2>&1 | tee -a ${CURRENT_DIR}/install.log
     else
-      service docker start 2>&1 | tee -a ${CURRENT_DIR}/install.log
+      service docker start >/dev/null 2>&1 | tee -a ${CURRENT_DIR}/install.log
     fi
   else
     echo "Install Docker..."
@@ -295,6 +294,8 @@ Install_Docker() {
       apk update
       apk add docker docker-cli-compose
       rc-update add docker default
+    elif [[ "${PLATFORM}" =~ ^arch$ ]]; then
+      pacman -S docker docker-compose --noconfirm
     elif [[ "${PLATFORM}" =~ ^amzn$ ]]; then
       yum -y install docker
     elif [[ "${PLATFORM}" =~ ^alinux$ ]]; then
@@ -334,15 +335,15 @@ EOF
 EOF
 
     echo "Start Docker..."
-    if command systemctl --version >/dev/null 2>&1; then
+    if command -v systemctl >/dev/null 2>&1; then
       systemctl enable docker
       systemctl daemon-reload
-      systemctl start docker 2>&1 | tee -a ${CURRENT_DIR}/install.log
+      systemctl start docker >/dev/null 2>&1 | tee -a ${CURRENT_DIR}/install.log
     else
-      service docker start 2>&1 | tee -a ${CURRENT_DIR}/install.log
+      service docker start >/dev/null 2>&1 | tee -a ${CURRENT_DIR}/install.log
     fi
 
-    if command docker version >/dev/null 2>&1; then
+    if command -v docker >/dev/null 2>&1; then
       echo -e "\033[32mDocker installed successfully! \033[0m"
     else
       echo -e "\033[31mDocker installation failed! \033[0m"
@@ -352,7 +353,7 @@ EOF
 }
 
 Install_Compose() {
-  if command docker-compose >/dev/null 2>&1; then
+  if command -v docker-compose >/dev/null 2>&1; then
     DOCKER_COMPOSE_MAIN_VER=$(docker-compose -v | awk '{print $NF}' | awk -F. '{print $1}')
     if [[ ${DOCKER_COMPOSE_MAIN_VER#v} -ge 2 ]]; then
       echo "Docker Compose is already installed, skip..."
@@ -390,7 +391,7 @@ Install_Compose() {
       chmod +x /usr/local/bin/docker-compose
       [ ! -L /usr/bin/docker-compose ] && ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
     fi
-    if command docker-compose version >/dev/null 2>&1; then
+    if command -v docker-compose >/dev/null 2>&1; then
       echo -e "\033[32mDocker Compose installed successfully! \033[0m"
     else
       echo -e "\033[31mDocker Compose installation failed! \033[0m"
