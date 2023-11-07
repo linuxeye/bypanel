@@ -43,7 +43,42 @@ Init_OS() {
   PLATFORM=${ID,,}
   VERSION_MAIN_ID=${VERSION_ID%%.*}
   ARCH=$(arch)
-  if [[ "${PLATFORM}" =~ ^centos$|^rhel$|^almalinux$|^rocky$|^fedora$|^amzn$|^ol$|^alinux$|^anolis$|^tencentos$|^opencloudos$|^euleros$|^openeuler$|^kylin$|^uos$|^kylinsecos$ ]]; then
+  if [[ "${PLATFORM}" =~ ^alpine$ ]]; then
+    # Custom profile
+    cat >/etc/profile.d/bypanel.sh <<EOF
+HISTSIZE=10000
+PS1="\[\e[37;40m\][\[\e[32;40m\]\u\[\e[37;40m\]@\h \[\e[35;40m\]\W\[\e[0m\]]\\\\$ "
+HISTTIMEFORMAT="%F %T \$(whoami) "
+
+alias l='ls -AFhlt'
+alias lh='l | head'
+alias vi=vim
+
+GREP_OPTIONS="--color=auto"
+alias grep='grep --color'
+alias egrep='egrep --color'
+alias fgrep='fgrep --color'
+EOF
+    # /etc/sysctl.conf
+    [ -z "$(grep 'fs.file-max' /etc/sysctl.conf)" ] && cat >>/etc/sysctl.conf <<EOF
+fs.file-max = 1000000
+fs.inotify.max_user_instances = 8192
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_fin_timeout = 30
+net.ipv4.tcp_tw_reuse = 1
+net.ipv4.ip_local_port_range = 1024 65000
+net.ipv4.tcp_max_syn_backlog = 16384
+net.ipv4.tcp_max_tw_buckets = 6000
+net.ipv4.route.gc_timeout = 100
+net.ipv4.tcp_syn_retries = 1
+net.ipv4.tcp_synack_retries = 1
+net.core.somaxconn = 32768
+net.core.netdev_max_backlog = 32768
+net.ipv4.tcp_timestamps = 0
+net.ipv4.tcp_max_orphans = 32768
+EOF
+    sysctl -p >/dev/null
+  elif [[ "${PLATFORM}" =~ ^centos$|^rhel$|^almalinux$|^rocky$|^fedora$|^amzn$|^ol$|^alinux$|^anolis$|^tencentos$|^opencloudos$|^euleros$|^openeuler$|^kylin$|^uos$|^kylinsecos$ ]]; then
     # Close SELINUX
     sed -i 's/^SELINUX=.*$/SELINUX=disabled/' /etc/selinux/config
     setenforce 0
@@ -178,7 +213,7 @@ net.core.netdev_max_backlog = 32768
 net.ipv4.tcp_timestamps = 0
 net.ipv4.tcp_max_orphans = 32768
 EOF
-    sysctl -p
+    sysctl -p >/dev/null
   elif [[ "${PLATFORM}" =~ ^ubuntu$|^linuxmint$|^elementary$ ]]; then
     # Custom profile
     cat >/etc/profile.d/bypanel.sh <<EOF
@@ -239,7 +274,7 @@ net.core.netdev_max_backlog = 32768
 net.ipv4.tcp_timestamps = 0
 net.ipv4.tcp_max_orphans = 32768
 EOF
-    sysctl -p
+    sysctl -p >/dev/null
 
     sed -i 's@^ACTIVE_CONSOLES.*@ACTIVE_CONSOLES="/dev/tty[1-2]"@' /etc/default/console-setup
   fi
@@ -249,10 +284,18 @@ Install_Docker() {
   if command docker >/dev/null 2>&1; then
     echo "Docker is already installed, skip..."
     echo "Start Docker..."
-    systemctl start docker 2>&1 | tee -a ${CURRENT_DIR}/install.log
+    if command systemctl --version >/dev/null 2>&1; then
+      systemctl start docker 2>&1 | tee -a ${CURRENT_DIR}/install.log
+    else
+      service docker start 2>&1 | tee -a ${CURRENT_DIR}/install.log
+    fi
   else
     echo "Install Docker..."
-    if [[ "${PLATFORM}" =~ ^amzn$ ]]; then
+    if [[ "${PLATFORM}" =~ ^alpine$ ]]; then
+      apk update
+      apk add docker docker-cli-compose
+      rc-update add docker default
+    elif [[ "${PLATFORM}" =~ ^amzn$ ]]; then
       yum -y install docker
     elif [[ "${PLATFORM}" =~ ^alinux$ ]]; then
       cat >/etc/yum.repos.d/docker-ce.repo <<EOF
@@ -291,9 +334,13 @@ EOF
 EOF
 
     echo "Start Docker..."
-    systemctl enable docker
-    systemctl daemon-reload
-    systemctl start docker 2>&1 | tee -a ${CURRENT_DIR}/install.log
+    if command systemctl --version >/dev/null 2>&1; then
+      systemctl enable docker
+      systemctl daemon-reload
+      systemctl start docker 2>&1 | tee -a ${CURRENT_DIR}/install.log
+    else
+      service docker start 2>&1 | tee -a ${CURRENT_DIR}/install.log
+    fi
 
     if command docker version >/dev/null 2>&1; then
       echo -e "\033[32mDocker installed successfully! \033[0m"
@@ -370,4 +417,3 @@ main() {
 }
 
 main
-
