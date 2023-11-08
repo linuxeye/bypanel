@@ -1,5 +1,32 @@
 # bypanel
 
+### Support OS system
+* CentOS
+* RedHat
+* Alpine Linux
+* Debian
+* Ubuntu
+* AlmaLinux
+* Rocky Linux
+* Fedora
+* Amazon Linux
+* Alibaba Linux
+* Oracle Linux
+* Arch Linux
+* openSUSE
+* Anolis
+* OpencloudOS
+* TencentOS
+* EulerOS
+* openEuler
+* Kylin
+* LinuxMint
+* Elementary
+* Deepin
+* Kali Linux
+* KylinsecOS
+* Uos
+
 ### Clone bypanel
 ```
 git clone https://github.com/linuxeye/bypanel.git

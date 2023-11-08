@@ -321,7 +321,7 @@ EOF
         echo "\033[31mget-docker.sh download failed, please try again \033[0m"
         exit 1
       fi
-      if [ "$(curl -s ipinfo.io/country)x" == "CN"x ]; then
+      if [ "$(curl -s ipinfo.io/country)x" = "CN"x ]; then
         sh get-docker.sh --mirror Aliyun 2>&1 | tee -a ${CURRENT_DIR}/install.log
       else
         sh get-docker.sh 2>&1 | tee -a ${CURRENT_DIR}/install.log
@@ -331,7 +331,7 @@ EOF
 
     DOCKER_CONFIG_DIR="/etc/docker"
     [ ! -d "${DOCKER_CONFIG_DIR}" ] && mkdir "${DOCKER_CONFIG_DIR}"
-    [ "$(curl -s ipinfo.io/country)x" == "CN"x ] && cat >/etc/docker/daemon.json <<EOF
+    [ "$(curl -s ipinfo.io/country)x" = "CN"x ] && cat >/etc/docker/daemon.json <<EOF
 {
   "registry-mirrors": [
     "https://docker.mirrors.sjtug.sjtu.edu.cn",
@@ -386,9 +386,7 @@ Install_Compose() {
     else
       echo "Install Docker Compose..."
       ARCH=$(uname -m)
-      if [ "${ARCH}" == 'armv7l' ]; then
-        ARCH='armv7'
-      fi
+      [ "${ARCH}" = "armv7l" ] && ARCH="armv7"
       curl -L https://github.com/docker/compose/releases/download/v2.23.0/docker-compose-$(uname -s | tr A-Z a-z)-${ARCH} -o /usr/local/bin/docker-compose 2>&1 | tee -a ${CURRENT_DIR}/install.log
       if [ ! -e /usr/local/bin/docker-compose ]; then
         echo "\033[31mdocker-compose download failed, please try again \033[0m"
