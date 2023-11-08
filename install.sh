@@ -18,7 +18,7 @@ printf "
 "
 # Check if user is root
 [ $(id -u) != "0" ] && {
-  echo -e "\033[31mError: You must be root to run this script\033[0m"
+  echo "\033[31mError: You must be root to run this script\033[0m"
   exit 1
 }
 
@@ -26,9 +26,9 @@ CURRENT_DIR=$(dirname "$(readlink -f $0)")
 
 Check_Env() {
   if [ ! -e ${CURRENT_DIR}/.env ]; then
-    echo -e "\033[31m${CURRENT_DIR}/.env does not exist! \033[0m"
-    echo -e "You can execute the command: 'cp ${CURRENT_DIR}/env-example ${CURRENT_DIR}/.env'"
-    echo -e "'vi ${CURRENT_DIR}/.env', Change to the configuration you want"
+    echo "\033[31m${CURRENT_DIR}/.env does not exist! \033[0m"
+    echo "You can execute the command: 'cp ${CURRENT_DIR}/env-example ${CURRENT_DIR}/.env'"
+    echo "'vi ${CURRENT_DIR}/.env', Change to the configuration you want"
     exit 1
   fi
 }
@@ -37,11 +37,14 @@ Init_OS() {
   if [ -e "/etc/os-release" ]; then
     . /etc/os-release
   else
-    echo -e "\033[31m/etc/os-release does not exist! \033[0m"
+    echo "\033[31m/etc/os-release does not exist! \033[0m"
     exit 1
   fi
   PLATFORM=$(printf "$ID" | tr '[:upper:]' '[:lower:]')
-  if [[ "${PLATFORM}" =~ ^alpine$ ]]; then
+  PLATFORM_RHEL="centos rhel almalinux rocky fedora amzn ol alinux anolis tencentos opencloudos euleros openeuler kylin uos kylinsecos"
+  PLATFORM_DEBIAN="debian deepin kali"
+  PLATFORM_UBUNTU="ubuntu linuxmint elementary"
+  if [ "${PLATFORM}" = "alpine" ]; then
     # Custom profile
     cat >/etc/profile.d/bypanel.sh <<EOF
 HISTSIZE=10000
@@ -76,7 +79,7 @@ net.ipv4.tcp_timestamps = 0
 net.ipv4.tcp_max_orphans = 32768
 EOF
     sysctl -p >/dev/null
-  elif [[ "${PLATFORM}" =~ ^centos$|^rhel$|^almalinux$|^rocky$|^fedora$|^amzn$|^ol$|^alinux$|^anolis$|^tencentos$|^opencloudos$|^euleros$|^openeuler$|^kylin$|^uos$|^kylinsecos$ ]]; then
+  elif [ -n "$(echo ${PLATFORM_RHEL} | grep -w ${PLATFORM})" ]; then
     # Close SELINUX
     sed -i 's/^SELINUX=.*$/SELINUX=disabled/' /etc/selinux/config
     setenforce 0
@@ -96,9 +99,10 @@ alias grep='grep --color'
 alias egrep='egrep --color'
 alias fgrep='fgrep --color'
 EOF
-    [[ "${PLATFORM}" =~ ^euleros$|^openeuler$ ]] && sed -i '/HISTTIMEFORMAT=/d' /etc/profile.d/bypanel.sh
+    PLATFORM_EULER="euleros openeuler"
+    [ -n "$(echo ${PLATFORM_EULER} | grep -w ${PLATFORM})" ] && sed -i '/HISTTIMEFORMAT=/d' /etc/profile.d/bypanel.sh
 
-    [[ ! "${PLATFORM}" =~ ^euleros$|^openeuler$ ]] && [ -z "$(grep ^'PROMPT_COMMAND=' /etc/bashrc)" ] && cat >>/etc/bashrc <<EOF
+    [ -z "$(echo ${PLATFORM_EULER} | grep -w ${PLATFORM})" ] && [ -z "$(grep ^'PROMPT_COMMAND=' /etc/bashrc)" ] && cat >>/etc/bashrc <<EOF
 PROMPT_COMMAND='{ msg=\$(history 1 | { read x y; echo \$y; });logger "[euid=\$(whoami)]":\$(who am i):[\`pwd\`]"\$msg"; }'
 EOF
 
@@ -114,7 +118,7 @@ EOF
 EOF
 
     # ip_conntrack table full dropping packets
-    echo -e "modprobe nf_conntrack" >/etc/sysconfig/modules/nf_conntrack.modules
+    echo "modprobe nf_conntrack" >/etc/sysconfig/modules/nf_conntrack.modules
     chmod +x /etc/sysconfig/modules/nf_conntrack.modules
     modprobe nf_conntrack
     echo options nf_conntrack hashsize=131072 >/etc/modprobe.d/nf_conntrack.conf
@@ -153,7 +157,7 @@ net.netfilter.nf_conntrack_tcp_timeout_time_wait = 120
 net.netfilter.nf_conntrack_tcp_timeout_established = 3600
 EOF
     sysctl -p >/dev/null
-  elif [[ "${PLATFORM}" =~ ^debian$|^deepin$|^kali$ ]]; then
+  elif [ -n "$(echo ${PLATFORM_DEBIAN} | grep -w ${PLATFORM})" ]; then
     # Custom profile
     cat >/etc/profile.d/bypanel.sh <<EOF
 HISTSIZE=10000
@@ -212,7 +216,7 @@ net.ipv4.tcp_timestamps = 0
 net.ipv4.tcp_max_orphans = 32768
 EOF
     sysctl -p >/dev/null
-  elif [[ "${PLATFORM}" =~ ^ubuntu$|^linuxmint$|^elementary$ ]]; then
+  elif [ -n "$(echo ${PLATFORM_UBUNTU} | grep -w ${PLATFORM})" ]; then
     # Custom profile
     cat >/etc/profile.d/bypanel.sh <<EOF
 HISTSIZE=10000
@@ -290,15 +294,17 @@ Install_Docker() {
     fi
   else
     echo "Install Docker..."
-    if [[ "${PLATFORM}" =~ ^alpine$ ]]; then
+    if [ "${PLATFORM}" = "alpine" ]; then
       apk update
       apk add docker docker-cli-compose
       rc-update add docker default
-    elif [[ "${PLATFORM}" =~ ^arch$ ]]; then
+    elif [ "${PLATFORM}" = "arch" ]; then
       pacman -S docker docker-compose --noconfirm
-    elif [[ "${PLATFORM}" =~ ^amzn$ ]]; then
+    elif [ "${PLATFORM}" = "opensuse-leap" ]; then
+      zypper --non-interactive install docker docker-compose
+    elif [ "${PLATFORM}" = "amzn" ]; then
       yum -y install docker
-    elif [[ "${PLATFORM}" =~ ^alinux$ ]]; then
+    elif [ "${PLATFORM}" = "alinux" ]; then
       cat >/etc/yum.repos.d/docker-ce.repo <<EOF
 [docker-ce-stable]
 name=Docker CE Stable - \$basearch
@@ -312,7 +318,7 @@ EOF
     else
       curl -fsSL https://get.docker.com -o get-docker.sh 2>&1 | tee -a ${CURRENT_DIR}/install.log
       if [ ! -e "get-docker.sh" ]; then
-        echo -e "\033[31mget-docker.sh download failed, please try again \033[0m"
+        echo "\033[31mget-docker.sh download failed, please try again \033[0m"
         exit 1
       fi
       if [ "$(curl -s ipinfo.io/country)x" == "CN"x ]; then
@@ -344,9 +350,9 @@ EOF
     fi
 
     if command -v docker >/dev/null 2>&1; then
-      echo -e "\033[32mDocker installed successfully! \033[0m"
+      echo "\033[32mDocker installed successfully! \033[0m"
     else
-      echo -e "\033[31mDocker installation failed! \033[0m"
+      echo "\033[31mDocker installation failed! \033[0m"
       exit 1
     fi
   fi
@@ -355,21 +361,21 @@ EOF
 Install_Compose() {
   if command -v docker-compose >/dev/null 2>&1; then
     DOCKER_COMPOSE_MAIN_VER=$(docker-compose -v | awk '{print $NF}' | awk -F. '{print $1}')
-    if [[ ${DOCKER_COMPOSE_MAIN_VER#v} -ge 2 ]]; then
+    if [ ${DOCKER_COMPOSE_MAIN_VER#v} -ge 2 ]; then
       echo "Docker Compose is already installed, skip..."
     else
       while :; do
         echo
         read -e -p "The installed version of Docker Compose is too low. Do you want to upgrade it? [y/n] : " DOCKER_COMPOSE_UPGRADE_FLAG
-        if [[ ! ${DOCKER_COMPOSE_UPGRADE_FLAG} =~ ^[y,n]$ ]]; then
-          echo -e "\033[33minput error! Please only input 'y' or 'n'\033[0m"
+        if [ "${DOCKER_COMPOSE_UPGRADE_FLAG}" != "y" -a "${DOCKER_COMPOSE_UPGRADE_FLAG}" != "n" ]; then
+          echo "\033[33minput error! Please only input 'y' or 'n'\033[0m"
         else
           break
         fi
       done
 
       # upgrade docker componse
-      if [ "${DOCKER_COMPOSE_UPGRADE_FLAG}" == "y" ]; then
+      if [ "${DOCKER_COMPOSE_UPGRADE_FLAG}" = "y" ]; then
         rm -f /usr/bin/docker-compose /usr/local/bin/docker-compose
         Install_Compose
       fi
@@ -385,16 +391,16 @@ Install_Compose() {
       fi
       curl -L https://github.com/docker/compose/releases/download/v2.23.0/docker-compose-$(uname -s | tr A-Z a-z)-${ARCH} -o /usr/local/bin/docker-compose 2>&1 | tee -a ${CURRENT_DIR}/install.log
       if [ ! -e /usr/local/bin/docker-compose ]; then
-        echo -e "\033[31mdocker-compose download failed, please try again \033[0m"
+        echo "\033[31mdocker-compose download failed, please try again \033[0m"
         exit 1
       fi
       chmod +x /usr/local/bin/docker-compose
       [ ! -L /usr/bin/docker-compose ] && ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
     fi
     if command -v docker-compose >/dev/null 2>&1; then
-      echo -e "\033[32mDocker Compose installed successfully! \033[0m"
+      echo "\033[32mDocker Compose installed successfully! \033[0m"
     else
-      echo -e "\033[31mDocker Compose installation failed! \033[0m"
+      echo "\033[31mDocker Compose installation failed! \033[0m"
       exit 1
     fi
   fi
