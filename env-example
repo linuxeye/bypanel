@@ -281,6 +281,22 @@ PMA_ARBITRARY=1
 PMA_ABSOLUTE_URI=/phpmyadmin
 
 
+###
+### 1.8 Choose sftpgo Server Image
+###
+### https://github.com/drakkan/sftpgo
+###
+### Note: SFTPGO_FTPD_WEB_ADMIN_PORT - create the first admin and a new SFTPGo user
+###       SFTPGO_FTPD_PORT - The FTP service port
+###       SFTPGO_FTPD_PASSIVE_PORT_RANGE_START - The FTP service passive start port
+###       SFTPGO_FTPD_PASSIVE_PORT_RANGE_END - The FTP service passive end port
+###
+SFTPGO_SERVER=alpine
+SFTPGO_FTPD_WEB_ADMIN_PORT=8021
+SFTPGO_FTPD_PORT=21
+SFTPGO_FTPD_PASSIVE_PORT_RANGE_START=21000
+SFTPGO_FTPD_PASSIVE_PORT_RANGE_END=21100
+
 
 ################################################################################
 ###

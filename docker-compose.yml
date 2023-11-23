@@ -1460,6 +1460,43 @@ services:
       app_net:
         ipv4_address: 172.16.238.100
 
+  # ------------------------------------------------------------
+  # sftpgo
+  # ------------------------------------------------------------
+  sftpgo:
+    image: drakkan/sftpgo:${SFTPGO_SERVER}
+    # Always pull docker image
+    #pull_policy: always
+    restart: always
+    hostname: sftpgo
+    profiles:
+      - sftpgo
+    environment:
+      - TZ=${TIMEZONE}
+      - SFTPGO_FTPD__BINDINGS__0__PORT=${SFTPGO_FTPD_PORT}
+      - SFTPGO_FTPD__PASSIVE_PORT_RANGE__START=${SFTPGO_FTPD_PASSIVE_PORT_RANGE_START}
+      - SFTPGO_FTPD__PASSIVE_PORT_RANGE__END=${SFTPGO_FTPD_PASSIVE_PORT_RANGE_END}
+    ports:
+      # ---- Format: ----
+      # [HOST-ADDR : ] HOST-PORT : DOCKER-PORT
+      - "${SFTPGO_FTPD_WEB_ADMIN_PORT}:8080"
+      - "${SFTPGO_FTPD_PORT}:${SFTPGO_FTPD_PORT}"
+      - "${SFTPGO_FTPD_PASSIVE_PORT_RANGE_START}-${SFTPGO_FTPD_PASSIVE_PORT_RANGE_END}:${SFTPGO_FTPD_PASSIVE_PORT_RANGE_START}-${SFTPGO_FTPD_PASSIVE_PORT_RANGE_END}"
+
+    volumes:
+      # ---- Format: ----
+      # HOST-DIRECTORY : DOCKER-DIRECTORY
+
+      # Mount var sftpgo
+      - ${BASE_DATA_PATH}/sftpgo:/var/lib/sftpgo:rw${MOUNT_OPTIONS}
+
+      # Mount data
+      - ${BASE_DATA_PATH}/webroot:/srv/sftpgo/data:rw${MOUNT_OPTIONS}
+
+    networks:
+      app_net:
+        ipv4_address: 172.16.238.101
+
 ################################################################################
 # NETWORK
 ################################################################################
