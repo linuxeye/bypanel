@@ -18,7 +18,7 @@ printf "
 "
 # Check if user is root
 [ $(id -u) != "0" ] && {
-  echo "\033[31mError: You must be root to run this script\033[0m"
+  printf "\033[31mError: You must be root to run this script\033[0m\n"
   exit 1
 }
 
@@ -26,9 +26,9 @@ CURRENT_DIR=$(dirname "$(readlink -f $0)")
 
 Check_Env() {
   if [ ! -e ${CURRENT_DIR}/.env ]; then
-    echo "\033[31m${CURRENT_DIR}/.env does not exist! \033[0m"
-    echo "You can execute the command: 'cp ${CURRENT_DIR}/env-example ${CURRENT_DIR}/.env'"
-    echo "'vi ${CURRENT_DIR}/.env', Change to the configuration you want"
+    printf "\033[31m${CURRENT_DIR}/.env does not exist! \033[0m\n"
+    printf "You can execute the command: 'cp ${CURRENT_DIR}/env-example ${CURRENT_DIR}/.env'\n"
+    printf "'vi ${CURRENT_DIR}/.env', Change to the configuration you want\n"
     exit 1
   fi
 }
@@ -37,7 +37,7 @@ Init_OS() {
   if [ -e "/etc/os-release" ]; then
     . /etc/os-release
   else
-    echo "\033[31m/etc/os-release does not exist! \033[0m"
+    printf "\033[31m/etc/os-release does not exist! \033[0m\n"
     exit 1
   fi
   PLATFORM=$(printf "$ID" | tr '[:upper:]' '[:lower:]')
@@ -284,8 +284,8 @@ EOF
 
 Install_Docker() {
   if command -v docker >/dev/null 2>&1; then
-    echo "Docker is already installed, skip..."
-    echo "Start Docker..."
+    printf "Docker is already installed, skip...\n"
+    printf "Start Docker...\n"
     if command -v systemctl >/dev/null 2>&1; then
       systemctl enable docker >/dev/null 2>&1 | tee -a ${CURRENT_DIR}/install.log
       systemctl start docker >/dev/null 2>&1 | tee -a ${CURRENT_DIR}/install.log
@@ -293,7 +293,7 @@ Install_Docker() {
       service docker start >/dev/null 2>&1 | tee -a ${CURRENT_DIR}/install.log
     fi
   else
-    echo "Install Docker..."
+    printf "Install Docker...\n"
     if [ "${PLATFORM}" = "alpine" ]; then
       apk update
       apk add docker docker-cli-compose
@@ -318,7 +318,7 @@ EOF
     else
       curl -fsSL https://get.docker.com -o get-docker.sh 2>&1 | tee -a ${CURRENT_DIR}/install.log
       if [ ! -e "get-docker.sh" ]; then
-        echo "\033[31mget-docker.sh download failed, please try again \033[0m"
+        printf "\033[31mget-docker.sh download failed, please try again \033[0m\n"
         exit 1
       fi
       if [ "$(curl -s ipinfo.io/country)x" = "CN"x ]; then
@@ -340,7 +340,7 @@ EOF
 }
 EOF
 
-    echo "Start Docker..."
+    printf "Start Docker...\n"
     if command -v systemctl >/dev/null 2>&1; then
       systemctl enable docker
       systemctl daemon-reload
@@ -350,9 +350,9 @@ EOF
     fi
 
     if command -v docker >/dev/null 2>&1; then
-      echo "\033[32mDocker installed successfully! \033[0m"
+      printf "\033[32mDocker installed successfully! \033[0m\n"
     else
-      echo "\033[31mDocker installation failed! \033[0m"
+      printf "\033[31mDocker installation failed! \033[0m\n"
       exit 1
     fi
   fi
@@ -362,13 +362,13 @@ Install_Compose() {
   if command -v docker-compose >/dev/null 2>&1; then
     DOCKER_COMPOSE_MAIN_VER=$(docker-compose -v | awk '{print $NF}' | awk -F. '{print $1}')
     if [ ${DOCKER_COMPOSE_MAIN_VER#v} -ge 2 ]; then
-      echo "Docker Compose is already installed, skip..."
+      printf "Docker Compose is already installed, skip...\n"
     else
       while :; do
         echo
         read -e -p "The installed version of Docker Compose is too low. Do you want to upgrade it? [y/n] : " DOCKER_COMPOSE_UPGRADE_FLAG
         if [ "${DOCKER_COMPOSE_UPGRADE_FLAG}" != "y" -a "${DOCKER_COMPOSE_UPGRADE_FLAG}" != "n" ]; then
-          echo "\033[33minput error! Please only input 'y' or 'n'\033[0m"
+          printf "\033[33minput error! Please only input 'y' or 'n'\033[0m\n"
         else
           break
         fi
@@ -384,21 +384,21 @@ Install_Compose() {
     if [ -e /usr/libexec/docker/cli-plugins/docker-compose ]; then
       [ ! -L /usr/bin/docker-compose ] && ln -s /usr/libexec/docker/cli-plugins/docker-compose /usr/bin/docker-compose
     else
-      echo "Install Docker Compose..."
+      printf "Install Docker Compose...\n"
       ARCH=$(uname -m)
       [ "${ARCH}" = "armv7l" ] && ARCH="armv7"
-      curl -L https://github.com/docker/compose/releases/download/v2.23.0/docker-compose-$(uname -s | tr A-Z a-z)-${ARCH} -o /usr/local/bin/docker-compose 2>&1 | tee -a ${CURRENT_DIR}/install.log
+      curl -L https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-$(uname -s | tr A-Z a-z)-${ARCH} -o /usr/local/bin/docker-compose 2>&1 | tee -a ${CURRENT_DIR}/install.log
       if [ ! -e /usr/local/bin/docker-compose ]; then
-        echo "\033[31mdocker-compose download failed, please try again \033[0m"
+        printf "\033[31mdocker-compose download failed, please try again \033[0m\n"
         exit 1
       fi
       chmod +x /usr/local/bin/docker-compose
       [ ! -L /usr/bin/docker-compose ] && ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
     fi
     if command -v docker-compose >/dev/null 2>&1; then
-      echo "\033[32mDocker Compose installed successfully! \033[0m"
+      printf "\033[32mDocker Compose installed successfully! \033[0m\n"
     else
-      echo "\033[31mDocker Compose installation failed! \033[0m"
+      printf "\033[31mDocker Compose installation failed! \033[0m\n"
       exit 1
     fi
   fi
