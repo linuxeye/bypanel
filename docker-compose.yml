@@ -1449,7 +1449,6 @@ services:
     hostname: phpmyadmin
     profiles:
       - phpmyadmin
-      - lnmp
     environment:
       - TZ=${TIMEZONE}
       - PMA_ARBITRARY=${PMA_ARBITRARY}

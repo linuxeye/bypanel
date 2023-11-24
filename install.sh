@@ -287,10 +287,10 @@ Install_Docker() {
     printf "Docker is already installed, skip...\n"
     printf "Start Docker...\n"
     if command -v systemctl >/dev/null 2>&1; then
-      systemctl enable docker >/dev/null 2>&1 | tee -a ${CURRENT_DIR}/install.log
-      systemctl start docker >/dev/null 2>&1 | tee -a ${CURRENT_DIR}/install.log
+      systemctl enable docker >/dev/null 2>&1
+      systemctl start docker >/dev/null 2>&1
     else
-      service docker start >/dev/null 2>&1 | tee -a ${CURRENT_DIR}/install.log
+      service docker start >/dev/null 2>&1
     fi
   else
     printf "Install Docker...\n"
@@ -316,15 +316,15 @@ EOF
       yum clean all
       yum -y install docker-ce
     else
-      curl -fsSL https://get.docker.com -o get-docker.sh 2>&1 | tee -a ${CURRENT_DIR}/install.log
+      curl -fsSL https://get.docker.com -o get-docker.sh 2>&1
       if [ ! -e "get-docker.sh" ]; then
         printf "\033[31mget-docker.sh download failed, please try again \033[0m\n"
         exit 1
       fi
       if [ "$(curl -s ipinfo.io/country)x" = "CN"x ]; then
-        sh get-docker.sh --mirror Aliyun 2>&1 | tee -a ${CURRENT_DIR}/install.log
+        sh get-docker.sh --mirror Aliyun 2>&1
       else
-        sh get-docker.sh 2>&1 | tee -a ${CURRENT_DIR}/install.log
+        sh get-docker.sh 2>&1
       fi
       rm -f get-docker.sh
     fi
@@ -344,9 +344,9 @@ EOF
     if command -v systemctl >/dev/null 2>&1; then
       systemctl enable docker
       systemctl daemon-reload
-      systemctl start docker >/dev/null 2>&1 | tee -a ${CURRENT_DIR}/install.log
+      systemctl start docker >/dev/null 2>&1
     else
-      service docker start >/dev/null 2>&1 | tee -a ${CURRENT_DIR}/install.log
+      service docker start >/dev/null 2>&1
     fi
 
     if command -v docker >/dev/null 2>&1; then
@@ -387,7 +387,7 @@ Install_Compose() {
       printf "Install Docker Compose...\n"
       ARCH=$(uname -m)
       [ "${ARCH}" = "armv7l" ] && ARCH="armv7"
-      curl -L https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-$(uname -s | tr A-Z a-z)-${ARCH} -o /usr/local/bin/docker-compose 2>&1 | tee -a ${CURRENT_DIR}/install.log
+      curl -L https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-$(uname -s | tr A-Z a-z)-${ARCH} -o /usr/local/bin/docker-compose 2>&1
       if [ ! -e /usr/local/bin/docker-compose ]; then
         printf "\033[31mdocker-compose download failed, please try again \033[0m\n"
         exit 1
