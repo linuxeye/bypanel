@@ -1449,7 +1449,6 @@ services:
     hostname: php83
     profiles:
       - php83
-      - lnmp
 
     ##
     ## All .env variables
