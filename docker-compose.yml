@@ -184,6 +184,9 @@ services:
       # Mount MySQL Data directory
       - ${BASE_DATA_PATH}/${MYSQL_SERVER}:/var/lib/mysql:rw${MOUNT_OPTIONS}
 
+      # Mount DB Backup directory
+      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
+
   # ------------------------------------------------------------
   # PostgreSQL
   # ------------------------------------------------------------
@@ -216,6 +219,9 @@ services:
 
       # Mount PostgreSQL Data directory
       - ${BASE_DATA_PATH}/pgsql-${PGSQL_SERVER}:/var/lib/postgresql/data/pgdata:rw${MOUNT_OPTIONS}
+
+      # Mount DB Backup directory
+      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # Redis
@@ -388,9 +394,6 @@ services:
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-5.3:/var/log/php:rw${MOUNT_OPTIONS}
 
-      # Mount DB Backup directory
-      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
-
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
       - ${BYPANEL_PATH}/cfg/php-ini-5.3:/etc/php-custom.d:ro${MOUNT_OPTIONS}
@@ -481,9 +484,6 @@ services:
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-5.4:/var/log/php:rw${MOUNT_OPTIONS}
-
-      # Mount DB Backup directory
-      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
@@ -576,9 +576,6 @@ services:
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-5.5:/var/log/php:rw${MOUNT_OPTIONS}
 
-      # Mount DB Backup directory
-      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
-
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
       - ${BYPANEL_PATH}/cfg/php-ini-5.5:/etc/php-custom.d:ro${MOUNT_OPTIONS}
@@ -669,9 +666,6 @@ services:
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-5.6:/var/log/php:rw${MOUNT_OPTIONS}
-
-      # Mount DB Backup directory
-      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
@@ -764,9 +758,6 @@ services:
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-7.0:/var/log/php:rw${MOUNT_OPTIONS}
 
-      # Mount DB Backup directory
-      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
-
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
       - ${BYPANEL_PATH}/cfg/php-ini-7.0:/etc/php-custom.d:ro${MOUNT_OPTIONS}
@@ -857,9 +848,6 @@ services:
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-7.1:/var/log/php:rw${MOUNT_OPTIONS}
-
-      # Mount DB Backup directory
-      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
@@ -952,9 +940,6 @@ services:
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-7.2:/var/log/php:rw${MOUNT_OPTIONS}
 
-      # Mount DB Backup directory
-      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
-
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
       - ${BYPANEL_PATH}/cfg/php-ini-7.2:/etc/php-custom.d:ro${MOUNT_OPTIONS}
@@ -1045,9 +1030,6 @@ services:
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-7.3:/var/log/php:rw${MOUNT_OPTIONS}
-
-      # Mount DB Backup directory
-      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
@@ -1140,9 +1122,6 @@ services:
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-7.4:/var/log/php:rw${MOUNT_OPTIONS}
 
-      # Mount DB Backup directory
-      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
-
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
       - ${BYPANEL_PATH}/cfg/php-ini-7.4:/etc/php-custom.d:ro${MOUNT_OPTIONS}
@@ -1234,9 +1213,6 @@ services:
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-8.0:/var/log/php:rw${MOUNT_OPTIONS}
 
-      # Mount DB Backup directory
-      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
-
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
       - ${BYPANEL_PATH}/cfg/php-ini-8.0:/etc/php-custom.d:ro${MOUNT_OPTIONS}
@@ -1327,9 +1303,6 @@ services:
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-8.1:/var/log/php:rw${MOUNT_OPTIONS}
-
-      # Mount DB Backup directory
-      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
@@ -1423,9 +1396,6 @@ services:
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-8.2:/var/log/php:rw${MOUNT_OPTIONS}
 
-      # Mount DB Backup directory
-      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
-
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
       - ${BYPANEL_PATH}/cfg/php-ini-8.2:/etc/php-custom.d:ro${MOUNT_OPTIONS}
@@ -1516,9 +1486,6 @@ services:
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-8.3:/var/log/php:rw${MOUNT_OPTIONS}
-
-      # Mount DB Backup directory
-      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
