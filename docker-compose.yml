@@ -77,7 +77,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:ro${MOUNT_OPTIONS}
+      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount custom web server config directory
       - ${BYPANEL_PATH}/cfg/nginx/conf.d:/etc/nginx/conf.d:rw${MOUNT_OPTIONS}
@@ -135,7 +135,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:ro${MOUNT_OPTIONS}
+      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount custom web server config directory
       - ${BYPANEL_PATH}/cfg/openresty/conf.d:/etc/nginx/conf.d:rw${MOUNT_OPTIONS}
@@ -383,7 +383,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:ro${MOUNT_OPTIONS}
+      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-5.3:/var/log/php:rw${MOUNT_OPTIONS}
@@ -477,7 +477,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:ro${MOUNT_OPTIONS}
+      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-5.4:/var/log/php:rw${MOUNT_OPTIONS}
@@ -571,7 +571,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:ro${MOUNT_OPTIONS}
+      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-5.5:/var/log/php:rw${MOUNT_OPTIONS}
@@ -665,7 +665,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:ro${MOUNT_OPTIONS}
+      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-5.6:/var/log/php:rw${MOUNT_OPTIONS}
@@ -759,7 +759,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:ro${MOUNT_OPTIONS}
+      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-7.0:/var/log/php:rw${MOUNT_OPTIONS}
@@ -853,7 +853,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:ro${MOUNT_OPTIONS}
+      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-7.1:/var/log/php:rw${MOUNT_OPTIONS}
@@ -947,7 +947,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:ro${MOUNT_OPTIONS}
+      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-7.2:/var/log/php:rw${MOUNT_OPTIONS}
@@ -1041,7 +1041,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:ro${MOUNT_OPTIONS}
+      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-7.3:/var/log/php:rw${MOUNT_OPTIONS}
@@ -1135,7 +1135,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:ro${MOUNT_OPTIONS}
+      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-7.4:/var/log/php:rw${MOUNT_OPTIONS}
@@ -1229,7 +1229,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:ro${MOUNT_OPTIONS}
+      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-8.0:/var/log/php:rw${MOUNT_OPTIONS}
@@ -1323,7 +1323,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:ro${MOUNT_OPTIONS}
+      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-8.1:/var/log/php:rw${MOUNT_OPTIONS}
@@ -1418,7 +1418,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:ro${MOUNT_OPTIONS}
+      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-8.2:/var/log/php:rw${MOUNT_OPTIONS}
@@ -1512,7 +1512,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:ro${MOUNT_OPTIONS}
+      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/php-fpm-8.3:/var/log/php:rw${MOUNT_OPTIONS}
