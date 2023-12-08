@@ -193,7 +193,8 @@ services:
     #pull_policy: always
     restart: unless-stopped
     hostname: mysql-cron-backup
-    depends_on: mysql
+    depends_on:
+      - mysql
     profiles:
       - mysql-cron-backup
     environment:
