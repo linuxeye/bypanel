@@ -187,6 +187,34 @@ services:
       # Mount DB Backup directory
       - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
 
+  mysql-cron-backup:
+    image: fradelg/mysql-cron-backup
+    # Always pull docker image
+    #pull_policy: always
+    restart: unless-stopped
+    hostname: mysql-cron-backup
+    depends_on: mysql
+    profiles:
+      - mysql-cron-backup
+    environment:
+      - TZ=${TIMEZONE}
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=root
+      - MYSQL_PASS=${MYSQL_ROOT_PASSWORD}
+      - MAX_BACKUPS=15
+      - INIT_BACKUP=0
+      # Every day at 03:00
+      - CRON_TIME=0 3 * * *
+      # Make it small
+      - GZIP_LEVEL=9
+      # As of MySQL 8.0.21 this is needed
+      - MYSQLDUMP_OPTS=--no-tablespaces
+    networks:
+      app_net:
+        ipv4_address: 172.16.238.153
+    volumes:
+      - ${BASE_DATA_PATH}/backups:/backup:rw${MOUNT_OPTIONS}
+
   # ------------------------------------------------------------
   # PostgreSQL
   # ------------------------------------------------------------
