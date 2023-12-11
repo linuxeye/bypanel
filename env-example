@@ -341,7 +341,7 @@ MOUNT_OPTIONS=
 ###
 ### PHP_MODULES_ENABLE=ioncube, blackfire
 ###
-PHP_MODULES_ENABLE=ioncube
+PHP_MODULES_ENABLE=
 
 
 ###
@@ -351,7 +351,7 @@ PHP_MODULES_ENABLE=ioncube
 ###
 ### PHP_MODULES_DISABLE=xdebug,imagick,swoole
 ###
-PHP_MODULES_DISABLE=amqp,apcu,oci8,PDO_OCI,pdo_sqlsrv,sqlsrv,rdkafka,swoole,psr,phalcon
+PHP_MODULES_DISABLE=xdebug,swoole,memcache,memcached,redis,mongodb,pgsql,amqp,apcu,oci8,PDO_OCI,pdo_sqlsrv,sqlsrv,rdkafka,swoole,psr,phalcon
 
 
 ###

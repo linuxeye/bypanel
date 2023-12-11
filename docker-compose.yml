@@ -1586,6 +1586,24 @@ services:
       app_net:
         ipv4_address: 172.16.238.101
 
+  ninja:
+    image: gngpp/ninja
+    # Always pull docker image
+    #pull_policy: always
+    restart: unless-stopped
+    hostname: ninja
+    profiles:
+      - ninja
+    environment:
+      - TZ=${TIMEZONE}
+    command: run
+    ports:
+      - 8080:7999
+
+    networks:
+      app_net:
+        ipv4_address: 172.16.238.111
+
 ################################################################################
 # NETWORK
 ################################################################################
@@ -1599,4 +1617,3 @@ networks:
       config:
         - subnet: 172.16.238.0/24
           gateway: 172.16.238.1
-
