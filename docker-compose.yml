@@ -69,8 +69,7 @@ services:
       - "${HOST_PORT_NGINX_SSL}:443"
 
     networks:
-      app_net:
-        ipv4_address: 172.16.238.10
+      - app_net
 
     volumes:
       # ---- Format: ----
@@ -127,8 +126,7 @@ services:
       - "${HOST_PORT_OPENRESTY_SSL}:443"
 
     networks:
-      app_net:
-        ipv4_address: 172.16.238.11
+      - app_net
 
     volumes:
       # ---- Format: ----
@@ -169,8 +167,7 @@ services:
       - "${HOST_PORT_MYSQL}:3306"
 
     networks:
-      app_net:
-        ipv4_address: 172.16.238.12
+      - app_net
 
     volumes:
       # ---- Format: ----
@@ -195,8 +192,10 @@ services:
     hostname: mysql-cron-backup
     depends_on:
       - mysql
+
     profiles:
       - mysql-cron-backup
+
     environment:
       - TZ=${TIMEZONE}
       - MYSQL_HOST=mysql
@@ -210,9 +209,10 @@ services:
       - GZIP_LEVEL=9
       # As of MySQL 8.0.21 this is needed
       - MYSQLDUMP_OPTS=--no-tablespaces
+
     networks:
-      app_net:
-        ipv4_address: 172.16.238.153
+      - app_net
+
     volumes:
       - ${BASE_DATA_PATH}/backups:/backup:rw${MOUNT_OPTIONS}
 
@@ -239,8 +239,7 @@ services:
       - "${LOCAL_LISTEN_ADDR}${HOST_PORT_PGSQL}:5432"
 
     networks:
-      app_net:
-        ipv4_address: 172.16.238.13
+      - app_net
 
     volumes:
       # ---- Format: ----
@@ -281,8 +280,7 @@ services:
     privileged: true
 
     networks:
-      app_net:
-        ipv4_address: 172.16.238.14
+      - app_net
 
     volumes:
       # ---- Format: ----
@@ -311,8 +309,7 @@ services:
       - "${LOCAL_LISTEN_ADDR}${HOST_PORT_MEMCACHED}:11211"
 
     networks:
-      app_net:
-        ipv4_address: 172.16.238.15
+      - app_net
 
   # ------------------------------------------------------------
   # MongoDB
@@ -334,8 +331,7 @@ services:
       - TZ=${TIMEZONE}
 
     networks:
-      app_net:
-        ipv4_address: 172.16.238.16
+      - app_net
 
     volumes:
       # ---- Format: ----
@@ -394,22 +390,8 @@ services:
       - ENABLE_MODULES=${PHP_MODULES_ENABLE}
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
-      ##
-      ## MySQL Backups
-      ##
-      - MYSQL_BACKUP_USER=root
-      - MYSQL_BACKUP_PASS=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_BACKUP_HOST=mysql
-
-    # MacOS and Windows have this by default, this hack also allows it for Linux
-    extra_hosts:
-      docker.for.lin.host.internal: 172.16.238.1
-      docker.for.lin.localhost: 172.16.238.1
-      host.docker.internal: host-gateway
-
     networks:
-      app_net:
-        ipv4_address: 172.16.238.53
+      - app_net
 
     working_dir: /var/www
 
@@ -485,22 +467,8 @@ services:
       - ENABLE_MODULES=${PHP_MODULES_ENABLE}
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
-      ##
-      ## MySQL Backups
-      ##
-      - MYSQL_BACKUP_USER=root
-      - MYSQL_BACKUP_PASS=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_BACKUP_HOST=mysql
-
-    # MacOS and Windows have this by default, this hack also allows it for Linux
-    extra_hosts:
-      docker.for.lin.host.internal: 172.16.238.1
-      docker.for.lin.localhost: 172.16.238.1
-      host.docker.internal: host-gateway
-
     networks:
-      app_net:
-        ipv4_address: 172.16.238.54
+      - app_net
 
     working_dir: /var/www
 
@@ -576,22 +544,8 @@ services:
       - ENABLE_MODULES=${PHP_MODULES_ENABLE}
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
-      ##
-      ## MySQL Backups
-      ##
-      - MYSQL_BACKUP_USER=root
-      - MYSQL_BACKUP_PASS=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_BACKUP_HOST=mysql
-
-    # MacOS and Windows have this by default, this hack also allows it for Linux
-    extra_hosts:
-      docker.for.lin.host.internal: 172.16.238.1
-      docker.for.lin.localhost: 172.16.238.1
-      host.docker.internal: host-gateway
-
     networks:
-      app_net:
-        ipv4_address: 172.16.238.55
+      - app_net
 
     working_dir: /var/www
 
@@ -667,22 +621,8 @@ services:
       - ENABLE_MODULES=${PHP_MODULES_ENABLE}
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
-      ##
-      ## MySQL Backups
-      ##
-      - MYSQL_BACKUP_USER=root
-      - MYSQL_BACKUP_PASS=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_BACKUP_HOST=mysql
-
-    # MacOS and Windows have this by default, this hack also allows it for Linux
-    extra_hosts:
-      docker.for.lin.host.internal: 172.16.238.1
-      docker.for.lin.localhost: 172.16.238.1
-      host.docker.internal: host-gateway
-
     networks:
-      app_net:
-        ipv4_address: 172.16.238.56
+      - app_net
 
     working_dir: /var/www
 
@@ -758,22 +698,8 @@ services:
       - ENABLE_MODULES=${PHP_MODULES_ENABLE}
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
-      ##
-      ## MySQL Backups
-      ##
-      - MYSQL_BACKUP_USER=root
-      - MYSQL_BACKUP_PASS=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_BACKUP_HOST=mysql
-
-    # MacOS and Windows have this by default, this hack also allows it for Linux
-    extra_hosts:
-      docker.for.lin.host.internal: 172.16.238.1
-      docker.for.lin.localhost: 172.16.238.1
-      host.docker.internal: host-gateway
-
     networks:
-      app_net:
-        ipv4_address: 172.16.238.70
+      - app_net
 
     working_dir: /var/www
 
@@ -849,22 +775,8 @@ services:
       - ENABLE_MODULES=${PHP_MODULES_ENABLE}
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
-      ##
-      ## MySQL Backups
-      ##
-      - MYSQL_BACKUP_USER=root
-      - MYSQL_BACKUP_PASS=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_BACKUP_HOST=mysql
-
-    # MacOS and Windows have this by default, this hack also allows it for Linux
-    extra_hosts:
-      docker.for.lin.host.internal: 172.16.238.1
-      docker.for.lin.localhost: 172.16.238.1
-      host.docker.internal: host-gateway
-
     networks:
-      app_net:
-        ipv4_address: 172.16.238.71
+      - app_net
 
     working_dir: /var/www
 
@@ -940,22 +852,8 @@ services:
       - ENABLE_MODULES=${PHP_MODULES_ENABLE}
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
-      ##
-      ## MySQL Backups
-      ##
-      - MYSQL_BACKUP_USER=root
-      - MYSQL_BACKUP_PASS=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_BACKUP_HOST=mysql
-
-    # MacOS and Windows have this by default, this hack also allows it for Linux
-    extra_hosts:
-      docker.for.lin.host.internal: 172.16.238.1
-      docker.for.lin.localhost: 172.16.238.1
-      host.docker.internal: host-gateway
-
     networks:
-      app_net:
-        ipv4_address: 172.16.238.72
+      - app_net
 
     working_dir: /var/www
 
@@ -1031,22 +929,8 @@ services:
       - ENABLE_MODULES=${PHP_MODULES_ENABLE}
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
-      ##
-      ## MySQL Backups
-      ##
-      - MYSQL_BACKUP_USER=root
-      - MYSQL_BACKUP_PASS=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_BACKUP_HOST=mysql
-
-    # MacOS and Windows have this by default, this hack also allows it for Linux
-    extra_hosts:
-      docker.for.lin.host.internal: 172.16.238.1
-      docker.for.lin.localhost: 172.16.238.1
-      host.docker.internal: host-gateway
-
     networks:
-      app_net:
-        ipv4_address: 172.16.238.73
+      - app_net
 
     working_dir: /var/www
 
@@ -1122,22 +1006,8 @@ services:
       - ENABLE_MODULES=${PHP_MODULES_ENABLE}
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
-      ##
-      ## MySQL Backups
-      ##
-      - MYSQL_BACKUP_USER=root
-      - MYSQL_BACKUP_PASS=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_BACKUP_HOST=mysql
-
-    # MacOS and Windows have this by default, this hack also allows it for Linux
-    extra_hosts:
-      docker.for.lin.host.internal: 172.16.238.1
-      docker.for.lin.localhost: 172.16.238.1
-      host.docker.internal: host-gateway
-
     networks:
-      app_net:
-        ipv4_address: 172.16.238.74
+      - app_net
 
     working_dir: /var/www
 
@@ -1213,22 +1083,8 @@ services:
       - ENABLE_MODULES=${PHP_MODULES_ENABLE}
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
-      ##
-      ## MySQL Backups
-      ##
-      - MYSQL_BACKUP_USER=root
-      - MYSQL_BACKUP_PASS=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_BACKUP_HOST=mysql
-
-    # MacOS and Windows have this by default, this hack also allows it for Linux
-    extra_hosts:
-      docker.for.lin.host.internal: 172.16.238.1
-      docker.for.lin.localhost: 172.16.238.1
-      host.docker.internal: host-gateway
-
     networks:
-      app_net:
-        ipv4_address: 172.16.238.80
+      - app_net
 
     working_dir: /var/www
 
@@ -1304,22 +1160,8 @@ services:
       - ENABLE_MODULES=${PHP_MODULES_ENABLE}
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
-      ##
-      ## MySQL Backups
-      ##
-      - MYSQL_BACKUP_USER=root
-      - MYSQL_BACKUP_PASS=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_BACKUP_HOST=mysql
-
-    # MacOS and Windows have this by default, this hack also allows it for Linux
-    extra_hosts:
-      docker.for.lin.host.internal: 172.16.238.1
-      docker.for.lin.localhost: 172.16.238.1
-      host.docker.internal: host-gateway
-
     networks:
-      app_net:
-        ipv4_address: 172.16.238.81
+      - app_net
 
     working_dir: /var/www
 
@@ -1396,22 +1238,8 @@ services:
       - ENABLE_MODULES=${PHP_MODULES_ENABLE}
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
-      ##
-      ## MySQL Backups
-      ##
-      - MYSQL_BACKUP_USER=root
-      - MYSQL_BACKUP_PASS=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_BACKUP_HOST=mysql
-
-    # MacOS and Windows have this by default, this hack also allows it for Linux
-    extra_hosts:
-      docker.for.lin.host.internal: 172.16.238.1
-      docker.for.lin.localhost: 172.16.238.1
-      host.docker.internal: host-gateway
-
     networks:
-      app_net:
-        ipv4_address: 172.16.238.82
+      - app_net
 
     working_dir: /var/www
 
@@ -1487,22 +1315,8 @@ services:
       - ENABLE_MODULES=${PHP_MODULES_ENABLE}
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
-      ##
-      ## MySQL Backups
-      ##
-      - MYSQL_BACKUP_USER=root
-      - MYSQL_BACKUP_PASS=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_BACKUP_HOST=mysql
-
-    # MacOS and Windows have this by default, this hack also allows it for Linux
-    extra_hosts:
-      docker.for.lin.host.internal: 172.16.238.1
-      docker.for.lin.localhost: 172.16.238.1
-      host.docker.internal: host-gateway
-
     networks:
-      app_net:
-        ipv4_address: 172.16.238.83
+      - app_net
 
     working_dir: /var/www
 
@@ -1546,8 +1360,7 @@ services:
       - PMA_ABSOLUTE_URI=${PMA_ABSOLUTE_URI}
       - PMA_PORTS=${HOST_PORT_MYSQL}
     networks:
-      app_net:
-        ipv4_address: 172.16.238.100
+      - app_net
 
   # ------------------------------------------------------------
   # sftpgo
@@ -1583,8 +1396,7 @@ services:
       - ${BASE_DATA_PATH}/webroot:/srv/sftpgo/data:rw${MOUNT_OPTIONS}
 
     networks:
-      app_net:
-        ipv4_address: 172.16.238.101
+      - app_net
 
   ninja:
     image: gngpp/ninja
@@ -1601,8 +1413,7 @@ services:
       - 8080:7999
 
     networks:
-      app_net:
-        ipv4_address: 172.16.238.111
+      - app_net
 
 ################################################################################
 # NETWORK
@@ -1612,8 +1423,3 @@ networks:
     driver: bridge
     driver_opts:
       com.docker.network.enable_ipv6: "false"
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.16.238.0/24
-          gateway: 172.16.238.1

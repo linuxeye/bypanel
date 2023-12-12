@@ -30,6 +30,8 @@ Check_Env() {
     printf "You can execute the command: 'cp ${CURRENT_DIR}/env-example ${CURRENT_DIR}/.env'\n"
     printf "'vi ${CURRENT_DIR}/.env', Change to the configuration you want\n"
     exit 1
+  else
+    . ${CURRENT_DIR}/.env
   fi
 }
 
@@ -387,7 +389,8 @@ Install_Compose() {
       printf "Install Docker Compose...\n"
       ARCH=$(uname -m)
       [ "${ARCH}" = "armv7l" ] && ARCH="armv7"
-      curl -L https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-$(uname -s | tr A-Z a-z)-${ARCH} -o /usr/local/bin/docker-compose 2>&1
+      DOCKER_COMPOSE_LATEST_VER=$(curl -s https://api.github.com/repos/docker/compose/tags | grep 'name' | cut -d\" -f4 | head -1)
+      curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_LATEST_VER}/docker-compose-$(uname -s | tr A-Z a-z)-${ARCH} -o /usr/local/bin/docker-compose 2>&1
       if [ ! -e /usr/local/bin/docker-compose ]; then
         printf "\033[31mdocker-compose download failed, please try again \033[0m\n"
         exit 1
@@ -410,7 +413,7 @@ Init_Webroot() {
   mkdir -p ${BASE_DATA_PATH}/webroot/default
   echo "<?php phpinfo() ?>" >${BASE_DATA_PATH}/webroot/default/phpinfo.php
   curl -fsSL "https://api.inn-studio.com/download?id=xprober" -o ${BASE_DATA_PATH}/webroot/default/xprober.php 2>&1
-  chown -R 1000:1000 ${BASE_DATA_PATH}/webroot
+  chown -R ${NEW_UID}:${NEW_GID} ${BASE_DATA_PATH}/webroot
 }
 
 main() {
