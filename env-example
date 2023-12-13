@@ -499,3 +499,48 @@ HOST_PORT_MEMCACHED=11211
 ### Expose MongoDB Port to Host
 ###
 HOST_PORT_MONGO=27017
+
+
+
+################################################################################
+###
+### 10. chatgpt-web Docker Settings
+###
+################################################################################
+
+###
+### Expose chatgpt-web Port to Host
+###
+HOST_PORT_CHATGPT_WEB=3002
+
+### choose one
+OPENAI_API_KEY=sk-xxx
+OPENAI_ACCESS_TOKEN=xxx
+
+### API interface address, optional, available when OPENAI_API_KEY is set
+OPENAI_API_BASE_URL=https://api.chatanywhere.com.cn
+
+### API model, optional, available when OPENAI_API_KEY is set, https://platform.openai.com/docs/models
+### gpt-4, gpt-4-1106-preview, gpt-4-0314, gpt-4-0613, gpt-4-32k, gpt-4-32k-0314, gpt-4-32k-0613, gpt-3.5-turbo-16k, gpt-3.5-turbo-16k-0613, gpt-3.5-turbo, gpt-3.5-turbo-0301, gpt-3.5-turbo-0613, text-davinci-003, text-davinci-002, code-davinci-002
+OPENAI_API_MODEL=gpt-3.5-turbo
+
+### reverse proxy, optional
+API_REVERSE_PROXY=
+
+### access permission key, optional
+AUTH_SECRET_KEY=
+
+### maximum number of requests per hour, optional, unlimited by default
+MAX_REQUEST_PER_HOUR=0
+
+### timeout, unit milliseconds, optional
+TIMEOUT_MS=60000
+
+### Socks proxy, optional, take effect with SOCKS_PROXY_PORT
+SOCKS_PROXY_HOST=
+
+### Socks proxy port, optional, take effect with SOCKS_PROXY_HOST
+SOCKS_PROXY_PORT=
+
+### HTTPS proxy, optional, support http,https,socks5
+HTTPS_PROXY=

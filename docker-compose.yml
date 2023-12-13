@@ -1398,19 +1398,32 @@ services:
     networks:
       - app_net
 
-  ninja:
-    image: gngpp/ninja
+
+  chatgpt-web:
+    image: chenzhaoyu94/chatgpt-web
     # Always pull docker image
     #pull_policy: always
     restart: unless-stopped
-    hostname: ninja
+    hostname: chatgpt-web
     profiles:
-      - ninja
+      - chatgpt-web
+
     environment:
       - TZ=${TIMEZONE}
-    command: run
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_ACCESS_TOKEN=${OPENAI_ACCESS_TOKEN}
+      - OPENAI_API_BASE_URL=${OPENAI_API_BASE_URL}
+      - OPENAI_API_MODEL=${OPENAI_API_MODEL}
+      - API_REVERSE_PROXY=${API_REVERSE_PROXY}
+      - AUTH_SECRET_KEY=${AUTH_SECRET_KEY}
+      - MAX_REQUEST_PER_HOUR=${MAX_REQUEST_PER_HOUR}
+      - TIMEOUT_MS=${TIMEOUT_MS}
+      - SOCKS_PROXY_HOST=${SOCKS_PROXY_HOST}
+      - SOCKS_PROXY_PORT=${SOCKS_PROXY_PORT}
+      - HTTPS_PROXY=${HTTPS_PROXY}
+
     ports:
-      - 8080:7999
+      - ${HOST_PORT_CHATGPT_WEB}:3002
 
     networks:
       - app_net
