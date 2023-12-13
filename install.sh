@@ -306,12 +306,29 @@ Install_Docker() {
       zypper --non-interactive install docker docker-compose
     elif [ "${PLATFORM}" = "amzn" ]; then
       yum -y install docker
-    elif [[ "${PLATFORM}" =~ ^alinux$|^almalinux$|^rocky$ ]]; then
+    elif [[ "${PLATFORM}" =~ ^almalinux$|^rocky$ ]]; then
       [ "$(curl -s ipinfo.io/country)x" = "CN"x ] && DOCKER_REPO_URL=https://mirrors.aliyun.com/docker-ce || DOCKER_REPO_URL=https://download.docker.com
       cat >/etc/yum.repos.d/docker-ce.repo <<EOF
 [docker-ce-stable]
 name=Docker CE Stable - \$basearch
 baseurl=${DOCKER_REPO_URL}/linux/centos/\$releasever/\$basearch/stable
+enabled=1
+gpgcheck=0
+EOF
+    elif [[ "${PLATFORM}" =~ ^alinux$ ]]; then
+      if [ "${VERSION_ID}" = "3" ]; then
+        basearch = 8
+      elif [ "${VERSION_ID}" = "2" ]; then
+        basearch = 7
+      else
+        printf "\033[31mError: This OS is not supported! \033[0m\n"
+        exit 1
+      fi
+      [ "$(curl -s ipinfo.io/country)x" = "CN"x ] && DOCKER_REPO_URL=https://mirrors.aliyun.com/docker-ce || DOCKER_REPO_URL=https://download.docker.com
+      cat >/etc/yum.repos.d/docker-ce.repo <<EOF
+[docker-ce-stable]
+name=Docker CE Stable - $basearch
+baseurl=${DOCKER_REPO_URL}/linux/centos/$releasever/\$basearch/stable
 enabled=1
 gpgcheck=0
 EOF
