@@ -79,10 +79,7 @@ services:
       - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount custom web server config directory
-      - ${BYPANEL_PATH}/cfg/nginx/conf.d:/etc/nginx/conf.d:rw${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/nginx/rewrite:/etc/nginx/rewrite:rw${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/nginx/cert:/etc/nginx/cert:rw${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/nginx/nginx.conf:/etc/nginx/nginx.conf:rw${MOUNT_OPTIONS}
+      - ${BYPANEL_PATH}/cfg/nginx:/etc/nginx:rw${MOUNT_OPTIONS}
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/nginx:/var/log/nginx:rw${MOUNT_OPTIONS}
@@ -136,10 +133,7 @@ services:
       - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount custom web server config directory
-      - ${BYPANEL_PATH}/cfg/openresty/conf.d:/etc/nginx/conf.d:rw${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/openresty/rewrite:/etc/nginx/rewrite:rw${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/openresty/cert:/etc/nginx/cert:rw${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/openresty/nginx.conf:/etc/nginx/nginx.conf:rw${MOUNT_OPTIONS}
+      - ${BYPANEL_PATH}/cfg/openresty:/etc/nginx:rw${MOUNT_OPTIONS}
 
       # Mount logs
       - ${BASE_DATA_PATH}/logs/openresty:/var/log/nginx:rw${MOUNT_OPTIONS}
