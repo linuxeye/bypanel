@@ -306,7 +306,7 @@ Install_Docker() {
       zypper --non-interactive install docker docker-compose
     elif [ "${PLATFORM}" = "amzn" ]; then
       yum -y install docker
-    elif [[ "${PLATFORM}" =~ ^almalinux$|^rocky$|^ol$|^anolis$|^opencloudos$ ]]; then
+    elif [ "${PLATFORM}" = "almalinux" ] || [ "${PLATFORM}" = "rocky" ] || [ "${PLATFORM}" = "ol" ] || [ "${PLATFORM}" = "anolis" ] || [ "${PLATFORM}" = "opencloudos" ]; then
       [ "$(curl -s ipinfo.io/country)x" = "CN"x ] && DOCKER_REPO_URL=https://mirrors.aliyun.com/docker-ce || DOCKER_REPO_URL=https://download.docker.com
       cat >/etc/yum.repos.d/docker-ce.repo <<EOF
 [docker-ce-stable]
@@ -317,7 +317,7 @@ gpgcheck=0
 EOF
       yum clean all
       yum -y install docker-ce
-    elif [[ "${PLATFORM}" =~ ^alinux$|^tencentos$ ]]; then
+    elif [ "${PLATFORM}" = "alinux" ] || [ "${PLATFORM}" = "tencentos" ]; then
       if [ "${VERSION_ID}" = "3" ]; then
         releasever=8
       elif [ "${VERSION_ID}" = "2" ]; then

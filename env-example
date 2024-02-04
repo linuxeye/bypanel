@@ -276,12 +276,7 @@ MONGO_SERVER=5.0
 ###
 ### https://www.phpmyadmin.net
 ###
-### Note: PMA_ARBITRARY - when set to 1 connection to the arbitrary server will be allowed
-###       PMA_ABSOLUTE_URI - the full URL to phpMyAdmin. Sometimes needed when used in a reverse-proxy configuration.
-###
 PMA_SERVER=latest
-PMA_ARBITRARY=1
-PMA_ABSOLUTE_URI=/phpmyadmin
 
 
 ###
@@ -289,16 +284,16 @@ PMA_ABSOLUTE_URI=/phpmyadmin
 ###
 ### https://github.com/drakkan/sftpgo
 ###
-### Note: SFTPGO_FTPD_WEB_ADMIN_PORT - create the first admin and a new SFTPGo user
-###       SFTPGO_FTPD_PORT - The FTP service port
-###       SFTPGO_FTPD_PASSIVE_PORT_RANGE_START - The FTP service passive start port
-###       SFTPGO_FTPD_PASSIVE_PORT_RANGE_END - The FTP service passive end port
-###
 SFTPGO_SERVER=alpine
-SFTPGO_FTPD_WEB_ADMIN_PORT=8021
-SFTPGO_FTPD_PORT=21
-SFTPGO_FTPD_PASSIVE_PORT_RANGE_START=21000
-SFTPGO_FTPD_PASSIVE_PORT_RANGE_END=21100
+
+
+###
+### 1.9 Choose rabbitmq Server Image
+###
+### https://rabbitmq.com
+###
+#RABBITMQ_SERVER=latest
+RABBITMQ_SERVER=3.12-management-alpine
 
 
 ################################################################################
@@ -361,7 +356,6 @@ PHP_MODULES_DISABLE=xdebug,swoole,memcache,memcached,redis,mongodb,pgsql,amqp,ap
 ### * cfg/php-fpm-X.X/*.conf
 
 
-
 ################################################################################
 ###
 ### 4. Web Docker Settings
@@ -379,6 +373,7 @@ HOST_PORT_OPENRESTY_SSL=443
 
 HOST_PORT_APACHE=80
 HOST_PORT_APACHE_SSL=443
+
 
 ################################################################################
 ###
@@ -406,7 +401,6 @@ MYSQL_ROOT_PASSWORD=bypanel
 ### Expose MySQL Port to Host
 ###
 HOST_PORT_MYSQL=3306
-
 
 
 ################################################################################
@@ -442,7 +436,6 @@ PGSQL_HOST_AUTH_METHOD=trust
 HOST_PORT_PGSQL=5432
 
 
-
 ################################################################################
 ###
 ### 7. Redis Docker Settings
@@ -475,7 +468,6 @@ HOST_PORT_REDIS=6379
 REDIS_ARGS="--appendonly yes"
 
 
-
 ################################################################################
 ###
 ### 8. Memcached Docker Settings
@@ -486,7 +478,6 @@ REDIS_ARGS="--appendonly yes"
 ### Expose Memcached Port to Host
 ###
 HOST_PORT_MEMCACHED=11211
-
 
 
 ################################################################################
@@ -501,10 +492,62 @@ HOST_PORT_MEMCACHED=11211
 HOST_PORT_MONGO=27017
 
 
+################################################################################
+###
+### 10. phpMyAdmin Docker Settings
+###
+################################################################################
+
+###
+### Note: PMA_ARBITRARY - when set to 1 connection to the arbitrary server will be allowed
+###       PMA_ABSOLUTE_URI - the full URL to phpMyAdmin. Sometimes needed when used in a reverse-proxy configuration.
+###
+PMA_ARBITRARY=1
+PMA_ABSOLUTE_URI=/phpmyadmin
+
 
 ################################################################################
 ###
-### 10. chatgpt-web Docker Settings
+### 11. SFTPGO Docker Settings
+###
+################################################################################
+
+###
+### Expose SFTPGO Port to Host
+###
+### Note: SFTPGO_FTPD_WEB_ADMIN_PORT - create the first admin and a new SFTPGo user
+###       SFTPGO_FTPD_PORT - The FTP service port
+###       SFTPGO_FTPD_PASSIVE_PORT_RANGE_START - The FTP service passive start port
+###       SFTPGO_FTPD_PASSIVE_PORT_RANGE_END - The FTP service passive end port
+###
+SFTPGO_FTPD_WEB_ADMIN_PORT=8021
+SFTPGO_FTPD_PORT=21
+SFTPGO_FTPD_PASSIVE_PORT_RANGE_START=21000
+SFTPGO_FTPD_PASSIVE_PORT_RANGE_END=21100
+
+
+################################################################################
+###
+### 12. rabbitmq Docker Settings
+###
+################################################################################
+###
+### Node: HOST_PORT_RABBITMQ - Expose RabbitMQ Port to Host
+###       HOST_PORT_RABBITMQ_MANAGEMENT - Expose RabbitMQ Management Port to Host
+###       RABBITMQ_DEFAULT_USER - RabbitMQ Management default user
+###       RABBITMQ_DEFAULT_PASS - RabbitMQ Management default password
+###       RABBITMQ_DEFAULT_VHOST - RabbitMQ  Management default vhost
+###
+HOST_PORT_RABBITMQ=5672
+HOST_PORT_RABBITMQ_MANAGEMENT=15672
+RABBITMQ_DEFAULT_USER=admin
+RABBITMQ_DEFAULT_PASS=bypanel
+RABBITMQ_DEFAULT_VHOST=/
+
+
+################################################################################
+###
+### 13. chatgpt-web Docker Settings
 ###
 ################################################################################
 
