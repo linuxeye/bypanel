@@ -69,7 +69,7 @@ services:
       - "${HOST_PORT_NGINX_SSL}:443"
 
     networks:
-      - app_net
+      - bypanel-network
 
     volumes:
       # ---- Format: ----
@@ -123,7 +123,7 @@ services:
       - "${HOST_PORT_OPENRESTY_SSL}:443"
 
     networks:
-      - app_net
+      - bypanel-network
 
     volumes:
       # ---- Format: ----
@@ -161,7 +161,7 @@ services:
       - "${HOST_PORT_MYSQL}:3306"
 
     networks:
-      - app_net
+      - bypanel-network
 
     volumes:
       # ---- Format: ----
@@ -205,7 +205,7 @@ services:
       - MYSQLDUMP_OPTS=--no-tablespaces
 
     networks:
-      - app_net
+      - bypanel-network
 
     volumes:
       - ${BASE_DATA_PATH}/backups:/backup:rw${MOUNT_OPTIONS}
@@ -233,7 +233,7 @@ services:
       - "${LOCAL_LISTEN_ADDR}${HOST_PORT_PGSQL}:5432"
 
     networks:
-      - app_net
+      - bypanel-network
 
     volumes:
       # ---- Format: ----
@@ -274,7 +274,7 @@ services:
     privileged: true
 
     networks:
-      - app_net
+      - bypanel-network
 
     volumes:
       # ---- Format: ----
@@ -303,7 +303,7 @@ services:
       - "${LOCAL_LISTEN_ADDR}${HOST_PORT_MEMCACHED}:11211"
 
     networks:
-      - app_net
+      - bypanel-network
 
   # ------------------------------------------------------------
   # MongoDB
@@ -325,7 +325,7 @@ services:
       - TZ=${TIMEZONE}
 
     networks:
-      - app_net
+      - bypanel-network
 
     volumes:
       # ---- Format: ----
@@ -385,7 +385,7 @@ services:
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
     networks:
-      - app_net
+      - bypanel-network
 
     working_dir: /var/www
 
@@ -462,7 +462,7 @@ services:
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
     networks:
-      - app_net
+      - bypanel-network
 
     working_dir: /var/www
 
@@ -539,7 +539,7 @@ services:
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
     networks:
-      - app_net
+      - bypanel-network
 
     working_dir: /var/www
 
@@ -616,7 +616,7 @@ services:
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
     networks:
-      - app_net
+      - bypanel-network
 
     working_dir: /var/www
 
@@ -693,7 +693,7 @@ services:
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
     networks:
-      - app_net
+      - bypanel-network
 
     working_dir: /var/www
 
@@ -770,7 +770,7 @@ services:
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
     networks:
-      - app_net
+      - bypanel-network
 
     working_dir: /var/www
 
@@ -847,7 +847,7 @@ services:
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
     networks:
-      - app_net
+      - bypanel-network
 
     working_dir: /var/www
 
@@ -924,7 +924,7 @@ services:
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
     networks:
-      - app_net
+      - bypanel-network
 
     working_dir: /var/www
 
@@ -1001,7 +1001,7 @@ services:
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
     networks:
-      - app_net
+      - bypanel-network
 
     working_dir: /var/www
 
@@ -1078,7 +1078,7 @@ services:
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
     networks:
-      - app_net
+      - bypanel-network
 
     working_dir: /var/www
 
@@ -1155,7 +1155,7 @@ services:
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
     networks:
-      - app_net
+      - bypanel-network
 
     working_dir: /var/www
 
@@ -1233,7 +1233,7 @@ services:
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
     networks:
-      - app_net
+      - bypanel-network
 
     working_dir: /var/www
 
@@ -1310,7 +1310,7 @@ services:
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
     networks:
-      - app_net
+      - bypanel-network
 
     working_dir: /var/www
 
@@ -1354,7 +1354,7 @@ services:
       - PMA_ABSOLUTE_URI=${PMA_ABSOLUTE_URI}
       - PMA_PORTS=${HOST_PORT_MYSQL}
     networks:
-      - app_net
+      - bypanel-network
 
   # ------------------------------------------------------------
   # sftpgo
@@ -1390,7 +1390,7 @@ services:
       - ${BASE_DATA_PATH}/webroot:/srv/sftpgo/data:rw${MOUNT_OPTIONS}
 
     networks:
-      - app_net
+      - bypanel-network
 
   # ------------------------------------------------------------
   # rabbitmq
@@ -1422,7 +1422,7 @@ services:
       - ${BASE_DATA_PATH}/rabbitmq:/var/lib/rabbitmq:rw${MOUNT_OPTIONS}
 
     networks:
-      - app_net
+      - bypanel-network
 
   chatgpt-web:
     image: chenzhaoyu94/chatgpt-web
@@ -1451,13 +1451,11 @@ services:
       - ${HOST_PORT_CHATGPT_WEB}:3002
 
     networks:
-      - app_net
+      - bypanel-network
 
 ################################################################################
 # NETWORK
 ################################################################################
 networks:
-  app_net:
+  bypanel-network:
     driver: bridge
-    driver_opts:
-      com.docker.network.enable_ipv6: "false"
