@@ -1,0 +1,54 @@
+version: '3'
+services:
+  nginx:
+    image: bypanel/nginx:1.24.0
+    # Always pull docker image
+    #pull_policy: always
+    restart: always
+    hostname: nginx
+
+    environment:
+
+      ##
+      ## Debug/Logging
+      ##
+      - DEBUG_ENTRYPOINT=${DEBUG_ENTRYPOINT:-2}
+      - DEBUG_RUNTIME=1
+      - DOCKER_LOGS
+
+      ##
+      ## Adjust timezone
+      ##
+      - TIMEZONE
+
+      ##
+      ## UserID and GroupID
+      ##
+      - NEW_UID
+      - NEW_GID
+
+    ports:
+      # ---- Format: ----
+      # [HOST-ADDR : ] HOST-PORT : DOCKER-PORT
+      - "${HOST_PORT_NGINX}:80"
+      - "${HOST_PORT_NGINX_SSL}:443"
+
+    networks:
+      - bypanel-network
+
+    volumes:
+      # ---- Format: ----
+      # HOST-DIRECTORY : DOCKER-DIRECTORY
+
+      # Mount custom intranet
+      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+
+      # Mount custom web server config directory
+      - ${BYPANEL_PATH}/cfg/nginx:/etc/nginx:rw${MOUNT_OPTIONS}
+
+      # Mount logs
+      - ${BASE_DATA_PATH}/logs/nginx:/var/log/nginx:rw${MOUNT_OPTIONS}
+
+networks:
+  bypanel-network:
+    driver: bridge

@@ -1,0 +1,38 @@
+version: '3'
+services:
+  redis:
+    image: redis:4.0-alpine
+    # Always pull docker image
+    #pull_policy: always
+    restart: always
+    hostname: redis
+
+    # Apply custom arguments to redis startup
+    command: sh -c "echo 1 > /proc/sys/vm/overcommit_memory && redis-server ${REDIS_ARGS:- }"
+
+    environment:
+      - TZ=${TIMEZONE}
+      - REDIS_ARGS=${REDIS_ARGS:- }
+
+    ports:
+      # [local-machine:]local-port:docker-port
+      - "${LOCAL_LISTEN_ADDR}${HOST_PORT_REDIS}:6379"
+
+    sysctls:
+      - net.core.somaxconn=1024
+
+    privileged: true
+
+    networks:
+      - bypanel-network
+
+    volumes:
+      # ---- Format: ----
+      # HOST-DIRECTORY : DOCKER-DIRECTORY
+
+      # Mount Redis Data directory
+      - ${BASE_DATA_PATH}/redis-4.0:/data:rw${MOUNT_OPTIONS}
+
+networks:
+  bypanel-network:
+    driver: bridge

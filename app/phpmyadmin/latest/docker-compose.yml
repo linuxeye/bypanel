@@ -1,0 +1,20 @@
+version: '3'
+services:
+  phpmyadmin:
+    image: phpmyadmin
+    # Always pull docker image
+    #pull_policy: always
+    restart: always
+    hostname: phpmyadmin
+    environment:
+      - TZ=${TIMEZONE}
+      - PMA_ARBITRARY=${PMA_ARBITRARY}
+      - PMA_HOST=mysql
+      - PMA_ABSOLUTE_URI=${PMA_ABSOLUTE_URI}
+      - PMA_PORTS=${HOST_PORT_MYSQL}
+    networks:
+      - bypanel-network
+
+networks:
+  bypanel-network:
+    driver: bridge

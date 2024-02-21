@@ -1,0 +1,22 @@
+version: '3'
+services:
+  memcached:
+    image: memcached:1.4-alpine
+    # Always pull docker image
+    #pull_policy: always
+    restart: always
+    hostname: memcached
+
+    environment:
+      - TZ=${TIMEZONE}
+
+    ports:
+      # [local-machine:]local-port:docker-port
+      - "${LOCAL_LISTEN_ADDR}${HOST_PORT_MEMCACHED}:11211"
+
+    networks:
+      - bypanel-network
+
+networks:
+  bypanel-network:
+    driver: bridge

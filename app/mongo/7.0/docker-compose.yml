@@ -1,0 +1,29 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:7.0
+    # Always pull docker image
+    #pull_policy: always
+    restart: always
+    hostname: mongo
+
+    ports:
+      # [local-machine:]local-port:docker-port
+      - "${LOCAL_LISTEN_ADDR}${HOST_PORT_MONGO}:27017"
+
+    environment:
+      - TZ=${TIMEZONE}
+
+    networks:
+      - bypanel-network
+
+    volumes:
+      # ---- Format: ----
+      # HOST-DIRECTORY : DOCKER-DIRECTORY
+
+      # Mount MongoDB Data directory
+      - ${BASE_DATA_PATH}/mongo-7.0:/data/db:rw${MOUNT_OPTIONS}
+
+networks:
+  bypanel-network:
+    driver: bridge

@@ -1,0 +1,35 @@
+version: '3'
+services:
+  postgresql:
+    image: postgres:13-alpine
+    # Always pull docker image
+    #pull_policy: always
+    restart: always
+    hostname: pgsql
+    environment:
+      - TZ=${TIMEZONE}
+      - POSTGRES_USER=${PGSQL_ROOT_USER}
+      - POSTGRES_PASSWORD=${PGSQL_ROOT_PASSWORD}
+      - POSTGRES_HOST_AUTH_METHOD=${PGSQL_HOST_AUTH_METHOD:-trust}
+      - PGDATA=/var/lib/postgresql/data/pgdata
+
+    ports:
+      # [local-machine:]local-port:docker-port
+      - "${LOCAL_LISTEN_ADDR}${HOST_PORT_PGSQL}:5432"
+
+    networks:
+      - bypanel-network
+
+    volumes:
+      # ---- Format: ----
+      # HOST-DIRECTORY : DOCKER-DIRECTORY
+
+      # Mount PostgreSQL Data directory
+      - ${BASE_DATA_PATH}/pgsql-13:/var/lib/postgresql/data/pgdata:rw${MOUNT_OPTIONS}
+
+      # Mount DB Backup directory
+      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
+
+networks:
+  bypanel-network:
+    driver: bridge
