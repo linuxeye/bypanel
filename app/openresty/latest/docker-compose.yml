@@ -40,13 +40,13 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount custom web server config directory
       - ${BYPANEL_PATH}/cfg/openresty:/etc/nginx:rw${MOUNT_OPTIONS}
 
       # Mount logs
-      - ${BASE_DATA_PATH}/logs/openresty:/var/log/nginx:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/logs/openresty:/var/log/nginx:rw${MOUNT_OPTIONS}
 
 networks:
   net:

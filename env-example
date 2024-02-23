@@ -49,8 +49,10 @@ DEBUG_ENTRYPOINT=2
 DOCKER_LOGS=0
 
 ###
-### Set the project name. If not set, the default is the name of the current working directory
-###  (if the working directory is not set, the working directory defaults to the directory where the Compose configuration file is located).
+### Sets the project name.
+### This value is prepended along with the service name to the container on start up.
+### For example, if your project name is myapp and it includes two services db and web,
+### then Compose starts containers named myapp_db_1 and myapp_web_1 respectively.
 ### 
 COMPOSE_PROJECT_NAME=bypanel
 
@@ -71,7 +73,7 @@ COMPOSE_PROJECT_NAME=bypanel
 BYPANEL_PATH=.
 
 ### Web, DB, Log base data path
-BASE_DATA_PATH=/data
+VOLUME_PATH=/data
 
 ###
 ### At what IP address should the docker services listen

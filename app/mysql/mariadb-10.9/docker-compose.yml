@@ -28,10 +28,10 @@ services:
       - ${BYPANEL_PATH}/cfg/mariadb-10.9:/etc/mysql/docker-default.d:ro${MOUNT_OPTIONS}
 
       # Mount MySQL Data directory
-      - ${BASE_DATA_PATH}/mariadb-10.9:/var/lib/mysql:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/mariadb-10.9:/var/lib/mysql:rw${MOUNT_OPTIONS}
 
       # Mount DB Backup directory
-      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
 
 networks:
   net:

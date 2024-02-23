@@ -23,10 +23,10 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount var sftpgo
-      - ${BASE_DATA_PATH}/sftpgo:/var/lib/sftpgo:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/sftpgo:/var/lib/sftpgo:rw${MOUNT_OPTIONS}
 
       # Mount data
-      - ${BASE_DATA_PATH}/webroot:/srv/sftpgo/data:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/webroot:/srv/sftpgo/data:rw${MOUNT_OPTIONS}
 
     networks:
       - net

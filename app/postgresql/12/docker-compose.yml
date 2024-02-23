@@ -25,10 +25,10 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount PostgreSQL Data directory
-      - ${BASE_DATA_PATH}/pgsql-12:/var/lib/postgresql/data/pgdata:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/pgsql-12:/var/lib/postgresql/data/pgdata:rw${MOUNT_OPTIONS}
 
       # Mount DB Backup directory
-      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
 
 networks:
   net:

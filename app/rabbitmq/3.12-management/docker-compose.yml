@@ -22,7 +22,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount var sftpgo
-      - ${BASE_DATA_PATH}/rabbitmq:/var/lib/rabbitmq:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/rabbitmq:/var/lib/rabbitmq:rw${MOUNT_OPTIONS}
 
     networks:
       - net

@@ -31,7 +31,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount Redis Data directory
-      - ${BASE_DATA_PATH}/redis-3.2:/data:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/redis-3.2:/data:rw${MOUNT_OPTIONS}
 
 networks:
   net:

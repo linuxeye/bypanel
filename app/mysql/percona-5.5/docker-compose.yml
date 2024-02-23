@@ -28,10 +28,10 @@ services:
       - ${BYPANEL_PATH}/cfg/percona-5.5:/etc/mysql/docker-default.d:ro${MOUNT_OPTIONS}
 
       # Mount MySQL Data directory
-      - ${BASE_DATA_PATH}/percona-5.5:/var/lib/mysql:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/percona-5.5:/var/lib/mysql:rw${MOUNT_OPTIONS}
 
       # Mount DB Backup directory
-      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
 
 networks:
   net:

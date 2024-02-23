@@ -27,7 +27,7 @@ services:
       - net
 
     volumes:
-      - ${BASE_DATA_PATH}/backups:/backup:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/backups:/backup:rw${MOUNT_OPTIONS}
 
 networks:
   net:

@@ -40,7 +40,6 @@ services:
     hostname: nginx
     profiles:
       - nginx
-      - lnmp
 
     environment:
 
@@ -76,13 +75,13 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount custom web server config directory
       - ${BYPANEL_PATH}/cfg/nginx:/etc/nginx:rw${MOUNT_OPTIONS}
 
       # Mount logs
-      - ${BASE_DATA_PATH}/logs/nginx:/var/log/nginx:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/logs/nginx:/var/log/nginx:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # OpenResty
@@ -130,13 +129,13 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount custom web server config directory
       - ${BYPANEL_PATH}/cfg/openresty:/etc/nginx:rw${MOUNT_OPTIONS}
 
       # Mount logs
-      - ${BASE_DATA_PATH}/logs/openresty:/var/log/nginx:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/logs/openresty:/var/log/nginx:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # MySQL Database
@@ -149,7 +148,6 @@ services:
     hostname: mysql
     profiles:
       - mysql
-      - lnmp
 
     environment:
       - TZ=${TIMEZONE}
@@ -173,10 +171,10 @@ services:
       - ${BYPANEL_PATH}/cfg/${MYSQL_SERVER}:/etc/mysql/docker-default.d:ro${MOUNT_OPTIONS}
 
       # Mount MySQL Data directory
-      - ${BASE_DATA_PATH}/${MYSQL_SERVER}:/var/lib/mysql:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/${MYSQL_SERVER}:/var/lib/mysql:rw${MOUNT_OPTIONS}
 
       # Mount DB Backup directory
-      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
 
   mysql-cron-backup:
     image: fradelg/mysql-cron-backup
@@ -208,7 +206,7 @@ services:
       - net
 
     volumes:
-      - ${BASE_DATA_PATH}/backups:/backup:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/backups:/backup:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # PostgreSQL
@@ -240,10 +238,10 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount PostgreSQL Data directory
-      - ${BASE_DATA_PATH}/pgsql-${PGSQL_SERVER}:/var/lib/postgresql/data/pgdata:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/pgsql-${PGSQL_SERVER}:/var/lib/postgresql/data/pgdata:rw${MOUNT_OPTIONS}
 
       # Mount DB Backup directory
-      - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # Redis
@@ -281,7 +279,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount Redis Data directory
-      - ${BASE_DATA_PATH}/redis-${REDIS_SERVER}:/data:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/redis-${REDIS_SERVER}:/data:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # Memcached
@@ -332,7 +330,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount MongoDB Data directory
-      - ${BASE_DATA_PATH}/mongo-${MONGO_SERVER}:/data/db:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/mongo-${MONGO_SERVER}:/data/db:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # PHP5.3
@@ -345,15 +343,6 @@ services:
     hostname: php53
     profiles:
       - php53
-
-    ##
-    ## All .env variables
-    ##
-    ## Source all variables defined in .env
-    ## This also makes any custom variable available in each PHP container
-    ##
-    env_file:
-      - ./.env
 
     environment:
       ##
@@ -394,10 +383,10 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
-      - ${BASE_DATA_PATH}/logs/php-fpm-5.3:/var/log/php:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/logs/php-fpm-5.3:/var/log/php:rw${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
@@ -423,15 +412,6 @@ services:
     profiles:
       - php54
 
-    ##
-    ## All .env variables
-    ##
-    ## Source all variables defined in .env
-    ## This also makes any custom variable available in each PHP container
-    ##
-    env_file:
-      - ./.env
-
     environment:
       ##
       ## Debug/Logging
@@ -471,10 +451,10 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
-      - ${BASE_DATA_PATH}/logs/php-fpm-5.4:/var/log/php:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/logs/php-fpm-5.4:/var/log/php:rw${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
@@ -500,15 +480,6 @@ services:
     profiles:
       - php55
 
-    ##
-    ## All .env variables
-    ##
-    ## Source all variables defined in .env
-    ## This also makes any custom variable available in each PHP container
-    ##
-    env_file:
-      - ./.env
-
     environment:
       ##
       ## Debug/Logging
@@ -548,10 +519,10 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
-      - ${BASE_DATA_PATH}/logs/php-fpm-5.5:/var/log/php:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/logs/php-fpm-5.5:/var/log/php:rw${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
@@ -577,15 +548,6 @@ services:
     profiles:
       - php56
 
-    ##
-    ## All .env variables
-    ##
-    ## Source all variables defined in .env
-    ## This also makes any custom variable available in each PHP container
-    ##
-    env_file:
-      - ./.env
-
     environment:
       ##
       ## Debug/Logging
@@ -625,10 +587,10 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
-      - ${BASE_DATA_PATH}/logs/php-fpm-5.6:/var/log/php:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/logs/php-fpm-5.6:/var/log/php:rw${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
@@ -654,15 +616,6 @@ services:
     profiles:
       - php70
 
-    ##
-    ## All .env variables
-    ##
-    ## Source all variables defined in .env
-    ## This also makes any custom variable available in each PHP container
-    ##
-    env_file:
-      - ./.env
-
     environment:
       ##
       ## Debug/Logging
@@ -702,10 +655,10 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
-      - ${BASE_DATA_PATH}/logs/php-fpm-7.0:/var/log/php:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/logs/php-fpm-7.0:/var/log/php:rw${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
@@ -731,15 +684,6 @@ services:
     profiles:
       - php71
 
-    ##
-    ## All .env variables
-    ##
-    ## Source all variables defined in .env
-    ## This also makes any custom variable available in each PHP container
-    ##
-    env_file:
-      - ./.env
-
     environment:
       ##
       ## Debug/Logging
@@ -779,10 +723,10 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
-      - ${BASE_DATA_PATH}/logs/php-fpm-7.1:/var/log/php:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/logs/php-fpm-7.1:/var/log/php:rw${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
@@ -808,15 +752,6 @@ services:
     profiles:
       - php72
 
-    ##
-    ## All .env variables
-    ##
-    ## Source all variables defined in .env
-    ## This also makes any custom variable available in each PHP container
-    ##
-    env_file:
-      - ./.env
-
     environment:
       ##
       ## Debug/Logging
@@ -856,10 +791,10 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
-      - ${BASE_DATA_PATH}/logs/php-fpm-7.2:/var/log/php:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/logs/php-fpm-7.2:/var/log/php:rw${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
@@ -885,15 +820,6 @@ services:
     profiles:
       - php73
 
-    ##
-    ## All .env variables
-    ##
-    ## Source all variables defined in .env
-    ## This also makes any custom variable available in each PHP container
-    ##
-    env_file:
-      - ./.env
-
     environment:
       ##
       ## Debug/Logging
@@ -933,10 +859,10 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
-      - ${BASE_DATA_PATH}/logs/php-fpm-7.3:/var/log/php:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/logs/php-fpm-7.3:/var/log/php:rw${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
@@ -962,15 +888,6 @@ services:
     profiles:
       - php74
 
-    ##
-    ## All .env variables
-    ##
-    ## Source all variables defined in .env
-    ## This also makes any custom variable available in each PHP container
-    ##
-    env_file:
-      - ./.env
-
     environment:
       ##
       ## Debug/Logging
@@ -1010,10 +927,10 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
-      - ${BASE_DATA_PATH}/logs/php-fpm-7.4:/var/log/php:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/logs/php-fpm-7.4:/var/log/php:rw${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
@@ -1039,15 +956,6 @@ services:
     profiles:
       - php80
 
-    ##
-    ## All .env variables
-    ##
-    ## Source all variables defined in .env
-    ## This also makes any custom variable available in each PHP container
-    ##
-    env_file:
-      - ./.env
-
     environment:
       ##
       ## Debug/Logging
@@ -1087,10 +995,10 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
-      - ${BASE_DATA_PATH}/logs/php-fpm-8.0:/var/log/php:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/logs/php-fpm-8.0:/var/log/php:rw${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
@@ -1116,15 +1024,6 @@ services:
     profiles:
       - php81
 
-    ##
-    ## All .env variables
-    ##
-    ## Source all variables defined in .env
-    ## This also makes any custom variable available in each PHP container
-    ##
-    env_file:
-      - ./.env
-
     environment:
       ##
       ## Debug/Logging
@@ -1164,10 +1063,10 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
-      - ${BASE_DATA_PATH}/logs/php-fpm-8.1:/var/log/php:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/logs/php-fpm-8.1:/var/log/php:rw${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
@@ -1192,16 +1091,6 @@ services:
     hostname: php82
     profiles:
       - php82
-      - lnmp
-
-    ##
-    ## All .env variables
-    ##
-    ## Source all variables defined in .env
-    ## This also makes any custom variable available in each PHP container
-    ##
-    env_file:
-      - ./.env
 
     environment:
       ##
@@ -1242,10 +1131,10 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
-      - ${BASE_DATA_PATH}/logs/php-fpm-8.2:/var/log/php:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/logs/php-fpm-8.2:/var/log/php:rw${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
@@ -1271,15 +1160,6 @@ services:
     profiles:
       - php83
 
-    ##
-    ## All .env variables
-    ##
-    ## Source all variables defined in .env
-    ## This also makes any custom variable available in each PHP container
-    ##
-    env_file:
-      - ./.env
-
     environment:
       ##
       ## Debug/Logging
@@ -1319,10 +1199,10 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${BASE_DATA_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount logs
-      - ${BASE_DATA_PATH}/logs/php-fpm-8.3:/var/log/php:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/logs/php-fpm-8.3:/var/log/php:rw${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
@@ -1384,10 +1264,10 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount var sftpgo
-      - ${BASE_DATA_PATH}/sftpgo:/var/lib/sftpgo:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/sftpgo:/var/lib/sftpgo:rw${MOUNT_OPTIONS}
 
       # Mount data
-      - ${BASE_DATA_PATH}/webroot:/srv/sftpgo/data:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/webroot:/srv/sftpgo/data:rw${MOUNT_OPTIONS}
 
     networks:
       - net
@@ -1419,7 +1299,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount var sftpgo
-      - ${BASE_DATA_PATH}/rabbitmq:/var/lib/rabbitmq:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/rabbitmq:/var/lib/rabbitmq:rw${MOUNT_OPTIONS}
 
     networks:
       - net

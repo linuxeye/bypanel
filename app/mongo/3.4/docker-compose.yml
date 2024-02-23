@@ -22,7 +22,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount MongoDB Data directory
-      - ${BASE_DATA_PATH}/mongo-3.4:/data/db:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/mongo-3.4:/data/db:rw${MOUNT_OPTIONS}
 
 networks:
   net:
