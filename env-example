@@ -48,6 +48,11 @@ DEBUG_ENTRYPOINT=2
 ###
 DOCKER_LOGS=0
 
+###
+### Set the project name. If not set, the default is the name of the current working directory
+###  (if the working directory is not set, the working directory defaults to the directory where the Compose configuration file is located).
+### 
+COMPOSE_PROJECT_NAME=bypanel
 
 ###
 ### Relative or absolute path to the bypanel repository.

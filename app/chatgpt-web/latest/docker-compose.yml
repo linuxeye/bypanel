@@ -25,8 +25,8 @@ services:
       - ${HOST_PORT_CHATGPT_WEB}:3002
 
     networks:
-      - bypanel-network
+      - net
 
 networks:
-  bypanel-network:
+  net:
     driver: bridge

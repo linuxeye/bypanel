@@ -15,7 +15,7 @@ services:
       - TZ=${TIMEZONE}
 
     networks:
-      - bypanel-network
+      - net
 
     volumes:
       # ---- Format: ----
@@ -25,5 +25,5 @@ services:
       - ${BASE_DATA_PATH}/mongo-4.2:/data/db:rw${MOUNT_OPTIONS}
 
 networks:
-  bypanel-network:
+  net:
     driver: bridge

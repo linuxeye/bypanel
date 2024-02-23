@@ -33,7 +33,7 @@ services:
       - "${HOST_PORT_OPENRESTY_SSL}:443"
 
     networks:
-      - bypanel-network
+      - net
 
     volumes:
       # ---- Format: ----
@@ -49,5 +49,5 @@ services:
       - ${BASE_DATA_PATH}/logs/openresty:/var/log/nginx:rw${MOUNT_OPTIONS}
 
 networks:
-  bypanel-network:
+  net:
     driver: bridge

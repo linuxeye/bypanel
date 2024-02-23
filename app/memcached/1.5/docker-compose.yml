@@ -15,8 +15,8 @@ services:
       - "${LOCAL_LISTEN_ADDR}${HOST_PORT_MEMCACHED}:11211"
 
     networks:
-      - bypanel-network
+      - net
 
 networks:
-  bypanel-network:
+  net:
     driver: bridge

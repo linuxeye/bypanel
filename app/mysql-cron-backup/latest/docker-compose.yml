@@ -24,11 +24,11 @@ services:
       - MYSQLDUMP_OPTS=--no-tablespaces
 
     networks:
-      - bypanel-network
+      - net
 
     volumes:
       - ${BASE_DATA_PATH}/backups:/backup:rw${MOUNT_OPTIONS}
 
 networks:
-  bypanel-network:
+  net:
     driver: bridge

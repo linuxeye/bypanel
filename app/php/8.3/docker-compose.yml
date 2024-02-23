@@ -36,7 +36,7 @@ services:
       - DISABLE_MODULES=${PHP_MODULES_DISABLE}
 
     networks:
-      - bypanel-network
+      - net
 
     working_dir: /var/www
 
@@ -63,6 +63,6 @@ services:
       - ${BYPANEL_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
 
 networks:
-  bypanel-network:
+  net:
     driver: bridge
     

@@ -24,7 +24,7 @@ services:
     privileged: true
 
     networks:
-      - bypanel-network
+      - net
 
     volumes:
       # ---- Format: ----
@@ -34,5 +34,5 @@ services:
       - ${BASE_DATA_PATH}/redis-7.2:/data:rw${MOUNT_OPTIONS}
 
 networks:
-  bypanel-network:
+  net:
     driver: bridge

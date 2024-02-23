@@ -16,7 +16,7 @@ services:
       - "${HOST_PORT_MYSQL}:3306"
 
     networks:
-      - bypanel-network
+      - net
 
     volumes:
       # ---- Format: ----
@@ -34,5 +34,5 @@ services:
       - ${BASE_DATA_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
 
 networks:
-  bypanel-network:
+  net:
     driver: bridge

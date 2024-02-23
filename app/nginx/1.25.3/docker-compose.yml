@@ -34,7 +34,7 @@ services:
       - "${HOST_PORT_NGINX_SSL}:443"
 
     networks:
-      - bypanel-network
+      - net
 
     volumes:
       # ---- Format: ----
@@ -50,5 +50,5 @@ services:
       - ${BASE_DATA_PATH}/logs/nginx:/var/log/nginx:rw${MOUNT_OPTIONS}
 
 networks:
-  bypanel-network:
+  net:
     driver: bridge

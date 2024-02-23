@@ -25,8 +25,8 @@ services:
       - ${BASE_DATA_PATH}/rabbitmq:/var/lib/rabbitmq:rw${MOUNT_OPTIONS}
 
     networks:
-      - bypanel-network
+      - net
 
 networks:
-  bypanel-network:
+  net:
     driver: bridge

@@ -13,8 +13,8 @@ services:
       - PMA_ABSOLUTE_URI=${PMA_ABSOLUTE_URI}
       - PMA_PORTS=${HOST_PORT_MYSQL}
     networks:
-      - bypanel-network
+      - net
 
 networks:
-  bypanel-network:
+  net:
     driver: bridge
