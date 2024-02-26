@@ -575,22 +575,22 @@ OPENAI_API_BASE_URL=https://api.chatanywhere.com.cn
 OPENAI_API_MODEL=gpt-3.5-turbo
 
 ### reverse proxy, optional
-API_REVERSE_PROXY=
+CHATGPT_API_REVERSE_PROXY=
 
 ### access permission key, optional
-AUTH_SECRET_KEY=
+CHATGPT_AUTH_SECRET_KEY=
 
 ### maximum number of requests per hour, optional, unlimited by default
-MAX_REQUEST_PER_HOUR=0
+CHATGPT_MAX_REQUEST_PER_HOUR=0
 
 ### timeout, unit milliseconds, optional
-TIMEOUT_MS=60000
+CHATGPT_TIMEOUT_MS=60000
 
 ### Socks proxy, optional, take effect with SOCKS_PROXY_PORT
-SOCKS_PROXY_HOST=
+CHATGPT_SOCKS_PROXY_HOST=
 
 ### Socks proxy port, optional, take effect with SOCKS_PROXY_HOST
-SOCKS_PROXY_PORT=
+CHATGPT_SOCKS_PROXY_PORT=
 
 ### HTTPS proxy, optional, support http,https,socks5
-HTTPS_PROXY=
+CHATGPT_HTTPS_PROXY=
