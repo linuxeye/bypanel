@@ -24,8 +24,8 @@ services:
 
       # Mount bypanel user-defined cnf files in order
       # to overwrite the MySQL server configuration
-      #- ${BYPANEL_PATH}/cfg/mysql.cnf:/etc/mysql/conf.d/bypanel.cnf:ro${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/percona-5.5:/etc/mysql/docker-default.d:ro${MOUNT_OPTIONS}
+      #- ${BASE_PATH}/cfg/mysql.cnf:/etc/mysql/conf.d/bypanel.cnf:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/percona-5.5:/etc/mysql/docker-default.d:ro${MOUNT_OPTIONS}
 
       # Mount MySQL Data directory
       - ${VOLUME_PATH}/percona-5.5:/var/lib/mysql:rw${MOUNT_OPTIONS}

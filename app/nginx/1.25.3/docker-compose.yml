@@ -44,7 +44,7 @@ services:
       - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount custom web server config directory
-      - ${BYPANEL_PATH}/cfg/nginx:/etc/nginx:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/nginx:/etc/nginx:rw${MOUNT_OPTIONS}
 
       # Mount logs
       - ${VOLUME_PATH}/logs/nginx:/var/log/nginx:rw${MOUNT_OPTIONS}

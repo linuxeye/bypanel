@@ -52,15 +52,15 @@ services:
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
-      - ${BYPANEL_PATH}/cfg/php-ini-8.2:/etc/php-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-ini-8.2:/etc/php-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM *.conf files in order
       # to overwrite the default PHP-FPM configuration
-      - ${BYPANEL_PATH}/cfg/php-fpm-8.2:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-fpm-8.2:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM startup *.sh scripts
-      - ${BYPANEL_PATH}/cfg/php-startup-8.2:/startup.1.d:rw${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-startup-8.2:/startup.1.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
 
 networks:
   net:

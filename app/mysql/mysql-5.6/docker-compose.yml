@@ -24,8 +24,8 @@ services:
 
       # Mount bypanel user-defined cnf files in order
       # to overwrite the MySQL server configuration
-      #- ${BYPANEL_PATH}/cfg/mysql.cnf:/etc/mysql/conf.d/bypanel.cnf:ro${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/mysql-5.6:/etc/mysql/docker-default.d:ro${MOUNT_OPTIONS}
+      #- ${BASE_PATH}/cfg/mysql.cnf:/etc/mysql/conf.d/bypanel.cnf:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/mysql-5.6:/etc/mysql/docker-default.d:ro${MOUNT_OPTIONS}
 
       # Mount MySQL Data directory
       - ${VOLUME_PATH}/mysql-5.6:/var/lib/mysql:rw${MOUNT_OPTIONS}

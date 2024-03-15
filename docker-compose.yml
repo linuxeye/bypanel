@@ -78,7 +78,7 @@ services:
       - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount custom web server config directory
-      - ${BYPANEL_PATH}/cfg/nginx:/etc/nginx:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/nginx:/etc/nginx:rw${MOUNT_OPTIONS}
 
       # Mount logs
       - ${VOLUME_PATH}/logs/nginx:/var/log/nginx:rw${MOUNT_OPTIONS}
@@ -132,7 +132,7 @@ services:
       - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount custom web server config directory
-      - ${BYPANEL_PATH}/cfg/openresty:/etc/nginx:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/openresty:/etc/nginx:rw${MOUNT_OPTIONS}
 
       # Mount logs
       - ${VOLUME_PATH}/logs/openresty:/var/log/nginx:rw${MOUNT_OPTIONS}
@@ -167,8 +167,8 @@ services:
 
       # Mount bypanel user-defined cnf files in order
       # to overwrite the MySQL server configuration
-      #- ${BYPANEL_PATH}/cfg/mysql.cnf:/etc/mysql/conf.d/bypanel.cnf:ro${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/${MYSQL_SERVER}:/etc/mysql/docker-default.d:ro${MOUNT_OPTIONS}
+      #- ${BASE_PATH}/cfg/mysql.cnf:/etc/mysql/conf.d/bypanel.cnf:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/${MYSQL_SERVER}:/etc/mysql/docker-default.d:ro${MOUNT_OPTIONS}
 
       # Mount MySQL Data directory
       - ${VOLUME_PATH}/${MYSQL_SERVER}:/var/lib/mysql:rw${MOUNT_OPTIONS}
@@ -390,15 +390,15 @@ services:
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
-      - ${BYPANEL_PATH}/cfg/php-ini-5.3:/etc/php-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-ini-5.3:/etc/php-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM *.conf files in order
       # to overwrite the default PHP-FPM configuration
-      - ${BYPANEL_PATH}/cfg/php-fpm-5.3:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-fpm-5.3:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM startup *.sh scripts
-      - ${BYPANEL_PATH}/cfg/php-startup-5.3:/startup.1.d:rw${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-startup-5.3:/startup.1.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # PHP5.4
@@ -458,15 +458,15 @@ services:
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
-      - ${BYPANEL_PATH}/cfg/php-ini-5.4:/etc/php-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-ini-5.4:/etc/php-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM *.conf files in order
       # to overwrite the default PHP-FPM configuration
-      - ${BYPANEL_PATH}/cfg/php-fpm-5.4:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-fpm-5.4:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM startup *.sh scripts
-      - ${BYPANEL_PATH}/cfg/php-startup-5.4:/startup.1.d:rw${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-startup-5.4:/startup.1.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # PHP5.5
@@ -526,15 +526,15 @@ services:
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
-      - ${BYPANEL_PATH}/cfg/php-ini-5.5:/etc/php-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-ini-5.5:/etc/php-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM *.conf files in order
       # to overwrite the default PHP-FPM configuration
-      - ${BYPANEL_PATH}/cfg/php-fpm-5.5:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-fpm-5.5:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM startup *.sh scripts
-      - ${BYPANEL_PATH}/cfg/php-startup-5.5:/startup.1.d:rw${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-startup-5.5:/startup.1.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # PHP5.6
@@ -594,15 +594,15 @@ services:
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
-      - ${BYPANEL_PATH}/cfg/php-ini-5.6:/etc/php-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-ini-5.6:/etc/php-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM *.conf files in order
       # to overwrite the default PHP-FPM configuration
-      - ${BYPANEL_PATH}/cfg/php-fpm-5.6:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-fpm-5.6:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM startup *.sh scripts
-      - ${BYPANEL_PATH}/cfg/php-startup-5.6:/startup.1.d:rw${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-startup-5.6:/startup.1.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # PHP7.0
@@ -662,15 +662,15 @@ services:
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
-      - ${BYPANEL_PATH}/cfg/php-ini-7.0:/etc/php-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-ini-7.0:/etc/php-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM *.conf files in order
       # to overwrite the default PHP-FPM configuration
-      - ${BYPANEL_PATH}/cfg/php-fpm-7.0:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-fpm-7.0:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM startup *.sh scripts
-      - ${BYPANEL_PATH}/cfg/php-startup-7.0:/startup.1.d:rw${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-startup-7.0:/startup.1.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # PHP7.1
@@ -730,15 +730,15 @@ services:
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
-      - ${BYPANEL_PATH}/cfg/php-ini-7.1:/etc/php-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-ini-7.1:/etc/php-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM *.conf files in order
       # to overwrite the default PHP-FPM configuration
-      - ${BYPANEL_PATH}/cfg/php-fpm-7.1:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-fpm-7.1:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM startup *.sh scripts
-      - ${BYPANEL_PATH}/cfg/php-startup-7.1:/startup.1.d:rw${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-startup-7.1:/startup.1.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # PHP7.2
@@ -798,15 +798,15 @@ services:
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
-      - ${BYPANEL_PATH}/cfg/php-ini-7.2:/etc/php-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-ini-7.2:/etc/php-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM *.conf files in order
       # to overwrite the default PHP-FPM configuration
-      - ${BYPANEL_PATH}/cfg/php-fpm-7.2:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-fpm-7.2:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM startup *.sh scripts
-      - ${BYPANEL_PATH}/cfg/php-startup-7.2:/startup.1.d:rw${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-startup-7.2:/startup.1.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # PHP7.3
@@ -866,15 +866,15 @@ services:
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
-      - ${BYPANEL_PATH}/cfg/php-ini-7.3:/etc/php-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-ini-7.3:/etc/php-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM *.conf files in order
       # to overwrite the default PHP-FPM configuration
-      - ${BYPANEL_PATH}/cfg/php-fpm-7.3:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-fpm-7.3:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM startup *.sh scripts
-      - ${BYPANEL_PATH}/cfg/php-startup-7.3:/startup.1.d:rw${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-startup-7.3:/startup.1.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # PHP7.4
@@ -934,15 +934,15 @@ services:
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
-      - ${BYPANEL_PATH}/cfg/php-ini-7.4:/etc/php-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-ini-7.4:/etc/php-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM *.conf files in order
       # to overwrite the default PHP-FPM configuration
-      - ${BYPANEL_PATH}/cfg/php-fpm-7.4:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-fpm-7.4:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM startup *.sh scripts
-      - ${BYPANEL_PATH}/cfg/php-startup-7.4:/startup.1.d:rw${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-startup-7.4:/startup.1.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # PHP8.0
@@ -1002,15 +1002,15 @@ services:
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
-      - ${BYPANEL_PATH}/cfg/php-ini-8.0:/etc/php-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-ini-8.0:/etc/php-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM *.conf files in order
       # to overwrite the default PHP-FPM configuration
-      - ${BYPANEL_PATH}/cfg/php-fpm-8.0:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-fpm-8.0:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM startup *.sh scripts
-      - ${BYPANEL_PATH}/cfg/php-startup-8.0:/startup.1.d:rw${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-startup-8.0:/startup.1.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # PHP8.1
@@ -1070,15 +1070,15 @@ services:
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
-      - ${BYPANEL_PATH}/cfg/php-ini-8.1:/etc/php-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-ini-8.1:/etc/php-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM *.conf files in order
       # to overwrite the default PHP-FPM configuration
-      - ${BYPANEL_PATH}/cfg/php-fpm-8.1:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-fpm-8.1:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM startup *.sh scripts
-      - ${BYPANEL_PATH}/cfg/php-startup-8.1:/startup.1.d:rw${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-startup-8.1:/startup.1.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # PHP8.2
@@ -1138,15 +1138,15 @@ services:
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
-      - ${BYPANEL_PATH}/cfg/php-ini-8.2:/etc/php-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-ini-8.2:/etc/php-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM *.conf files in order
       # to overwrite the default PHP-FPM configuration
-      - ${BYPANEL_PATH}/cfg/php-fpm-8.2:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-fpm-8.2:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM startup *.sh scripts
-      - ${BYPANEL_PATH}/cfg/php-startup-8.2:/startup.1.d:rw${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-startup-8.2:/startup.1.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # PHP8.3
@@ -1206,15 +1206,15 @@ services:
 
       # Mount bypanel user-defined *.ini files in order
       # to overwrite the default PHP.ini configuration
-      - ${BYPANEL_PATH}/cfg/php-ini-8.3:/etc/php-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-ini-8.3:/etc/php-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM *.conf files in order
       # to overwrite the default PHP-FPM configuration
-      - ${BYPANEL_PATH}/cfg/php-fpm-8.3:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-fpm-8.3:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
 
       # Mount bypanel user-defined PHP-FPM startup *.sh scripts
-      - ${BYPANEL_PATH}/cfg/php-startup-8.3:/startup.1.d:rw${MOUNT_OPTIONS}
-      - ${BYPANEL_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/php-startup-8.3:/startup.1.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # phpMyAdmin
