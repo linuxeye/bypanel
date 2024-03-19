@@ -138,6 +138,59 @@ services:
       - ${VOLUME_PATH}/logs/openresty:/var/log/nginx:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
+  # Apache
+  # ------------------------------------------------------------
+  apache:
+    image: bypanel/apache
+    # Always pull docker image
+    #pull_policy: always
+    restart: always
+    hostname: apache
+    profiles:
+      - apache
+
+    environment:
+      ##
+      ## Debug/Logging
+      ##
+      - DEBUG_ENTRYPOINT=${DEBUG_ENTRYPOINT:-2}
+      - DEBUG_RUNTIME=1
+      - DOCKER_LOGS
+
+      ##
+      ## Adjust timezone
+      ##
+      - TIMEZONE
+
+      ##
+      ## UserID and GroupID
+      ##
+      - NEW_UID
+      - NEW_GID
+
+    ports:
+      # ---- Format: ----
+      # [HOST-ADDR : ] HOST-PORT : DOCKER-PORT
+      - "${HOST_PORT_APACHE}:80"
+      - "${HOST_PORT_APACHE_SSL}:443"
+
+    networks:
+      - net
+
+    volumes:
+      # ---- Format: ----
+      # HOST-DIRECTORY : DOCKER-DIRECTORY
+
+      # Mount custom intranet
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+
+      # Mount custom web server config directory
+      - ${BASE_PATH}/cfg/apache:/etc/httpd:rw${MOUNT_OPTIONS}
+
+      # Mount logs
+      - ${VOLUME_PATH}/logs/apache:/var/log/httpd:rw${MOUNT_OPTIONS}
+
+  # ------------------------------------------------------------
   # MySQL Database
   # ------------------------------------------------------------
   mysql:
