@@ -384,8 +384,8 @@ PHP_MODULES_DISABLE=xdebug,swoole,memcache,memcached,redis,mongodb,pgsql,amqp,ap
 ###
 ### Expose Web Port to Host
 ###
-HOST_PORT_NGINX=80
-HOST_PORT_NGINX_SSL=443
+HOST_PORT_WEB=80
+HOST_PORT_WEB_SSL=443
 
 HOST_PORT_OPENRESTY=80
 HOST_PORT_OPENRESTY_SSL=443

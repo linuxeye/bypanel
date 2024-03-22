@@ -1,24 +1,17 @@
 version: '3'
 services:
-  apache:
-    image: bypanel/apache
+  openresty:
+    image: caddy
     # Always pull docker image
     #pull_policy: always
     restart: always
-    hostname: apache
+    hostname: caddy
 
     environment:
       ##
-      ## Debug/Logging
-      ##
-      - DEBUG_ENTRYPOINT=${DEBUG_ENTRYPOINT:-2}
-      - DEBUG_RUNTIME=1
-      - DOCKER_LOGS
-
-      ##
       ## Adjust timezone
       ##
-      - TIMEZONE
+      - TZ=${TIMEZONE}
 
       ##
       ## UserID and GroupID
@@ -43,10 +36,10 @@ services:
       - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount custom web server config directory
-      - ${BASE_PATH}/cfg/apache:/etc/httpd:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/caddy:/etc/caddy:rw${MOUNT_OPTIONS}
 
       # Mount logs
-      - ${VOLUME_PATH}/logs/apache:/var/log/httpd:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/logs/caddy:/var/log/caddy:rw${MOUNT_OPTIONS}
 
 networks:
   net:

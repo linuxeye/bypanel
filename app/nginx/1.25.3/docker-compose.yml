@@ -30,8 +30,8 @@ services:
     ports:
       # ---- Format: ----
       # [HOST-ADDR : ] HOST-PORT : DOCKER-PORT
-      - "${HOST_PORT_NGINX}:80"
-      - "${HOST_PORT_NGINX_SSL}:443"
+      - "${HOST_PORT_WEB}:80"
+      - "${HOST_PORT_WEB_SSL}:443"
 
     networks:
       - net
