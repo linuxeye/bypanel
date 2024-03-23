@@ -1,6 +1,6 @@
 version: '3'
 services:
-  openresty:
+  caddy:
     image: caddy
     # Always pull docker image
     #pull_policy: always

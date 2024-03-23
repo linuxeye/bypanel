@@ -387,12 +387,6 @@ PHP_MODULES_DISABLE=xdebug,swoole,memcache,memcached,redis,mongodb,pgsql,amqp,ap
 HOST_PORT_WEB=80
 HOST_PORT_WEB_SSL=443
 
-HOST_PORT_OPENRESTY=80
-HOST_PORT_OPENRESTY_SSL=443
-
-HOST_PORT_APACHE=80
-HOST_PORT_APACHE_SSL=443
-
 
 ################################################################################
 ###

@@ -190,6 +190,49 @@ services:
       # Mount logs
       - ${VOLUME_PATH}/logs/apache:/var/log/httpd:rw${MOUNT_OPTIONS}
 
+  caddy:
+    image: caddy
+    # Always pull docker image
+    #pull_policy: always
+    restart: always
+    hostname: caddy
+    profiles:
+      - caddy
+
+    environment:
+      ##
+      ## Adjust timezone
+      ##
+      - TZ=${TIMEZONE}
+
+      ##
+      ## UserID and GroupID
+      ##
+      - NEW_UID
+      - NEW_GID
+
+    ports:
+      # ---- Format: ----
+      # [HOST-ADDR : ] HOST-PORT : DOCKER-PORT
+      - "${HOST_PORT_WEB}:80"
+      - "${HOST_PORT_WEB_SSL}:443"
+
+    networks:
+      - net
+
+    volumes:
+      # ---- Format: ----
+      # HOST-DIRECTORY : DOCKER-DIRECTORY
+
+      # Mount custom intranet
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+
+      # Mount custom web server config directory
+      - ${BASE_PATH}/cfg/caddy:/etc/caddy:rw${MOUNT_OPTIONS}
+
+      # Mount logs
+      - ${VOLUME_PATH}/logs/caddy:/var/log/caddy:rw${MOUNT_OPTIONS}
+
   # ------------------------------------------------------------
   # MySQL Database
   # ------------------------------------------------------------
