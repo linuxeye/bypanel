@@ -46,7 +46,8 @@ vi .env
 
 ### Start bypanel
 ```
-docker-compose --profile lnmp up -d
+docker-compose --profile nginx --profile php82 --profile mysql --profile phpmyadmin up -d
+
 ```
 
 Start `nginx-1.24.0`, `php-8.2`, `maraidb-10.6`, `phpmyadmin` by default
@@ -54,5 +55,5 @@ Start `nginx-1.24.0`, `php-8.2`, `maraidb-10.6`, `phpmyadmin` by default
 
 ### Stop bypanel
 ```
-docker-compose --profile lnmp stop
+docker-compose --profile nginx --profile php82 --profile mysql --profile phpmyadmin stop
 ```
