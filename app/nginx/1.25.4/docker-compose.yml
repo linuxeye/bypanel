@@ -1,7 +1,7 @@
 version: '3'
 services:
   nginx:
-    image: bypanel/nginx:1.25.3
+    image: bypanel/nginx:1.25.4
     # Always pull docker image
     #pull_policy: always
     restart: always
