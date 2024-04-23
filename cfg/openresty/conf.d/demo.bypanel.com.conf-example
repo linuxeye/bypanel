@@ -3,14 +3,11 @@ server {
   index index.html index.htm index.php;
   server_name demo.bypanel.com;
   root /var/www/demo.bypanel.com;
+
   #error_page 404 /404.html;
   #error_page 502 /502.html;
 
-  location ~ [^/]\.php(/|$) {
-    fastcgi_pass php82:9000;
-    fastcgi_index index.php;
-    include fastcgi.conf;
-  }
+  #include enable-php82.conf;
 
   location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|flv|mp4|ico)$ {
     expires 30d;
