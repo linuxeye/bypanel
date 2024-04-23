@@ -1,4 +1,3 @@
-version: '3'
 services:
   mysql:
     image: bypanel/mysql:percona-8.0

@@ -1,4 +1,3 @@
-version: '3'
 services:
   php80:
     image: bypanel/php-fpm:8.0-prod

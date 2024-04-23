@@ -1,4 +1,3 @@
-version: '3'
 services:
   php54:
     image: bypanel/php-fpm:5.4-prod

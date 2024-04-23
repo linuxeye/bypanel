@@ -1,4 +1,3 @@
-version: '3'
 services:
   mysql-cron-backup:
     image: fradelg/mysql-cron-backup

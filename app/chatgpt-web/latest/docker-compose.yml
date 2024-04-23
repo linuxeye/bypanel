@@ -1,4 +1,3 @@
-version: '3'
 services:
   chatgpt-web:
     image: chenzhaoyu94/chatgpt-web

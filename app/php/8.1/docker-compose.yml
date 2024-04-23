@@ -1,4 +1,3 @@
-version: '3'
 services:
   php81:
     image: bypanel/php-fpm:8.1-prod
