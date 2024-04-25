@@ -137,8 +137,8 @@ TIMEZONE=Asia/Shanghai
 ###
 ### 1.1 Choose Nginx Server Image
 ###
-NGINX_SERVER=1.24.0
-#NGINX_SERVER=1.25.4
+NGINX_SERVER=1.26.0
+#NGINX_SERVER=1.25.5
 
 
 ###
