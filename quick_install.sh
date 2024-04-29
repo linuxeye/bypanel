@@ -28,13 +28,13 @@ Download_Panel() {
     curl -fsSL ${MIRROR_URL}/bypanel.tar.gz -o /tmp/bypanel.tar.gz 2>&1
     Now_Panel_MD5=$(md5sum /tmp/bypanel.tar.gz)
     Latest_Panel_MD5=$(curl --connect-timeout 3 -m 5 -s ${MIRROR_URL}/md5sum.txt | grep bypanel.tar.gz | awk '{print $1}')
-    if [ "${Now_Panel_MD5}" != ${Now_Panel_MD5} ]; then
+    if [ "${Now_Panel_MD5}" != "${Now_Panel_MD5}" ]; then
       printf "\033[31mError: bypanel package md5 error! \033[0m\n"
       exit 1
     fi
-    tar xzf /tmp/bypanel.tar.gz -C /tmp/bypanel
+    tar xzf /tmp/bypanel.tar.gz -C /tmp/
     /bin/mv /tmp/bypanel/* ${BASE_PATH}/
-    rm -f /tmp/{bypanel,bypanel.tar.gz}
+    rm -f /tmp/bypanel.tar.gz
   else
     printf "\033[33mbypanel is already installed! \033[0m\n"
     exit 1
@@ -42,7 +42,7 @@ Download_Panel() {
   ARCH=$(uname -m)
   if [ "$ARCH" = "x86_64" ]; then
     BYPCTL_BIN=bypctl-linux-amd64
-  else if [ "$ARCH" = "aarch64" ]; then
+  elif [ "$ARCH" = "aarch64" ]; then
     BYPCTL_BIN=bypctl-linux-arm64
   fi
   curl -fsSL ${MIRROR_URL}/bypanel/${BYPCTL_BIN} -o /usr/local/bin/bypctl
@@ -456,7 +456,7 @@ Install_Compose() {
 Init_Webroot() {
   mkdir -p ${VOLUME_PATH}/webroot/default
   echo "<?php phpinfo() ?>" >${VOLUME_PATH}/webroot/default/phpinfo.php
-  curl -fsSL "${MIRROR_URL}/xprober.php" -o ${VOLUME_PATH}/webroot/default/xprober.php 2>&1
+  curl -fsSL "${MIRROR_URL}/bypanel/xprober.php" -o ${VOLUME_PATH}/webroot/default/xprober.php 2>&1
   chown -R ${NEW_UID}:${NEW_GID} ${VOLUME_PATH}/webroot
 }
 
