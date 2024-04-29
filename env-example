@@ -90,7 +90,7 @@ COMPOSE_PROJECT_NAME=bypanel
 ###
 ### $ docker-compose rm -f
 ###
-BASE_PATH=/opt/bypanel
+BASE_PATH=.
 
 ###
 ### Web, DB, Log base data path
