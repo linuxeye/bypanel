@@ -9,29 +9,55 @@
 #       https://github.com/bypanel/bypanel
 
 export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
-clear
-printf "
-#######################################################################
-#                     ByPanel for Linux 64bit                         #
-#       For more information please visit https://linuxeye.com        #
-#######################################################################
-"
+
 # Check if user is root
 [ $(id -u) != "0" ] && {
   printf "\033[31mError: You must be root to run this script\033[0m\n"
   exit 1
 }
 
-CURRENT_DIR=$(dirname "$(readlink -f $0)")
+MIRROR_URL=${MIRROR_URL:-http://mirrors.linuxeye.com}
+BASE_PATH=${BASE_PATH:-/opt/bypanel}
+VOLUME_PATH=${VOLUME_PATH:-/data}
+NEW_UID=${NEW_UID:-1000}
+NEW_GID=${NEW_GID:-1000}
+
+Download_Panel() {
+  if [ ! -e ${BASE_PATH}/env-example ]; then
+    [ ! -d ${BASE_PATH} ] && mkdir -p ${BASE_PATH}
+    curl -fsSL ${MIRROR_URL}/bypanel.tar.gz -o /tmp/bypanel.tar.gz 2>&1
+    Now_Panel_MD5=$(md5sum /tmp/bypanel.tar.gz)
+    Latest_Panel_MD5=$(curl --connect-timeout 3 -m 5 -s ${MIRROR_URL}/md5sum.txt | grep bypanel.tar.gz | awk '{print $1}')
+    if [ "${Now_Panel_MD5}" != ${Now_Panel_MD5} ]; then
+      printf "\033[31mError: bypanel package md5 error! \033[0m\n"
+      exit 1
+    fi
+    tar xzf /tmp/bypanel.tar.gz -C /tmp/bypanel
+    /bin/mv /tmp/bypanel/* ${BASE_PATH}/
+    rm -f /tmp/{bypanel,bypanel.tar.gz}
+  else
+    printf "\033[33mbypanel is already installed! \033[0m\n"
+    exit 1
+  fi
+  ARCH=$(uname -m)
+  if [ "$ARCH" = "x86_64" ]; then
+    BYPCTL_BIN=bypctl-linux-amd64
+  else if [ "$ARCH" = "aarch64" ]; then
+    BYPCTL_BIN=bypctl-linux-arm64
+  fi
+  curl -fsSL ${MIRROR_URL}/bypanel/${BYPCTL_BIN} -o /usr/local/bin/bypctl
+  chmod +x /usr/local/bin/bypctl
+}
 
 Check_Env() {
-  if [ ! -e ${CURRENT_DIR}/.env ]; then
-    printf "\033[31m${CURRENT_DIR}/.env does not exist! \033[0m\n"
-    printf "You can execute the command: 'cp ${CURRENT_DIR}/env-example ${CURRENT_DIR}/.env'\n"
-    printf "'vi ${CURRENT_DIR}/.env', Change to the configuration you want\n"
-    exit 1
+  if [ ! -e ${BASE_PATH}/.env ]; then
+    /bin/cp ${BASE_PATH}/{env-example,.env}
+    sed -i "s@^BASE_PATH=.*@BASE_PATH=${BASE_PATH}@" ${BASE_PATH}/.env
+    sed -i "s@^NEW_UID=.*@NEW_UID=${NEW_UID}@" ${BASE_PATH}/.env
+    sed -i "s@^NEW_GID=.*@NEW_GID=${NEW_GID}@" ${BASE_PATH}/.env
   else
-    . ${CURRENT_DIR}/.env
+    printf "\033[33mbypanel is already installed! \033[0m\n"
+    exit 1
   fi
 }
 
@@ -42,7 +68,7 @@ Init_OS() {
     printf "\033[31m/etc/os-release does not exist! \033[0m\n"
     exit 1
   fi
-  PLATFORM=$(printf "$ID" | tr '[:upper:]' '[:lower:]')
+  PLATFORM=$(printf "${ID}" | tr '[:upper:]' '[:lower:]')
   PLATFORM_RHEL="centos rhel almalinux rocky fedora amzn ol alinux anolis tencentos opencloudos euleros openeuler kylin uos kylinsecos"
   PLATFORM_DEBIAN="debian deepin kali"
   PLATFORM_UBUNTU="ubuntu linuxmint elementary"
@@ -428,14 +454,14 @@ Install_Compose() {
 }
 
 Init_Webroot() {
-  . ${CURRENT_DIR}/.env
   mkdir -p ${VOLUME_PATH}/webroot/default
   echo "<?php phpinfo() ?>" >${VOLUME_PATH}/webroot/default/phpinfo.php
-  curl -fsSL "http://mirrors.linuxeye.com/xprober.php" -o ${VOLUME_PATH}/webroot/default/xprober.php 2>&1
+  curl -fsSL "${MIRROR_URL}/xprober.php" -o ${VOLUME_PATH}/webroot/default/xprober.php 2>&1
   chown -R ${NEW_UID}:${NEW_GID} ${VOLUME_PATH}/webroot
 }
 
 main() {
+  Download_Panel
   Check_Env
   Init_OS
   Install_Docker

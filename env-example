@@ -49,11 +49,6 @@ DEBUG_ENTRYPOINT=2
 DOCKER_LOGS=0
 
 ###
-### Set bypanel download url
-###
-PANEL_URL=https://mirrors.linuxeye.com/bypanel.zip
-
-###
 ### Set bypanel md5
 ###
 PANEL_MD5=5746df6e92eae8319db91b6150766026
