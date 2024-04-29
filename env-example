@@ -49,6 +49,16 @@ DEBUG_ENTRYPOINT=2
 DOCKER_LOGS=0
 
 ###
+### Set bypanel download url
+###
+BYPANEL_URL=https://mirrors.linuxeye.com/bypanel.zip
+
+###
+### Set bypanel md5
+###
+BYPANEL_MD5=5746df6e92eae8319db91b6150766026
+
+###
 ### Set language
 ###
 LANG=en
@@ -80,7 +90,7 @@ COMPOSE_PROJECT_NAME=bypanel
 ###
 ### $ docker-compose rm -f
 ###
-BASE_PATH=.
+BASE_PATH=/opt/bypanel
 
 ###
 ### Web, DB, Log base data path
