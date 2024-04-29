@@ -51,12 +51,12 @@ DOCKER_LOGS=0
 ###
 ### Set bypanel download url
 ###
-BYPANEL_URL=https://mirrors.linuxeye.com/bypanel.zip
+PANEL_URL=https://mirrors.linuxeye.com/bypanel.zip
 
 ###
 ### Set bypanel md5
 ###
-BYPANEL_MD5=5746df6e92eae8319db91b6150766026
+PANEL_MD5=5746df6e92eae8319db91b6150766026
 
 ###
 ### Set language
