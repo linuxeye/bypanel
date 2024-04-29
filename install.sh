@@ -431,7 +431,7 @@ Init_Webroot() {
   . ${CURRENT_DIR}/.env
   mkdir -p ${VOLUME_PATH}/webroot/default
   echo "<?php phpinfo() ?>" >${VOLUME_PATH}/webroot/default/phpinfo.php
-  curl -fsSL "https://api.inn-studio.com/download?id=xprober" -o ${VOLUME_PATH}/webroot/default/xprober.php 2>&1
+  curl -fsSL "http://mirrors.linuxeye.com/xprober.php" -o ${VOLUME_PATH}/webroot/default/xprober.php 2>&1
   chown -R ${NEW_UID}:${NEW_GID} ${VOLUME_PATH}/webroot
 }
 
