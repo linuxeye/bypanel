@@ -1,6 +1,6 @@
 services:
   mysql:
-    image: bypanel/mysql:mysql-8.3
+    image: bypanel/mysql:mysql-8.4
     # Always pull docker image
     #pull_policy: always
     restart: always
@@ -24,10 +24,10 @@ services:
       # Mount bypanel user-defined cnf files in order
       # to overwrite the MySQL server configuration
       #- ${BASE_PATH}/cfg/mysql.cnf:/etc/mysql/conf.d/bypanel.cnf:ro${MOUNT_OPTIONS}
-      - ${BASE_PATH}/cfg/mysql-8.3:/etc/mysql/docker-default.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/mysql-8.4:/etc/mysql/docker-default.d:ro${MOUNT_OPTIONS}
 
       # Mount MySQL Data directory
-      - ${VOLUME_PATH}/mysql-8.3:/var/lib/mysql:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/mysql-8.4:/var/lib/mysql:rw${MOUNT_OPTIONS}
 
       # Mount DB Backup directory
       - ${VOLUME_PATH}/backups:/shared/backups:rw${MOUNT_OPTIONS}
