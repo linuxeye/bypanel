@@ -56,7 +56,7 @@ PANEL_MD5=5746df6e92eae8319db91b6150766026
 ###
 ### Set language
 ###
-LANG=en
+LANGUAGE=en
 
 ###
 ### Startup application
