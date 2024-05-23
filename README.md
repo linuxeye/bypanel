@@ -2,32 +2,19 @@
 * [<a href="README-CN.md">中文</a>]
 * [<a href="README.md">English</a>]
 
+### bypctl
+[<a href="https://github.com/linuxeye/bypctl">bypanel command control</a>]
+
 ### Support OS system
-* CentOS
-* RedHat
-* Alpine Linux
-* Debian
-* Ubuntu
-* AlmaLinux
-* Rocky Linux
-* Fedora
-* Amazon Linux
-* Alibaba Linux
-* Oracle Linux
-* Arch Linux
-* openSUSE
-* Anolis
-* OpencloudOS
-* TencentOS
-* EulerOS
-* openEuler
-* Kylin
-* LinuxMint
-* Elementary
-* Deepin
-* Kali Linux
-* KylinsecOS
-* Uos
+|             |            |               |            |            |
+|:-----------:|:----------:|:-------------:|:----------:|:----------:|
+| CentOS      | RedHat     | Alpine Linux  | Debian     | Ubuntu     |
+| AlmaLinux   | Fedora     | Rocky Linux   | openSUSE   | Anolis     |
+| OpencloudOS | TencentOS  | Amazon Linux  | EulerOS    | openEuler  |
+| Kylin       | LinuxMint  | Alibaba Linux | Elementary | Uos        |
+| Deepin      | KylinsecOS | Oracle Linux  | Kali Linux | Arch Linux |
+| ...         |            |               |            |            |
+
 
 ### Install
 ```
