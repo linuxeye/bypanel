@@ -2,7 +2,7 @@
 * [<a href="README-CN.md">中文</a>]
 * [<a href="README.md">English</a>]
 
-### Support OS system
+### 支持操作系统版本
 * CentOS
 * RedHat
 * Alpine Linux
@@ -29,83 +29,79 @@
 * KylinsecOS
 * Uos
 
-### Install
+### 安装
 ```
 curl https://raw.githubusercontent.com/linuxeye/bypanel/main/quick_install.sh | bash
 ```
-> Default install path: `/opt/bypanel`
+> 默认安装路径: `/opt/bypanel`
 >
-> bypctl install path: `/usr/local/bin/bypctl`
+> bypctl安装路径: `/usr/local/bin/bypctl`
 
-### Help
+### 配置
+```
+bypctl config
+```
+配置部署bypanel参数，即修改`/opt/bypanel/.env`
+
+### 命令帮助
 ```
 bypctl help
 ```
 
-### Config
-```
-bypctl config
-```
-> Configuration of deployment parameters for bypanel
-
-### Create and start
+### 创建和启动
 ```
 bypctl up -d
 ```
-> Create and start containers, `-d`: Detached mode: Run containers in the background
+创建和启动容器, 其中`-d`参数: 容器后台运行
 
-### Make web config
+### 生成web配置
 ```
 bypctl mkcfg
 ```
 
-### Reload web config
+### 重载web服务
 ```
 bypctl reload
 ```
 
-### Logs
+### 日志
 ```
-bypctl logs
+bypctl logs -f
 ```
-> View output from containers, `-f`: Follow log output
+> 显示日志, 如显示nginx实时日志：`bypctl logs nginx -f `, 其中`-f`参数: 打印日志输出
 
-### Status
+### 服务状态
 ```
 bypctl status
 ```
-> List containers, or `bypctl ps`
+> 查看容器状态, 或执行命令 `bypctl ps` 作用相同
 
-### Down
+### 停止、删除容器和网络
 ```
 bypctl down
 ```
-> Stop and remove containers, networks
 
-### Restart
+### 重启服务
 ```
 bypctl restart
 ```
-> Restart service containers
 
-### Start
+### 启动服务
 ```
 bypctl start
 ```
-> Start services containers
 
-### Stop
+### 停止服务
 ```
 bypctl stop
 ```
-> Stop services containers
 
-### Upgrade
+### 升级服务
 ```
 bypctl upgrade
 ```
 
-### Version
+### 版本显示
 ```
 bypctl version
 ```
