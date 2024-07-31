@@ -381,8 +381,8 @@ EOF
     [ "$(curl -s ipinfo.io/country)x" = "CN"x ] && cat >/etc/docker/daemon.json <<EOF
 {
   "registry-mirrors": [
-    "https://docker.mirrors.sjtug.sjtu.edu.cn",
-    "https://dockerproxy.com"
+    "https://docker.awsl9527.cn",
+    "https://hub.rat.dev"
   ]
 }
 EOF
