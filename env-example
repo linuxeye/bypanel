@@ -142,8 +142,8 @@ TIMEZONE=Asia/Shanghai
 ###
 ### 1.1 Choose Nginx Server Image
 ###
-NGINX_SERVER=1.26.0
-#NGINX_SERVER=1.25.5
+NGINX_SERVER=1.26.1
+#NGINX_SERVER=1.27.0
 
 
 ###
@@ -182,37 +182,13 @@ MYSQL_SERVER=mariadb-10.11
 ###            https://github.com/docker/toolbox/issues/510
 ###
 #
-# PostgreSQL without arm64 support
 #
-#PGSQL_SERVER=9.0
-#PGSQL_SERVER=9.1
-#PGSQL_SERVER=9.2-alpine
-#
-# PostgreSQL with arm64 support
-#
-#PGSQL_SERVER=9.2
-#PGSQL_SERVER=9.3
-#PGSQL_SERVER=9.3-alpine
-#PGSQL_SERVER=9.4
-#PGSQL_SERVER=9.4-alpine
-#PGSQL_SERVER=9.5
-#PGSQL_SERVER=9.5-alpine
-#PGSQL_SERVER=9.6
-#PGSQL_SERVER=9.6-alpine
-#PGSQL_SERVER=10
-#PGSQL_SERVER=10-alpine
-#PGSQL_SERVER=11
 #PGSQL_SERVER=11-alpine
-#PGSQL_SERVER=12
 #PGSQL_SERVER=12-alpine
-#PGSQL_SERVER=13
 #PGSQL_SERVER=13-alpine
-#PGSQL_SERVER=14
 PGSQL_SERVER=14-alpine
-#PGSQL_SERVER=15
 #PGSQL_SERVER=15-alpine
-#PGSQL_SERVER=latest
-#PGSQL_SERVER=alpine
+#PGSQL_SERVER=16-alpine
 
 
 ###
@@ -222,30 +198,13 @@ PGSQL_SERVER=14-alpine
 ###            https://github.com/docker/toolbox/issues/510
 ###
 #
-# Redis without arm64 support
 #
-#REDIS_SERVER=2.8
-#REDIS_SERVER=3.0
-#REDIS_SERVER=3.0-alpine
-#
-# Redis with arm64 support
-#
-#REDIS_SERVER=3.2
 #REDIS_SERVER=3.2-alpine
-#REDIS_SERVER=4.0
 #REDIS_SERVER=4.0-alpine
-#REDIS_SERVER=5.0
-#REDIS_SERVER=5.0-alpine
-#REDIS_SERVER=6.0
-#REDIS_SERVER=6.0-alpine
-#REDIS_SERVER=6.2
 #REDIS_SERVER=6.2-alpine
-#REDIS_SERVER=7.0
 #REDIS_SERVER=7.0-alpine
-#REDIS_SERVER=7.2
-REDIS_SERVER=7.2-alpine
-#REDIS_SERVER=latest
-#REDIS_SERVER=alpine
+#REDIS_SERVER=7.2-alpine
+REDIS_SERVER=7.4-alpine
 
 
 ###
@@ -257,17 +216,12 @@ REDIS_SERVER=7.2-alpine
 #
 # Memcached without arm64 support
 #
-#MEMCACHED_SERVER=1.4
 #MEMCACHED_SERVER=1.4-alpine
 #
 # Memcached with arm64 support
 #
-#MEMCACHED_SERVER=1.5
 #MEMCACHED_SERVER=1.5-alpine
-#MEMCACHED_SERVER=1.6
 MEMCACHED_SERVER=1.6-alpine
-#MEMCACHED_SERVER=latest
-#MEMCACHED_SERVER=alpine
 
 
 ###
@@ -292,7 +246,6 @@ MEMCACHED_SERVER=1.6-alpine
 MONGO_SERVER=5.0
 #MONGO_SERVER=6.0
 #MONGO_SERVER=7.0
-#MONGO_SERVER=latest
 
 
 ###
