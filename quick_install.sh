@@ -41,12 +41,35 @@ Download_Panel() {
   fi
   ARCH=$(uname -m)
   if [ "$ARCH" = "x86_64" ]; then
-    BYPCTL_BIN=bypctl-linux-amd64
+    BBYPANEL_BIN=bypanel-linux-amd64
   elif [ "$ARCH" = "aarch64" ]; then
-    BYPCTL_BIN=bypctl-linux-arm64
+    BBYPANEL_BIN=bypanel-linux-arm64
   fi
-  curl -fsSL ${MIRROR_URL}/bypanel/${BYPCTL_BIN} -o /usr/local/bin/bypctl
-  chmod +x /usr/local/bin/bypctl
+  curl -fsSL ${MIRROR_URL}/bypanel/${BBYPANEL_BIN} -o /usr/bin/bypanel
+  chmod +x /usr/bin/bypanel
+}
+
+Start_Panel() {
+  cat >/lib/systemd/sys/bypanel.service <<EOF
+[Unit]
+Description=Systemd ByPanel
+After=network.target
+
+[Service]
+# Execute \$(systemctl daemon-reload) after ExecStart= is changed.
+ExecStart=/usr/bin/bypanel
+
+[Install]
+WantedBy=multi-user.target
+EOF
+  systemctl enable bypanel >/dev/null
+  systemctl start bypanel
+  if [ $? -eq 0 ]; then
+    printf "\033[32mbypanel installed successfully! \033[0m\n"
+  else
+    printf "\033[31mDocker Compose installation failed! \033[0m\n"
+    exit 1
+  fi
 }
 
 Check_Env() {
@@ -467,6 +490,7 @@ main() {
   Install_Docker
   Install_Compose
   Init_Webroot
+  Start_Panel
 }
 
 main

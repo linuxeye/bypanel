@@ -2,9 +2,6 @@
 * [<a href="README-CN.md">中文</a>]
 * [<a href="README.md">English</a>]
 
-### bypctl
-[<a href="https://github.com/linuxeye/bypctl">bypanel命令行</a>]
-
 ### 支持操作系统版本
 |             |            |               |            |            |
 |:-----------:|:----------:|:-------------:|:----------:|:----------:|
@@ -22,73 +19,87 @@ curl https://raw.githubusercontent.com/linuxeye/bypanel/main/quick_install.sh | 
 ```
 > 默认安装路径: `/opt/bypanel`
 >
-> bypctl安装路径: `/usr/local/bin/bypctl`
+> bypanel二进制路径: `/usr/bin/bypanel`
 
 ### 配置
 ```
-bypctl config
+bypanel configure
 ```
 配置部署bypanel参数，即修改`/opt/bypanel/.env`
 
 ### 命令帮助
 ```
-bypctl help
+bypanel help
 ```
 
 ### 创建和启动
 ```
-bypctl up -d
+bypanel up -d
 ```
 创建和启动容器, 其中`-d`参数: 容器后台运行
 
-### 生成web配置
+### 虚拟主机
+#### 添加
 ```
-bypctl mkcfg
+bypanel vhost add
+```
+#### 删除
+```
+bypanel vhost del
+```
+#### 列表
+```
+bypanel vhost list
 ```
 
 ### 重载web服务
 ```
-bypctl reload
+bypanel reload
 ```
 
 ### 日志
 ```
-bypctl logs -f
+bypanel logs -f
 ```
-> 显示日志, 如显示nginx实时日志：`bypctl logs nginx -f `, 其中`-f`参数: 打印日志输出
+> 显示日志, 如显示nginx实时日志：`bypanel logs nginx -f `, 其中`-f`参数: 打印日志输出
 
 ### 服务状态
 ```
-bypctl status
+bypanel status
 ```
-> 查看容器状态, 或执行命令 `bypctl ps` 作用相同
+> 查看容器状态, 或执行命令 `bypanel ps` 作用相同
 
 ### 停止、删除容器和网络
 ```
-bypctl down
+bypanel down
 ```
 
 ### 重启服务
 ```
-bypctl restart
+bypanel restart
 ```
 
 ### 启动服务
 ```
-bypctl start
+bypanel start
 ```
 
 ### 停止服务
 ```
-bypctl stop
+bypanel stop
 ```
 
 ### 升级命令
 ```
+bypanel upgrade
+```
+bypctl升级为bypanel, 2次执行`bypctl upgrade`
+```
+bypctl upgrade
 bypctl upgrade
 ```
 
 ### 版本显示
 ```
-bypctl version
+bypanel version
 ```

@@ -2,9 +2,6 @@
 * [<a href="README-CN.md">中文</a>]
 * [<a href="README.md">English</a>]
 
-### bypctl
-[<a href="https://github.com/linuxeye/bypctl">bypanel command control</a>]
-
 ### Support OS system
 |             |            |               |            |            |
 |:-----------:|:----------:|:-------------:|:----------:|:----------:|
@@ -22,77 +19,86 @@ curl https://raw.githubusercontent.com/linuxeye/bypanel/main/quick_install.sh | 
 ```
 > Default install path: `/opt/bypanel`
 >
-> bypctl install path: `/usr/local/bin/bypctl`
+> bypanel binary path: `/usr/bin/bypanel`
 
 ### Help
 ```
-bypctl help
+bypanel help
 ```
 
-### Config
+### Configure
 ```
-bypctl config
+bypanel configure
 ```
 > Configuration of deployment parameters for bypanel
 
 ### Create and start
 ```
-bypctl up -d
+bypanel up -d
 ```
 > Create and start containers, `-d`: Detached mode: Run containers in the background
 
-### Make web config
+### Setting up virtual hosts on HTTP Server
+#### Add
 ```
-bypctl mkcfg
+bypanel vhost add
 ```
-
-### Reload web config
+#### Delete
 ```
-bypctl reload
+bypanel vhost del
+```
+#### List
+```
+bypanel vhost list
 ```
 
 ### Logs
 ```
-bypctl logs
+bypanel logs
 ```
 > View output from containers, `-f`: Follow log output
 
 ### Status
 ```
-bypctl status
+bypanel status
 ```
-> List containers, or `bypctl ps`
+> List containers, or `bypanel ps`
 
 ### Down
 ```
-bypctl down
+bypanel down
 ```
 > Stop and remove containers, networks
 
 ### Restart
 ```
-bypctl restart
+bypanel restart
 ```
 > Restart service containers
 
 ### Start
 ```
-bypctl start
+bypanel start
 ```
 > Start services containers
 
 ### Stop
 ```
-bypctl stop
+bypanel stop
 ```
 > Stop services containers
 
 ### Upgrade
 ```
+bypanel upgrade
+```
+Upgrade bypctl to bypanel, execute `bypctl upgrade` twice
+```
+bypctl upgrade
 bypctl upgrade
 ```
 
 ### Version
 ```
-bypctl version
+bypanel version
 ```
