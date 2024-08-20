@@ -25,10 +25,10 @@ NEW_GID=${NEW_GID:-1000}
 Download_Panel() {
   if [ ! -e ${BASE_PATH}/env-example ]; then
     [ ! -d ${BASE_PATH} ] && mkdir -p ${BASE_PATH}
-    curl -fsSL ${MIRROR_URL}/bypanel.tar.gz -o /tmp/bypanel.tar.gz 2>&1
-    Now_Panel_MD5=$(md5sum /tmp/bypanel.tar.gz)
-    Latest_Panel_MD5=$(curl --connect-timeout 3 -m 5 -s ${MIRROR_URL}/md5sum.txt | grep bypanel.tar.gz | awk '{print $1}')
-    if [ "${Now_Panel_MD5}" != "${Now_Panel_MD5}" ]; then
+    curl ${MIRROR_URL}/bypanel.tar.gz -o /tmp/bypanel.tar.gz 2>&1
+    NOW=$(md5sum /tmp/bypanel.tar.gz)
+    REMOTE_PANEL_MD5=$(curl --connect-timeout 3 -m 5 -s ${MIRROR_URL}/md5sum.txt | grep bypanel.tar.gz | awk '{print $1}')
+    if [ "${LOCAL_PANEL_MD5}" != "${REMOTE_PANEL_MD5}" ]; then
       printf "\033[31mError: bypanel package md5 error! \033[0m\n"
       exit 1
     fi
@@ -41,12 +41,18 @@ Download_Panel() {
   fi
   ARCH=$(uname -m)
   if [ "$ARCH" = "x86_64" ]; then
-    BBYPANEL_BIN=bypanel-linux-amd64
+    BYPANEL_BIN=bypanel-linux-amd64
   elif [ "$ARCH" = "aarch64" ]; then
-    BBYPANEL_BIN=bypanel-linux-arm64
+    BYPANEL_BIN=bypanel-linux-arm64
   fi
-  curl -fsSL ${MIRROR_URL}/bypanel/${BBYPANEL_BIN} -o /usr/bin/bypanel
-  chmod +x /usr/bin/bypanel
+  if [ !- /usr/bin/bypanel ]; then
+    curl ${MIRROR_URL}/bypanel/${BYPANEL_BIN} -o /usr/bin/bypanel
+    chmod +x /usr/bin/bypanel
+  else
+    printf "\033[33mbypanel is already installed! \033[0m\n"
+    printf "\033[33mYou can upgrade by running the command `bypanel upgrade`! \033[0m\n"
+    exit 1
+  fi
 }
 
 Start_Panel() {
@@ -367,6 +373,7 @@ EOF
       yum clean all
       yum -y install docker-ce
     elif [ "${PLATFORM}" = "alinux" ] || [ "${PLATFORM}" = "tencentos" ]; then
+      VERSION_ID=$(echo $VERSION_ID | cut -d'.' -f1)
       if [ "${VERSION_ID}" = "3" ]; then
         releasever=8
       elif [ "${VERSION_ID}" = "2" ]; then
