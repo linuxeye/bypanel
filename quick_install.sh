@@ -26,7 +26,7 @@ Download_Panel() {
   if [ ! -e ${BASE_PATH}/env-example ]; then
     [ ! -d ${BASE_PATH} ] && mkdir -p ${BASE_PATH}
     curl ${MIRROR_URL}/bypanel.tar.gz -o /tmp/bypanel.tar.gz 2>&1
-    LOCAL_PANEL_MD5=$(md5sum /tmp/bypanel.tar.gz)
+    LOCAL_PANEL_MD5=$(md5sum /tmp/bypanel.tar.gz | awk '{print $1}')
     REMOTE_PANEL_MD5=$(curl --connect-timeout 3 -m 5 -s ${MIRROR_URL}/md5sum.txt | grep bypanel.tar.gz | awk '{print $1}')
     if [ "${LOCAL_PANEL_MD5}" != "${REMOTE_PANEL_MD5}" ]; then
       printf "\033[31mError: bypanel.tar.gz package md5 error! \033[0m\n"

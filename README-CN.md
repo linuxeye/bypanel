@@ -15,7 +15,7 @@
 
 ### 安装
 ```
-curl https://raw.githubusercontent.com/linuxeye/bypanel/main/quick_install.sh | bash
+curl https://mirrors.linuxeye.com/bypanel/quick_install.sh | bash
 ```
 > 默认安装路径: `/opt/bypanel`
 >
