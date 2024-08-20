@@ -25,7 +25,9 @@ NEW_GID=${NEW_GID:-1000}
 Download_Panel() {
   if [ ! -e ${BASE_PATH}/env-example ]; then
     [ ! -d ${BASE_PATH} ] && mkdir -p ${BASE_PATH}
-    curl ${MIRROR_URL}/bypanel.tar.gz -o /tmp/bypanel.tar.gz 2>&1
+    printf "\033[33mbDownloading bypanel.tar.gz... \033[0m\n"
+    [ -e /tmp/bypanel.tar.gz ] && rm -rf /tmp/{bypanel.tar.gz,bypanel}
+    curl -# ${MIRROR_URL}/bypanel.tar.gz -o /tmp/bypanel.tar.gz 2>&1
     LOCAL_PANEL_MD5=$(md5sum /tmp/bypanel.tar.gz | awk '{print $1}')
     REMOTE_PANEL_MD5=$(curl --connect-timeout 3 -m 5 -s ${MIRROR_URL}/md5sum.txt | grep bypanel.tar.gz | awk '{print $1}')
     if [ "${LOCAL_PANEL_MD5}" != "${REMOTE_PANEL_MD5}" ]; then
@@ -37,7 +39,6 @@ Download_Panel() {
     rm -f /tmp/bypanel.tar.gz
   else
     printf "\033[33m/opt/bypanel is already installed! \033[0m\n"
-    exit 1
   fi
   ARCH=$(uname -m)
   if [ "$ARCH" = "x86_64" ]; then
@@ -46,7 +47,8 @@ Download_Panel() {
     BYPANEL_BIN=bypanel-linux-arm64
   fi
   if [ ! -e /usr/bin/bypanel ]; then
-    curl ${MIRROR_URL}/bypanel/${BYPANEL_BIN} -o /usr/bin/bypanel
+    printf "\033[33mbDownloading /usr/bin/bypanel... \033[0m\n"
+    curl -# ${MIRROR_URL}/bypanel/${BYPANEL_BIN} -o /usr/bin/bypanel
     chmod +x /usr/bin/bypanel
   else
     printf "\033[33m/usr/bin/bypanel is already installed! \033[0m\n"
@@ -56,7 +58,7 @@ Download_Panel() {
 }
 
 Start_Panel() {
-  cat >/lib/systemd/sys/bypanel.service <<EOF
+  cat >/lib/systemd/system/bypanel.service <<EOF
 [Unit]
 Description=Systemd ByPanel
 After=network.target
@@ -84,9 +86,6 @@ Check_Env() {
     sed -i "s@^BASE_PATH=.*@BASE_PATH=${BASE_PATH}@" ${BASE_PATH}/.env
     sed -i "s@^NEW_UID=.*@NEW_UID=${NEW_UID}@" ${BASE_PATH}/.env
     sed -i "s@^NEW_GID=.*@NEW_GID=${NEW_GID}@" ${BASE_PATH}/.env
-  else
-    printf "\033[33m/usr/bin/bypanel is already installed! \033[0m\n"
-    exit 1
   fi
 }
 
@@ -393,7 +392,8 @@ EOF
       yum clean all
       yum -y install docker-ce
     else
-      curl -fsSL https://get.docker.com -o get-docker.sh 2>&1
+      printf "\033[33mbDownloading get-docker.sh... \033[0m\n"
+      curl -# https://get.docker.com -o get-docker.sh 2>&1
       if [ ! -e "get-docker.sh" ]; then
         printf "\033[31mget-docker.sh download failed, please try again \033[0m\n"
         exit 1
