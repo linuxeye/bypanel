@@ -26,17 +26,17 @@ Download_Panel() {
   if [ ! -e ${BASE_PATH}/env-example ]; then
     [ ! -d ${BASE_PATH} ] && mkdir -p ${BASE_PATH}
     curl ${MIRROR_URL}/bypanel.tar.gz -o /tmp/bypanel.tar.gz 2>&1
-    NOW=$(md5sum /tmp/bypanel.tar.gz)
+    LOCAL_PANEL_MD5=$(md5sum /tmp/bypanel.tar.gz)
     REMOTE_PANEL_MD5=$(curl --connect-timeout 3 -m 5 -s ${MIRROR_URL}/md5sum.txt | grep bypanel.tar.gz | awk '{print $1}')
     if [ "${LOCAL_PANEL_MD5}" != "${REMOTE_PANEL_MD5}" ]; then
-      printf "\033[31mError: bypanel package md5 error! \033[0m\n"
+      printf "\033[31mError: bypanel.tar.gz package md5 error! \033[0m\n"
       exit 1
     fi
     tar xzf /tmp/bypanel.tar.gz -C /tmp/
     /bin/mv /tmp/bypanel/* ${BASE_PATH}/
     rm -f /tmp/bypanel.tar.gz
   else
-    printf "\033[33mbypanel is already installed! \033[0m\n"
+    printf "\033[33m/opt/bypanel is already installed! \033[0m\n"
     exit 1
   fi
   ARCH=$(uname -m)
@@ -45,12 +45,12 @@ Download_Panel() {
   elif [ "$ARCH" = "aarch64" ]; then
     BYPANEL_BIN=bypanel-linux-arm64
   fi
-  if [ !- /usr/bin/bypanel ]; then
+  if [ ! -e /usr/bin/bypanel ]; then
     curl ${MIRROR_URL}/bypanel/${BYPANEL_BIN} -o /usr/bin/bypanel
     chmod +x /usr/bin/bypanel
   else
-    printf "\033[33mbypanel is already installed! \033[0m\n"
-    printf "\033[33mYou can upgrade by running the command `bypanel upgrade`! \033[0m\n"
+    printf "\033[33m/usr/bin/bypanel is already installed! \033[0m\n"
+    printf "\033[33mYou can upgrade by running the command $(bypanel upgrade)! \033[0m\n"
     exit 1
   fi
 }
@@ -73,7 +73,7 @@ EOF
   if [ $? -eq 0 ]; then
     printf "\033[32mbypanel installed successfully! \033[0m\n"
   else
-    printf "\033[31mDocker Compose installation failed! \033[0m\n"
+    printf "\033[31mbypanel installation failed! \033[0m\n"
     exit 1
   fi
 }
@@ -85,7 +85,7 @@ Check_Env() {
     sed -i "s@^NEW_UID=.*@NEW_UID=${NEW_UID}@" ${BASE_PATH}/.env
     sed -i "s@^NEW_GID=.*@NEW_GID=${NEW_GID}@" ${BASE_PATH}/.env
   else
-    printf "\033[33mbypanel is already installed! \033[0m\n"
+    printf "\033[33m/usr/bin/bypanel is already installed! \033[0m\n"
     exit 1
   fi
 }
