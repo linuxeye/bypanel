@@ -15,11 +15,16 @@
 
 ### Install
 ```
-curl https://mirrors.linuxeye.com/bypanel/quick_install.sh | bash
+curl -sSL https://mirrors.linuxeye.com/bypanel/quick_install.sh | bash
 ```
 > Default install path: `/opt/bypanel`
 >
 > bypanel binary path: `/usr/bin/bypanel`
+
+bypanel binary download url:
+* AMD64: https://mirrors.linuxeye.com/bypanel/bypctl-linux-amd64
+* AArch64: https://mirrors.linuxeye.com/bypanel/bypctl-linux-arm64
+
 
 ### Help
 ```

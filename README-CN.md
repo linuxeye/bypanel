@@ -15,11 +15,15 @@
 
 ### 安装
 ```
-curl https://mirrors.linuxeye.com/bypanel/quick_install.sh | bash
+curl -sSL https://mirrors.linuxeye.com/bypanel/quick_install.sh | bash
 ```
 > 默认安装路径: `/opt/bypanel`
 >
 > bypanel二进制路径: `/usr/bin/bypanel`
+
+bypanel二进制下载地址
+* AMD64: https://mirrors.linuxeye.com/bypanel/bypctl-linux-amd64
+* AArch64: https://mirrors.linuxeye.com/bypanel/bypctl-linux-arm64
 
 ### 配置
 ```

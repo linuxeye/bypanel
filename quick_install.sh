@@ -25,7 +25,7 @@ NEW_GID=${NEW_GID:-1000}
 Download_Panel() {
   if [ ! -e ${BASE_PATH}/env-example ]; then
     [ ! -d ${BASE_PATH} ] && mkdir -p ${BASE_PATH}
-    printf "\033[33mbDownloading bypanel.tar.gz... \033[0m\n"
+    printf "\033[33mDownloading bypanel.tar.gz... \033[0m\n"
     [ -e /tmp/bypanel.tar.gz ] && rm -rf /tmp/{bypanel.tar.gz,bypanel}
     curl -# ${MIRROR_URL}/bypanel.tar.gz -o /tmp/bypanel.tar.gz 2>&1
     LOCAL_PANEL_MD5=$(md5sum /tmp/bypanel.tar.gz | awk '{print $1}')
@@ -47,7 +47,7 @@ Download_Panel() {
     BYPANEL_BIN=bypanel-linux-arm64
   fi
   if [ ! -e /usr/bin/bypanel ]; then
-    printf "\033[33mbDownloading /usr/bin/bypanel... \033[0m\n"
+    printf "\033[33mDownloading /usr/bin/bypanel... \033[0m\n"
     curl -# ${MIRROR_URL}/bypanel/${BYPANEL_BIN} -o /usr/bin/bypanel
     chmod +x /usr/bin/bypanel
   else
@@ -70,7 +70,7 @@ ExecStart=/usr/bin/bypanel
 [Install]
 WantedBy=multi-user.target
 EOF
-  systemctl enable bypanel >/dev/null
+  systemctl enable bypanel >/dev/null 2>&1
   systemctl start bypanel
   if [ $? -eq 0 ]; then
     printf "\033[32mbypanel installed successfully! \033[0m\n"
@@ -392,7 +392,7 @@ EOF
       yum clean all
       yum -y install docker-ce
     else
-      printf "\033[33mbDownloading get-docker.sh... \033[0m\n"
+      printf "\033[33mDownloading get-docker.sh... \033[0m\n"
       curl -# https://get.docker.com -o get-docker.sh 2>&1
       if [ ! -e "get-docker.sh" ]; then
         printf "\033[31mget-docker.sh download failed, please try again \033[0m\n"
