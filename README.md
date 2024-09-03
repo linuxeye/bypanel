@@ -1,6 +1,7 @@
-### README.md
-* [<a href="README-CN.md">中文</a>]
-* [<a href="README.md">English</a>]
+# ByPanel
+
+🌍 *[English](README.md) ∙ [简体中文](README-CN.md)*
+
 
 ### Support OS system
 |             |            |               |            |            |
