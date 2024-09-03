@@ -7,8 +7,8 @@ services:
     hostname: mysql
     environment:
       - TZ=${TIMEZONE}
-      - MYSQL_ROOT_PASSWORD
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=yes
 
     ports:
       # [local-machine:]local-port:docker-port
