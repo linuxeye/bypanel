@@ -253,7 +253,15 @@ PMA_SERVER=latest
 
 
 ###
-### 1.8 Choose sftpgo Server Image
+### 1.8 Choose Adminer Server Image
+###
+### https://www.adminer.org
+###
+ADMINER_SERVER=latest
+
+
+###
+### 1.9 Choose sftpgo Server Image
 ###
 ### https://github.com/drakkan/sftpgo
 ###
@@ -261,7 +269,7 @@ SFTPGO_SERVER=alpine
 
 
 ###
-### 1.9 Choose rabbitmq Server Image
+### 1.10 Choose rabbitmq Server Image
 ###
 ### https://rabbitmq.com
 ###

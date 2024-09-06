@@ -21,9 +21,9 @@ curl -sSL https://mirrors.linuxeye.com/bypanel/quick_install.sh | bash
 >
 > bypanel二进制路径: `/usr/bin/bypanel`
 
-bypanel二进制下载地址
-* AMD64: https://mirrors.linuxeye.com/bypanel/bypctl-linux-amd64
-* AArch64: https://mirrors.linuxeye.com/bypanel/bypctl-linux-arm64
+bypanel二进制下载地址(quick_install.sh已自动安装)
+* AMD64: https://mirrors.linuxeye.com/bypanel/bypanel-linux-amd64
+* AArch64: https://mirrors.linuxeye.com/bypanel/bypanel-linux-arm64
 
 ### 配置
 ```

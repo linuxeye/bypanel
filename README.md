@@ -22,9 +22,9 @@ curl -sSL https://mirrors.linuxeye.com/bypanel/quick_install.sh | bash
 >
 > bypanel binary path: `/usr/bin/bypanel`
 
-bypanel binary download url:
-* AMD64: https://mirrors.linuxeye.com/bypanel/bypctl-linux-amd64
-* AArch64: https://mirrors.linuxeye.com/bypanel/bypctl-linux-arm64
+bypanel binary download url(quick_install.sh has been automatically installed):
+* AMD64: https://mirrors.linuxeye.com/bypanel/bypanel-linux-amd64
+* AArch64: https://mirrors.linuxeye.com/bypanel/bypanel-linux-arm64
 
 
 ### Help

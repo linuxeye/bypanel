@@ -1,0 +1,16 @@
+services:
+  adminer:
+    image: adminer
+    # Always pull docker image
+    #pull_policy: always
+    restart: always
+    hostname: adminer
+    environment:
+      - TZ=${TIMEZONE}
+      - ADMINER_DEFAULT_SERVER=mysql
+    networks:
+      - net
+
+networks:
+  net:
+    driver: bridge

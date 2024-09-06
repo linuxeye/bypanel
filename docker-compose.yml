@@ -1331,6 +1331,23 @@ services:
       - net
 
   # ------------------------------------------------------------
+  # Adminer
+  # ------------------------------------------------------------
+  adminer:
+    image: adminer:${ADMINER_SERVER}
+    # Always pull docker image
+    #pull_policy: always
+    restart: always
+    hostname: adminer
+    profiles:
+      - adminer
+    environment:
+      - TZ=${TIMEZONE}
+      - ADMINER_DEFAULT_SERVER=mysql
+    networks:
+      - net
+
+  # ------------------------------------------------------------
   # sftpgo
   # ------------------------------------------------------------
   sftpgo:
