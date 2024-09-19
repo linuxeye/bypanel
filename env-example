@@ -273,8 +273,9 @@ SFTPGO_SERVER=alpine
 ###
 ### https://rabbitmq.com
 ###
-#RABBITMQ_SERVER=latest
-RABBITMQ_SERVER=3.12-management-alpine
+#RABBITMQ_SERVER=4.0-management-alpine
+RABBITMQ_SERVER=3.13-management-alpine
+#RABBITMQ_SERVER=3.12-management-alpine
 
 
 ################################################################################
