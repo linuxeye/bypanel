@@ -52,8 +52,7 @@ Download_Panel() {
     chmod +x /usr/bin/bypanel
   else
     printf "\033[33m/usr/bin/bypanel is already installed! \033[0m\n"
-    printf "\033[33mYou can upgrade by running the command $(bypanel upgrade)! \033[0m\n"
-    exit 1
+    printf "\033[33mYou can upgrade by running the command \`bypanel upgrade\`! \033[0m\n"
   fi
 }
 
