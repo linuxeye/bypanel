@@ -361,7 +361,16 @@ Install_Docker() {
     elif [ "${PLATFORM}" = "amzn" ]; then
       yum -y install docker
     elif [ "${PLATFORM}" = "almalinux" ] || [ "${PLATFORM}" = "rocky" ] || [ "${PLATFORM}" = "ol" ] || [ "${PLATFORM}" = "anolis" ] || [ "${PLATFORM}" = "opencloudos" ]; then
-      [ "$(curl -s ipinfo.io/country)x" = "CN"x ] && DOCKER_REPO_URL=https://mirrors.aliyun.com/docker-ce || DOCKER_REPO_URL=https://download.docker.com
+      if [ "$(curl -s ipinfo.io/country)x" = "CN"x ]; then
+        DOCKER_REPO_URL=https://mirrors.aliyun.com/docker-ce
+        ALMA_REPO_URL=https://mirrors.aliyun.com/almalinux
+      else
+        DOCKER_REPO_URL=https://download.docker.com
+        ALMA_REPO_URL=https://repo.almalinux.org/almalinux
+      fi
+      if [ "${PLATFORM}" = "opencloudos" ] && [ "$(echo $VERSION_ID | cut -d'.' -f1)" = '9' ]; then
+        yum install -y ${ALMA_REPO_URL}/9/AppStream/x86_64/os/Packages/container-selinux-2.229.0-1.el9_3.noarch.rpm
+      fi
       cat >/etc/yum.repos.d/docker-ce.repo <<EOF
 [docker-ce-stable]
 name=Docker CE Stable - \$basearch
