@@ -1415,6 +1415,9 @@ services:
     networks:
       - net
 
+  # ------------------------------------------------------------
+  # chatgpt-web
+  # ------------------------------------------------------------
   chatgpt-web:
     image: chenzhaoyu94/chatgpt-web
     # Always pull docker image
@@ -1441,6 +1444,27 @@ services:
     ports:
       - ${HOST_PORT_CHATGPT_WEB}:3002
 
+    networks:
+      - net
+
+  # ------------------------------------------------------------
+  # chatgpt-web
+  # ------------------------------------------------------------
+  crproxy:
+    image: ghcr.io/daocloud/crproxy/crproxy:v0.12.1
+    # Always pull docker image
+    #pull_policy: always
+    hostname: crproxy
+    profiles:
+      - crproxy
+    environment:
+      - TZ=${TIMEZONE}
+    command: |
+      --acme-cache-dir=/tmp/acme
+      --acme-hosts=*
+      --default-registry=docker.io
+    tmpfs:
+      - /tmp/acme
     networks:
       - net
 

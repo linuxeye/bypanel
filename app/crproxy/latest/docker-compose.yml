@@ -1,0 +1,20 @@
+services:
+  crproxy:
+    image: ghcr.io/daocloud/crproxy/crproxy:v0.12.1
+    # Always pull docker image
+    #pull_policy: always
+    hostname: crproxy
+    environment:
+      - TZ=${TIMEZONE}
+    command: |
+      --acme-cache-dir=/tmp/acme
+      --acme-hosts=*
+      --default-registry=docker.io
+    tmpfs:
+      - /tmp/acme
+    networks:
+      - net
+
+networks:
+  net:
+    driver: bridge
