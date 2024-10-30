@@ -1473,4 +1473,5 @@ services:
 ################################################################################
 networks:
   net:
+    name: ${COMPOSE_NETWORK_NAME}
     driver: bridge
