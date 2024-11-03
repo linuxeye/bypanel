@@ -14,4 +14,5 @@ services:
 networks:
   net:
     name: ${COMPOSE_NETWORK_NAME}
+    external: true
     driver: bridge
