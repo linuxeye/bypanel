@@ -1,12 +1,1 @@
-localhost {
-    root * /var/www/default
-    php_fastcgi 127.0.0.1:9000
-    file_server
-    encode gzip
-    @disallowed {
-        path /xmlrpc.php
-        path *.sql
-        path /wp-content/uploads/*.php
-    }
-    rewrite @disallowed '/index.php'
-}
+import /etc/caddy/conf.d/*.conf
