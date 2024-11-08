@@ -51,7 +51,7 @@ DOCKER_LOGS=0
 ###
 ### Set language
 ###
-LANGUAGE=en
+BYPANEL_LANG=en
 
 ###
 ### Startup application
