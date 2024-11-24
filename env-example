@@ -51,12 +51,12 @@ DOCKER_LOGS=0
 ###
 ### Set language
 ###
-BYPANEL_LANG=en
+PANEL_LANG=en
 
 ###
 ### Startup application
 ###
-COMPOSE_PROFILES=nginx,mysql,php82
+COMPOSE_PROFILES=nginx,mysql,php83
 
 ###
 ### Sets the project name.
