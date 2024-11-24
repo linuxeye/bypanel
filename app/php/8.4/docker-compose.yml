@@ -1,10 +1,10 @@
 services:
-  php83:
+  php84:
     image: bypanel/php-fpm:8.4-prod
     # Always pull docker image
     #pull_policy: always
     restart: always
-    hostname: php83
+    hostname: php84
     environment:
       ##
       ## Debug/Logging
