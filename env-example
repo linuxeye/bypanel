@@ -335,7 +335,7 @@ PHP_MODULES_ENABLE=
 ###
 ### PHP_MODULES_DISABLE=xdebug,imagick,swoole
 ###
-PHP_MODULES_DISABLE=xdebug,swoole,memcache,memcached,redis,mongodb,pgsql,amqp,apcu,oci8,PDO_OCI,pdo_sqlsrv,sqlsrv,rdkafka,swoole,psr,phalcon
+PHP_MODULES_DISABLE=xdebug,imagick,memcache,memcached,redis,mongo,mongodb,msgpack,pgsql,xhprof,uploadprogress,uuid,xlswriter,yaml,amqp,apcu,oci8,pdo_oci,PDO_OCI,pdo_sqlsrv,sqlsrv,rdkafka,swoole,psr,imap,solr,pspell,phalcon
 
 
 ###

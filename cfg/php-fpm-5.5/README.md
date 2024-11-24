@@ -42,13 +42,3 @@ watch --interval=1 "ps auxw | grep -E 'php-(cgi|fpm)' | grep -vE 'grep|master' |
 
 If multiple `.conf` files are present in this directory specifying different values for the
 same settings, the last file (alphabetically by filename) will overwrite any previous values.
-
-
-## Compatibility
-
-**Note:**
-
-PHP-FPM 5.2 uses XML-style configuration and does not allow includes.
-If you want to change php-fpm.conf for PHP-FPM 5.2 you need to adjust the main configuration file.
-
-See `php-fpm-5.2/` directory.

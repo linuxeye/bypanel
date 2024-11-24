@@ -1311,6 +1311,74 @@ services:
       - ${BASE_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
+  # PHP8.4
+  # ------------------------------------------------------------
+  php84:
+    image: bypanel/php-fpm:8.4-prod
+    # Always pull docker image
+    #pull_policy: always
+    restart: always
+    hostname: php84
+    profiles:
+      - php84
+
+    environment:
+      ##
+      ## Debug/Logging
+      ##
+      - DEBUG_ENTRYPOINT=${DEBUG_ENTRYPOINT:-2}
+      - DOCKER_LOGS
+
+      ##
+      ## Tools
+      ##
+      - COMPOSER_MEMORY_LIMIT=-1
+
+      ##
+      ## UserID and GroupID
+      ##
+      - NEW_UID
+      - NEW_GID
+
+      ##
+      ## Adjust timezone
+      ##
+      - TIMEZONE
+
+      ##
+      ## Enable/Disable PHP Modules
+      ##
+      - ENABLE_MODULES=${PHP_MODULES_ENABLE}
+      - DISABLE_MODULES=${PHP_MODULES_DISABLE}
+
+    networks:
+      - net
+
+    working_dir: /var/www
+
+    volumes:
+      # ---- Format: ----
+      # HOST-DIRECTORY : DOCKER-DIRECTORY
+
+      # Mount custom intranet
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+
+      # Mount logs
+      - ${VOLUME_PATH}/logs/php-fpm-8.4:/var/log/php:rw${MOUNT_OPTIONS}
+
+      # Mount bypanel user-defined *.ini files in order
+      # to overwrite the default PHP.ini configuration
+      - ${BASE_PATH}/cfg/php-ini-8.4:/etc/php-custom.d:ro${MOUNT_OPTIONS}
+
+      # Mount bypanel user-defined PHP-FPM *.conf files in order
+      # to overwrite the default PHP-FPM configuration
+      - ${BASE_PATH}/cfg/php-fpm-8.4:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
+
+      # Mount bypanel user-defined PHP-FPM startup *.sh scripts
+      - ${BASE_PATH}/cfg/php-startup-8.4:/startup.1.d:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
+
+  # ------------------------------------------------------------
   # phpMyAdmin
   # ------------------------------------------------------------
   phpmyadmin:
