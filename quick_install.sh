@@ -5,8 +5,7 @@
 # Notes: ByPanel for Linux 64bit
 #
 # Project home page:
-#       https://bypanel.com
-#       https://github.com/bypanel/bypanel
+#       https://github.com/linuxeye/bypanel
 
 export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 
@@ -21,6 +20,7 @@ BASE_PATH=${BASE_PATH:-/opt/bypanel}
 VOLUME_PATH=${VOLUME_PATH:-/data}
 NEW_UID=${NEW_UID:-1000}
 NEW_GID=${NEW_GID:-1000}
+IP_COUNTRY=$(curl -s ipinfo.io/country)
 
 Download_Panel() {
   if [ ! -e ${BASE_PATH}/env-example ]; then
@@ -360,7 +360,7 @@ Install_Docker() {
     elif [ "${PLATFORM}" = "amzn" ]; then
       yum -y install docker
     elif [ "${PLATFORM}" = "almalinux" ] || [ "${PLATFORM}" = "rocky" ] || [ "${PLATFORM}" = "ol" ] || [ "${PLATFORM}" = "anolis" ] || [ "${PLATFORM}" = "opencloudos" ]; then
-      if [ "$(curl -s ipinfo.io/country)x" = "CN"x ]; then
+      if [ "${IP_COUNTRY}x" = "CN"x ]; then
         DOCKER_REPO_URL=https://mirrors.aliyun.com/docker-ce
         ALMA_REPO_URL=https://mirrors.aliyun.com/almalinux
       else
@@ -389,7 +389,7 @@ EOF
         printf "\033[31mError: This OS is not supported! \033[0m\n"
         exit 1
       fi
-      [ "$(curl -s ipinfo.io/country)x" = "CN"x ] && DOCKER_REPO_URL=https://mirrors.aliyun.com/docker-ce || DOCKER_REPO_URL=https://download.docker.com
+      [ "${IP_COUNTRY}x" = "CN"x ] && DOCKER_REPO_URL=https://mirrors.aliyun.com/docker-ce || DOCKER_REPO_URL=https://download.docker.com
       cat >/etc/yum.repos.d/docker-ce.repo <<EOF
 [docker-ce-stable]
 name=Docker CE Stable - \$basearch
@@ -406,7 +406,7 @@ EOF
         printf "\033[31mget-docker.sh download failed, please try again \033[0m\n"
         exit 1
       fi
-      if [ "$(curl -s ipinfo.io/country)x" = "CN"x ]; then
+      if [ "${IP_COUNTRY}x" = "CN"x ]; then
         sh get-docker.sh --mirror Aliyun 2>&1
       else
         sh get-docker.sh 2>&1
@@ -416,7 +416,34 @@ EOF
 
     DOCKER_CONFIG_DIR="/etc/docker"
     [ ! -d "${DOCKER_CONFIG_DIR}" ] && mkdir "${DOCKER_CONFIG_DIR}"
-    [ "$(curl -s ipinfo.io/country)x" = "CN"x ] && cat >/etc/docker/daemon.json <<EOF
+    if [ "${IP_COUNTRY}x" = "CN"x ]; then
+      IP_ORG=$(curl -s ipinfo.io/org)
+      if echo ${IP_ORG} | grep -wiq Alibaba; then
+        cat >/etc/docker/daemon.json <<EOF
+{
+  "registry-mirrors": [
+    "https://u79eurfi.mirror.aliyuncs.com"
+  ]
+}
+EOF
+      elif echo ${IP_ORG} | grep -wiq Tencent; then
+        cat >/etc/docker/daemon.json <<EOF
+{
+  "registry-mirrors": [
+    "https://mirror.ccs.tencentyun.com"
+  ]
+}
+EOF
+      elif echo ${IP_ORG} | grep -wiq Huawei; then
+        cat >/etc/docker/daemon.json <<EOF
+{
+  "registry-mirrors": [
+    "https://44d8ee9edbbf4b07b9f0216b7a8fc0cc.mirror.swr.myhuaweicloud.com"
+  ]
+}
+EOF
+      else
+        cat >/etc/docker/daemon.json <<EOF
 {
   "registry-mirrors": [
     "https://docker.awsl9527.cn",
@@ -424,6 +451,8 @@ EOF
   ]
 }
 EOF
+      fi
+    fi
 
     printf "Start Docker...\n"
     if command -v systemctl >/dev/null 2>&1; then
