@@ -381,15 +381,10 @@ EOF
       yum -y install docker-ce
     elif [ "${PLATFORM}" = "alinux" ] || [ "${PLATFORM}" = "tencentos" ]; then
       VERSION_ID=$(echo $VERSION_ID | cut -d'.' -f1)
-      if [ "${VERSION_ID}" = "4" ]; then
-        releasever=9
-      elif [ "${VERSION_ID}" = "3" ]; then
+      if [ "${VERSION_ID}" = "3" ]; then
         releasever=8
       elif [ "${VERSION_ID}" = "2" ]; then
         releasever=7
-      else
-        printf "\033[31mError: This OS is not supported! \033[0m\n"
-        exit 1
       fi
       [ "${IP_COUNTRY}x" = "CN"x ] && DOCKER_REPO_URL=https://mirrors.aliyun.com/docker-ce || DOCKER_REPO_URL=https://download.docker.com
       cat >/etc/yum.repos.d/docker-ce.repo <<EOF
@@ -416,6 +411,13 @@ EOF
       rm -f get-docker.sh
     fi
 
+    if ! command -v docker >/dev/null 2>&1; then
+      if [ "${IP_COUNTRY}x" = "CN"x ]; then
+        curl -fsSL https://mirror.ghproxy.com/https://raw.githubusercontent.com/dyrnq/install-docker/main/install-docker.sh | bash -s docker --mirror aliyun --with-compose --compose-mirror daocloud --systemd-mirror "ghproxy"
+      else
+        curl -fsSL https://raw.githubusercontent.com/dyrnq/install-docker/main/install-docker.sh | bash -s docker --with-compose
+      fi
+    fi
     DOCKER_CONFIG_DIR="/etc/docker"
     [ ! -d "${DOCKER_CONFIG_DIR}" ] && mkdir "${DOCKER_CONFIG_DIR}"
     if [ "${IP_COUNTRY}x" = "CN"x ]; then
