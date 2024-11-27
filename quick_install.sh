@@ -450,8 +450,7 @@ EOF
         cat >/etc/docker/daemon.json <<EOF
 {
   "registry-mirrors": [
-    "https://docker.awsl9527.cn",
-    "https://hub.rat.dev"
+    "https://docker.1panel.live"
   ]
 }
 EOF
