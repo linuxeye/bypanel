@@ -136,8 +136,8 @@ EOF
     sysctl -p >/dev/null
   elif [ -n "$(echo ${PLATFORM_RHEL} | grep -w ${PLATFORM})" ]; then
     # Close SELINUX
-    sed -i 's/^SELINUX=.*$/SELINUX=disabled/' /etc/selinux/config
-    setenforce 0
+    [ -e "/etc/selinux/config" ] && sed -i 's/^SELINUX=.*$/SELINUX=disabled/' /etc/selinux/config
+    command -v setenforce >/dev/null 2>&1 && setenforce 0
 
     # Custom profile
     cat >/etc/profile.d/bypanel.sh <<EOF
@@ -173,10 +173,12 @@ EOF
 EOF
 
     # ip_conntrack table full dropping packets
-    echo "modprobe nf_conntrack" >/etc/sysconfig/modules/nf_conntrack.modules
-    chmod +x /etc/sysconfig/modules/nf_conntrack.modules
+    if [ -d "/etc/sysconfig/modules" ]; then
+      echo "modprobe nf_conntrack" > /etc/sysconfig/modules/nf_conntrack.modules
+      chmod +x /etc/sysconfig/modules/nf_conntrack.modules
+    fi
     modprobe nf_conntrack
-    echo options nf_conntrack hashsize=131072 >/etc/modprobe.d/nf_conntrack.conf
+    echo options nf_conntrack hashsize=131072 > /etc/modprobe.d/nf_conntrack.conf
 
     # /etc/sysctl.conf
     [ ! -e "/etc/sysctl.conf_bk" ] && /bin/mv /etc/sysctl.conf{,_bk}
@@ -461,9 +463,9 @@ EOF
     if command -v systemctl >/dev/null 2>&1; then
       systemctl enable docker
       systemctl daemon-reload
-      systemctl start docker >/dev/null 2>&1
+      systemctl restart docker >/dev/null 2>&1
     else
-      service docker start >/dev/null 2>&1
+      service docker restart >/dev/null 2>&1
     fi
 
     if command -v docker >/dev/null 2>&1; then
