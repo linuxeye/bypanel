@@ -401,16 +401,16 @@ EOF
     else
       printf "\033[33mDownloading get-docker.sh... \033[0m\n"
       curl -# https://get.docker.com -o get-docker.sh 2>&1
-      if [ ! -e "get-docker.sh" ]; then
-        printf "\033[31mget-docker.sh download failed, please try again \033[0m\n"
-        exit 1
-      fi
-      if [ "${IP_COUNTRY}x" = "CN"x ]; then
-        sh get-docker.sh --mirror Aliyun 2>&1
+      if [ -e "get-docker.sh" ]; then
+        if [ "${IP_COUNTRY}x" = "CN"x ]; then
+          sh get-docker.sh --mirror Aliyun 2>&1
+        else
+          sh get-docker.sh 2>&1
+        fi
+        rm -f get-docker.sh
       else
-        sh get-docker.sh 2>&1
+        printf "\033[31mget-docker.sh download failed, will try to install docker using install-docker.sh \033[0m\n"
       fi
-      rm -f get-docker.sh
     fi
 
     if ! command -v docker >/dev/null 2>&1; then

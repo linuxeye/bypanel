@@ -143,7 +143,7 @@ TIMEZONE=Asia/Shanghai
 ### 1.1 Choose Nginx Server Image
 ###
 NGINX_SERVER=1.26.2
-#NGINX_SERVER=1.27.2
+#NGINX_SERVER=1.27.3
 
 
 ###
@@ -335,7 +335,7 @@ PHP_MODULES_ENABLE=
 ###
 ### PHP_MODULES_DISABLE=xdebug,imagick,swoole
 ###
-PHP_MODULES_DISABLE=xdebug,imagick,memcache,memcached,redis,mongo,mongodb,msgpack,pgsql,xhprof,uploadprogress,uuid,xlswriter,yaml,amqp,apcu,oci8,pdo_oci,PDO_OCI,pdo_sqlsrv,sqlsrv,rdkafka,swoole,psr,imap,solr,pspell,phalcon
+PHP_MODULES_DISABLE=xdebug,imagick,memcache,memcached,redis,mongo,mongodb,msgpack,pgsql,xhprof,uploadprogress,uuid,xlswriter,yaml,amqp,apcu,oci8,pdo_oci,PDO_OCI,pdo_sqlsrv,sqlsrv,rdkafka,swoole,swoole_loader,psr,imap,solr,pspell,phalcon
 
 
 ###
