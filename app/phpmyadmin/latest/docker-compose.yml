@@ -11,6 +11,7 @@ services:
       - PMA_HOST=mysql
       - PMA_ABSOLUTE_URI=${PMA_ABSOLUTE_URI}
       - PMA_PORTS=${HOST_PORT_MYSQL}
+      - UPLOAD_LIMIT=1000M
     networks:
       - net
 
