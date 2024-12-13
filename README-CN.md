@@ -25,15 +25,20 @@ bypanel二进制下载地址(quick_install.sh已自动安装)
 * AMD64: https://mirrors.linuxeye.com/bypanel/bypanel-linux-amd64
 * AArch64: https://mirrors.linuxeye.com/bypanel/bypanel-linux-arm64
 
+### 命令帮助
+```
+bypanel help
+```
+
 ### 配置
 ```
 bypanel configure
 ```
 配置部署bypanel参数，即修改`/opt/bypanel/.env`
 
-### 命令帮助
+### 镜像拉取
 ```
-bypanel help
+bypanel pull
 ```
 
 ### 创建和启动
@@ -41,6 +46,11 @@ bypanel help
 bypanel up -d
 ```
 创建和启动容器, 其中`-d`参数: 容器后台运行
+
+### 在运行中容器执行命令
+```
+bypanel exec SERVICE COMMAND
+```
 
 ### 虚拟主机
 #### 添加
@@ -56,10 +66,30 @@ bypanel vhost del
 bypanel vhost list
 ```
 
+### SSL证书管理
+#### 添加
+```
+bypanel scm add
+```
+#### 删除
+```
+bypanel scm del
+```
+#### 列表
+```
+bypanel scm list
+```
+
 ### 重载web服务
 ```
 bypanel reload
 ```
+
+### 镜像管理
+```
+bypanel image
+```
+> 删除未使用镜像, 执行命令: `bypanel image prune`
 
 ### 日志
 ```
@@ -69,9 +99,9 @@ bypanel logs -f
 
 ### 服务状态
 ```
-bypanel status
+bypanel ps
 ```
-> 查看容器状态, 或执行命令 `bypanel ps` 作用相同
+> 查看容器状态, 或执行命令 `bypanel status` 作用相同
 
 ### 停止、删除容器和网络
 ```

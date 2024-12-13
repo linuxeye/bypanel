@@ -38,11 +38,21 @@ bypanel configure
 ```
 > Configuration of deployment parameters for bypanel
 
+### Pull service images
+```
+bypanel pull
+```
+
 ### Create and start
 ```
 bypanel up -d
 ```
 > Create and start containers, `-d`: Detached mode: Run containers in the background
+
+### Execute a command in a running container
+```
+bypanel exec SERVICE COMMAND
+```
 
 ### Setting up virtual hosts on HTTP Server
 #### Add
@@ -58,6 +68,32 @@ bypanel vhost del
 bypanel vhost list
 ```
 
+## SSL Certificate Manager
+#### Add
+```
+bypanel scm add
+```
+#### Delete
+```
+bypanel scm del
+```
+#### List
+```
+bypanel scm list
+```
+
+### Reload Web service
+```
+bypanel reload
+```
+> Reload Web service containers
+
+### Manage images
+```
+bypanel image
+```
+> Remove unused images, Exec command: `bypanel image prune`
+
 ### Logs
 ```
 bypanel logs
@@ -66,9 +102,9 @@ bypanel logs
 
 ### Status
 ```
-bypanel status
+bypanel ps
 ```
-> List containers, or `bypanel ps`
+> List containers, or `bypanel status`
 
 ### Down
 ```
