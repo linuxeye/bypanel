@@ -25,6 +25,10 @@ bypanel二进制下载地址(quick_install.sh已自动安装)
 * AMD64: https://mirrors.linuxeye.com/bypanel/bypanel-linux-amd64
 * AArch64: https://mirrors.linuxeye.com/bypanel/bypanel-linux-arm64
 
+### 架构图
+![alt bypanel-arch-cn](https://linuxeye.com/wp-content/uploads/2025/01/bypanel-arch-cn.png)
+
+
 ### 命令帮助
 ```
 bypanel help

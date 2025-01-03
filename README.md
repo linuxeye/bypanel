@@ -27,6 +27,9 @@ bypanel binary download url(quick_install.sh has been automatically installed):
 * AArch64: https://mirrors.linuxeye.com/bypanel/bypanel-linux-arm64
 
 
+### Arch
+![alt bypanel-arch](https://linuxeye.com/wp-content/uploads/2025/01/bypanel-arch.png)
+
 ### Help
 ```
 bypanel help
