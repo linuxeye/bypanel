@@ -497,12 +497,14 @@ PMA_ABSOLUTE_URI=/phpmyadmin
 ###
 ### Expose SFTPGO Port to Host
 ###
-### Note: SFTPGO_FTPD_WEB_ADMIN_PORT - create the first admin and a new SFTPGo user
+### Note: SFTPGO_WEB_PORT - WebClient, WebAdmin, create the first admin and a new SFTPGo user
 ###       SFTPGO_FTPD_PORT - The FTP service port
+###       SFTPGO_SFTPD_PORT - The SFTP service port
 ###       SFTPGO_FTPD_PASSIVE_PORT_RANGE_START - The FTP service passive start port
 ###       SFTPGO_FTPD_PASSIVE_PORT_RANGE_END - The FTP service passive end port
 ###
-SFTPGO_FTPD_WEB_ADMIN_PORT=8021
+SFTPGO_WEB_PORT=8021
+SFTPGO_SFTPD_PORT=2022
 SFTPGO_FTPD_PORT=21
 SFTPGO_FTPD_PASSIVE_PORT_RANGE_START=21000
 SFTPGO_FTPD_PASSIVE_PORT_RANGE_END=21100
