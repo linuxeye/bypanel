@@ -89,11 +89,10 @@ bypanel scm list
 bypanel reload
 ```
 
-### 镜像管理
+### 查看使用的镜像
 ```
-bypanel image
+bypanel images
 ```
-> 删除未使用镜像, 执行命令: `bypanel image prune`
 
 ### 日志
 ```

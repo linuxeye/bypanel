@@ -1,0 +1,25 @@
+services:
+  wp-cli:
+    image: wordpress:cli
+    user: ${NEW_UID}:${NEW_GID}
+    # Always pull docker image
+    #pull_policy: always
+    restart: always
+    hostname: wp-cli
+    command: sh
+    networks:
+      - net
+
+    working_dir: /var/www
+
+    volumes:
+      # ---- Format: ----
+      # HOST-DIRECTORY : DOCKER-DIRECTORY
+
+      # Mount custom intranet
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
+
+networks:
+  net:
+    name: ${COMPOSE_NETWORK_NAME}
+    driver: bridge

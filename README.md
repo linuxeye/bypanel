@@ -91,11 +91,10 @@ bypanel reload
 ```
 > Reload Web service containers
 
-### Manage images
+### List images used
 ```
-bypanel image
+bypanel images
 ```
-> Remove unused images, Exec command: `bypanel image prune`
 
 ### Logs
 ```
