@@ -528,6 +528,7 @@ Install_Compose() {
 Init_Webroot() {
   mkdir -p ${VOLUME_PATH}/webroot/default
   echo "<?php phpinfo() ?>" >${VOLUME_PATH}/webroot/default/phpinfo.php
+  curl -fsSL "${MIRROR_URL}/bypanel/index.html" -o ${VOLUME_PATH}/webroot/default/index.html 2>&1
   curl -fsSL "${MIRROR_URL}/bypanel/xprober.php" -o ${VOLUME_PATH}/webroot/default/xprober.php 2>&1
   chown -R ${NEW_UID}:${NEW_GID} ${VOLUME_PATH}/webroot
 }
