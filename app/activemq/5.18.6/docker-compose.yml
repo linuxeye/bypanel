@@ -1,0 +1,29 @@
+services:
+  activemq:
+    image: apache/activemq-classic:5.18.6
+    # Always pull docker image
+    #pull_policy: always
+    restart: always
+    hostname: activemq
+    environment:
+      - TZ=${TIMEZONE}
+      - ACTIVEMQ_WEB_USER=${ACTIVEMQ_WEB_USER}
+      - ACTIVEMQ_WEB_PASSWORD=${ACTIVEMQ_WEB_PASSWORD}
+    ports:
+      # ---- Format: ----
+      # [HOST-ADDR : ] HOST-PORT : DOCKER-PORT
+      - "${HOST_PORT_ACTIVEMQ}:61616"
+      - "${HOST_PORT_ACTIVEMQ_MANAGEMENT}:8161"
+
+    volumes:
+      # ---- Format: ----
+      # HOST-DIRECTORY : DOCKER-DIRECTORY
+      - ${VOLUME_PATH}/activemq:/opt/apache-activemq/data:rw${MOUNT_OPTIONS}
+
+    networks:
+      - net
+
+networks:
+  net:
+    name: ${COMPOSE_NETWORK_NAME}
+    driver: bridge

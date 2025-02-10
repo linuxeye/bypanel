@@ -1483,34 +1483,26 @@ services:
     networks:
       - net
 
-  # ------------------------------------------------------------
-  # chatgpt-web
-  # ------------------------------------------------------------
-  chatgpt-web:
-    image: chenzhaoyu94/chatgpt-web
+  activemq:
+    image: apache/activemq-classic:${ACTIVEMQ_SERVER}
     # Always pull docker image
     #pull_policy: always
-    restart: unless-stopped
-    hostname: chatgpt-web
-    profiles:
-      - chatgpt-web
-
+    restart: always
+    hostname: activemq
     environment:
       - TZ=${TIMEZONE}
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - OPENAI_ACCESS_TOKEN=${OPENAI_ACCESS_TOKEN}
-      - OPENAI_API_BASE_URL=${OPENAI_API_BASE_URL}
-      - OPENAI_API_MODEL=${OPENAI_API_MODEL}
-      - API_REVERSE_PROXY=${CHATGPT_API_REVERSE_PROXY}
-      - AUTH_SECRET_KEY=${CHATGPT_AUTH_SECRET_KEY}
-      - MAX_REQUEST_PER_HOUR=${CHATGPT_MAX_REQUEST_PER_HOUR}
-      - TIMEOUT_MS=${CHATGPT_TIMEOUT_MS}
-      - SOCKS_PROXY_HOST=${CHATGPT_SOCKS_PROXY_HOST}
-      - SOCKS_PROXY_PORT=${CHATGPT_SOCKS_PROXY_PORT}
-      - HTTPS_PROXY=${CHATGPT_HTTPS_PROXY}
-
+      - ACTIVEMQ_WEB_USER=${ACTIVEMQ_WEB_USER}
+      - ACTIVEMQ_WEB_PASSWORD=${ACTIVEMQ_WEB_PASSWORD}
     ports:
-      - ${HOST_PORT_CHATGPT_WEB}:3002
+      # ---- Format: ----
+      # [HOST-ADDR : ] HOST-PORT : DOCKER-PORT
+      - "${HOST_PORT_ACTIVEMQ}:61616"
+      - "${HOST_PORT_ACTIVEMQ_MANAGEMENT}:8161"
+
+    volumes:
+      # ---- Format: ----
+      # HOST-DIRECTORY : DOCKER-DIRECTORY
+      - ${VOLUME_PATH}/activemq:/opt/apache-activemq/data:rw${MOUNT_OPTIONS}
 
     networks:
       - net
