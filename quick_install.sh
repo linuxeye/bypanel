@@ -383,7 +383,9 @@ EOF
       yum -y install docker-ce
     elif [ "${PLATFORM}" = "alinux" ] || [ "${PLATFORM}" = "tencentos" ]; then
       VERSION_ID=$(echo $VERSION_ID | cut -d'.' -f1)
-      if [ "${VERSION_ID}" = "3" ]; then
+      if [ "${VERSION_ID}" = "4" ]; then
+        releasever=9
+      elif [ "${VERSION_ID}" = "3" ]; then
         releasever=8
       elif [ "${VERSION_ID}" = "2" ]; then
         releasever=7
@@ -452,7 +454,7 @@ EOF
         cat >/etc/docker/daemon.json <<EOF
 {
   "registry-mirrors": [
-    "https://docker.1panel.live"
+    "https://docker.1ms.run"
   ]
 }
 EOF
