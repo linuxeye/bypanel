@@ -2,29 +2,59 @@
 # Author:  Justo <lj2007331 AT gmail.com>
 # BLOG:  https://linuxeye.com
 #
-# Notes: ByPanel for Linux 64bit
+# Notes: ByPanel for Linux/Darwin 64bit
 #
 # Project home page:
 #       https://github.com/linuxeye/bypanel
 
-export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
-
-# Check if user is root
-[ $(id -u) != "0" ] && {
-  printf "\033[31mError: You must be root to run this script\033[0m\n"
-  exit 1
-}
+export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/opt/homebrew/bin:$PATH
 
 MIRROR_URL=${MIRROR_URL:-http://mirrors.linuxeye.com}
-BASE_PATH=${BASE_PATH:-/opt/bypanel}
-VOLUME_PATH=${VOLUME_PATH:-/data}
-NEW_UID=${NEW_UID:-1000}
-NEW_GID=${NEW_GID:-1000}
+KERNEL_NAME=$(uname -s | tr '[:upper:]' '[:lower:]')
+ARCH=$(uname -m)
 IP_COUNTRY=$(curl -s ipinfo.io/country)
 
-Download_Panel() {
+case "${KERNEL_NAME}" in
+darwin*)
+  NEW_UID=${NEW_UID:-$(id -u)}
+  NEW_GID=${NEW_GID:-$(id -g)}
+  BASE_PATH=${BASE_PATH:-~/bypanel}
+  VOLUME_PATH=${VOLUME_PATH:-~/bypanel/data}
+  BYPANEL_PATH=${BYPANEL_PATH:-~/bypanel/bin/bypanel}
+  ;;
+*)
+  NEW_UID=${NEW_UID:-1000}
+  NEW_GID=${NEW_GID:-1000}
+  BASE_PATH=${BASE_PATH:-/opt/bypanel}
+  VOLUME_PATH=${VOLUME_PATH:-/data}
+  BYPANEL_PATH=${BYPANEL_PATH:-/usr/bin/bypanel}
+  # Check if user is root
+  [ $(id -u) != "0" ] && {
+    printf "\033[31mError: You must be root to run this script\033[0m\n"
+    exit 1
+  }
+  ;;
+esac
+
+case "${ARCH}" in
+x86_64)
+  BYPANEL_BIN=bypanel-${KERNEL_NAME}-amd64
+  ;;
+aarch64 | arm64)
+  BYPANEL_BIN=bypanel-${KERNEL_NAME}-arm64
+  ;;
+armv7l)
+  ARCH="armv7"
+  ;;
+*)
+  printf "\033[31mERROR: Unsupported operating system '${KERNEL_NAME}' \033[0m\n"
+  exit 1
+  ;;
+esac
+
+download_bypanel() {
+  [ ! -d ${BASE_PATH}/bin ] && mkdir -p ${BASE_PATH}/bin
   if [ ! -e ${BASE_PATH}/env-example ]; then
-    [ ! -d ${BASE_PATH} ] && mkdir -p ${BASE_PATH}
     printf "\033[33mDownloading bypanel.tar.gz... \033[0m\n"
     [ -e /tmp/bypanel.tar.gz ] && rm -rf /tmp/{bypanel.tar.gz,bypanel}
     curl -# ${MIRROR_URL}/bypanel.tar.gz -o /tmp/bypanel.tar.gz 2>&1
@@ -38,25 +68,44 @@ Download_Panel() {
     /bin/mv /tmp/bypanel/* ${BASE_PATH}/
     rm -f /tmp/bypanel.tar.gz
   else
-    printf "\033[33m/opt/bypanel is already installed! \033[0m\n"
+    printf "\033[33m${BASE_PATH} is already installed! \033[0m\n"
   fi
-  ARCH=$(uname -m)
-  if [ "$ARCH" = "x86_64" ]; then
-    BYPANEL_BIN=bypanel-linux-amd64
-  elif [ "$ARCH" = "aarch64" ]; then
-    BYPANEL_BIN=bypanel-linux-arm64
-  fi
-  if [ ! -e /usr/bin/bypanel ]; then
-    printf "\033[33mDownloading /usr/bin/bypanel... \033[0m\n"
-    curl -# ${MIRROR_URL}/bypanel/${BYPANEL_BIN} -o /usr/bin/bypanel
-    chmod +x /usr/bin/bypanel
+
+  if [ ! -e ${BYPANEL_PATH} ]; then
+    printf "\033[33mDownloading ${BYPANEL_PATH}... \033[0m\n"
+    curl -# ${MIRROR_URL}/bypanel/${BYPANEL_BIN} -o ${BYPANEL_PATH}
+    chmod +x ${BYPANEL_PATH}
   else
-    printf "\033[33m/usr/bin/bypanel is already installed! \033[0m\n"
+    printf "\033[33m${BYPANEL_PATH} is already installed! \033[0m\n"
     printf "\033[33mYou can upgrade by running the command \`bypanel upgrade\`! \033[0m\n"
   fi
 }
 
-Start_Panel() {
+setup_bypanel_env() {
+  if [ ! -e ${BASE_PATH}/.env ]; then
+    /bin/cp ${BASE_PATH}/env-example ${BASE_PATH}/.env
+    case "${KERNEL_NAME}" in
+    darwin*)
+      sed -i '' "s@^BASE_PATH=.*@BASE_PATH=${BASE_PATH}@" ${BASE_PATH}/.env
+      sed -i '' "s@^VOLUME_PATH=.*@VOLUME_PATH=${VOLUME_PATH}@" ${BASE_PATH}/.env
+      sed -i '' "s@^NEW_UID=.*@NEW_UID=${NEW_UID}@" ${BASE_PATH}/.env
+      sed -i '' "s@^NEW_GID=.*@NEW_GID=${NEW_GID}@" ${BASE_PATH}/.env
+      if ! grep -q bypanel ~/.zshrc; then
+        echo "export PATH=\"$HOME/bypanel/bin:\$PATH\"" >>~/.zshrc
+        source ~/.zshrc
+      fi
+      ;;
+    *)
+      sed -i "s@^BASE_PATH=.*@BASE_PATH=${VOLUME_PATH}@" ${BASE_PATH}/.env
+      sed -i "s@^VOLUME_PATH=.*@VOLUME_PATH=${VOLUME_PATH}@" ${BASE_PATH}/.env
+      sed -i "s@^NEW_UID=.*@NEW_UID=${NEW_UID}@" ${BASE_PATH}/.env
+      sed -i "s@^NEW_GID=.*@NEW_GID=${NEW_GID}@" ${BASE_PATH}/.env
+      ;;
+    esac
+  fi
+}
+
+start_bypanel_linux() {
   cat >/lib/systemd/system/bypanel.service <<EOF
 [Unit]
 Description=Systemd ByPanel
@@ -64,7 +113,7 @@ After=network.target
 
 [Service]
 # Execute \$(systemctl daemon-reload) after ExecStart= is changed.
-ExecStart=/usr/bin/bypanel
+ExecStart=${BYPANEL_PATH}
 
 [Install]
 WantedBy=multi-user.target
@@ -77,18 +126,37 @@ EOF
     printf "\033[31mbypanel installation failed! \033[0m\n"
     exit 1
   fi
+
 }
 
-Check_Env() {
-  if [ ! -e ${BASE_PATH}/.env ]; then
-    /bin/cp ${BASE_PATH}/{env-example,.env}
-    sed -i "s@^BASE_PATH=.*@BASE_PATH=${BASE_PATH}@" ${BASE_PATH}/.env
-    sed -i "s@^NEW_UID=.*@NEW_UID=${NEW_UID}@" ${BASE_PATH}/.env
-    sed -i "s@^NEW_GID=.*@NEW_GID=${NEW_GID}@" ${BASE_PATH}/.env
+start_bypanel_darwin() {
+  [ ! -e ~/Library/LaunchAgents/bypanel.plist ] && cat >~/Library/LaunchAgents/bypanel.plist <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>bypanel</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>$HOME/bypanel/bin/bypanel</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+</dict>
+</plist>
+EOF
+  pgrep -q "bypanel" && launchctl unload ~/Library/LaunchAgents/bypanel.plist
+  launchctl load ~/Library/LaunchAgents/bypanel.plist
+  if [ $? -eq 0 ]; then
+    printf "\033[32mbypanel installed successfully! \033[0m\n"
+  else
+    printf "\033[31mbypanel installation failed! \033[0m\n"
+    exit 1
   fi
 }
 
-Init_OS() {
+setup_system_linux() {
   if [ -e "/etc/os-release" ]; then
     . /etc/os-release
   else
@@ -174,14 +242,14 @@ EOF
 
     # ip_conntrack table full dropping packets
     if [ -d "/etc/sysconfig/modules" ]; then
-      echo "modprobe nf_conntrack" > /etc/sysconfig/modules/nf_conntrack.modules
+      echo "modprobe nf_conntrack" >/etc/sysconfig/modules/nf_conntrack.modules
       chmod +x /etc/sysconfig/modules/nf_conntrack.modules
     fi
     modprobe nf_conntrack
-    echo options nf_conntrack hashsize=131072 > /etc/modprobe.d/nf_conntrack.conf
+    echo options nf_conntrack hashsize=131072 >/etc/modprobe.d/nf_conntrack.conf
 
     # /etc/sysctl.conf
-    [ ! -e "/etc/sysctl.conf_bk" ] && /bin/mv /etc/sysctl.conf{,_bk}
+    [ ! -e "/etc/sysctl.conf_bk" ] && /bin/mv /etc/sysctl.conf /etc/sysctl.conf_bk
     cat >/etc/sysctl.conf <<EOF
 fs.file-max=1000000
 net.ipv4.tcp_max_tw_buckets = 6000
@@ -339,7 +407,7 @@ EOF
   fi
 }
 
-Install_Docker() {
+install_docker_linux() {
   if command -v docker >/dev/null 2>&1; then
     printf "Docker is already installed, skip...\n"
     printf "Start Docker...\n"
@@ -417,7 +485,7 @@ EOF
 
     if ! command -v docker >/dev/null 2>&1; then
       if [ "${IP_COUNTRY}x" = "CN"x ]; then
-        curl -fsSL https://mirror.ghproxy.com/https://raw.githubusercontent.com/dyrnq/install-docker/main/install-docker.sh | bash -s docker --mirror aliyun --with-compose --compose-mirror daocloud --systemd-mirror "ghproxy"
+        curl -fsSL https://ghfast.top/https://raw.githubusercontent.com/dyrnq/install-docker/main/install-docker.sh | bash -s docker --mirror aliyun --with-compose --compose-mirror daocloud --systemd-mirror "ghproxy"
       else
         curl -fsSL https://raw.githubusercontent.com/dyrnq/install-docker/main/install-docker.sh | bash -s docker --with-compose
       fi
@@ -479,7 +547,41 @@ EOF
   fi
 }
 
-Install_Compose() {
+install_docker_darwin() {
+  if command -v docker >/dev/null 2>&1; then
+    printf "Docker is already installed, skip...\n"
+  else
+    printf "Please Install Docker on MacOS, Installation documentation: https://docs.docker.com/desktop/setup/install/mac-install/"
+  fi
+
+  if [ "${IP_COUNTRY}x" = "CN"x ]; then
+    [ -e ~/.docker/daemon.json ] && cat >~/.docker/daemon.json <<EOF
+{
+  "builder": {
+    "gc": {
+      "defaultKeepStorage": "20GB",
+      "enabled": true
+    }
+  },
+  "experimental": false,
+  "registry-mirrors": [
+    "https://docker.1ms.run"
+  ]
+}
+EOF
+  fi
+
+  if ! pgrep -q "Docker Desktop"; then
+    open -g -a Docker
+  fi
+
+  if ! docker info >/dev/null 2>&1; then
+    printf "\033[33mWarning: Docker service starts slowly, you may need to check manually \033[0m\n"
+    exit 1
+  fi
+}
+
+install_docker_compose_linux() {
   if command -v docker-compose >/dev/null 2>&1; then
     DOCKER_COMPOSE_MAIN_VER=$(docker-compose -v | awk '{print $NF}' | awk -F. '{print $1}')
     if [ ${DOCKER_COMPOSE_MAIN_VER#v} -ge 2 ]; then
@@ -506,8 +608,6 @@ Install_Compose() {
       [ ! -L /usr/bin/docker-compose ] && ln -s /usr/libexec/docker/cli-plugins/docker-compose /usr/bin/docker-compose
     else
       printf "Install Docker Compose...\n"
-      ARCH=$(uname -m)
-      [ "${ARCH}" = "armv7l" ] && ARCH="armv7"
       DOCKER_COMPOSE_LATEST_VER=$(curl -s https://api.github.com/repos/docker/compose/tags | grep 'name' | cut -d\" -f4 | head -1)
       curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_LATEST_VER}/docker-compose-$(uname -s | tr A-Z a-z)-${ARCH} -o /usr/local/bin/docker-compose 2>&1
       if [ ! -e /usr/local/bin/docker-compose ]; then
@@ -527,7 +627,37 @@ Install_Compose() {
   docker-compose version
 }
 
-Init_Webroot() {
+install_docker_compose_darwin() {
+  if ! command -v brew >/dev/null 2>&1; then
+    printf "\033[33mCommand 'brew' not found, Installation documentation: https://brew.sh\033[0m\n"
+    exit 1
+  fi
+
+  if command -v docker-compose >/dev/null 2>&1; then
+    DOCKER_COMPOSE_MAIN_VER=$(docker-compose -v | awk '{print $NF}' | awk -F. '{print $1}')
+    if [ ${DOCKER_COMPOSE_MAIN_VER#v} -ge 2 ]; then
+      printf "Docker Compose is already installed, skip...\n"
+    fi
+  else
+    printf "Install Docker Compose...\n"
+    brew install docker-compose
+    if ! command -v docker-compose >/dev/null 2>&1; then
+      printf "\033[31m'brew install docker-compose' failed, please try again \033[0m\n"
+      exit 1
+    fi
+    chmod +x /usr/local/bin/docker-compose
+
+    if command -v docker-compose >/dev/null 2>&1; then
+      printf "\033[32mDocker Compose installed successfully! \033[0m\n"
+    else
+      printf "\033[31mDocker Compose installation failed! \033[0m\n"
+      exit 1
+    fi
+  fi
+  docker-compose version
+}
+
+setup_webroot() {
   mkdir -p ${VOLUME_PATH}/webroot/default
   echo "<?php phpinfo() ?>" >${VOLUME_PATH}/webroot/default/phpinfo.php
   curl -fsSL "${MIRROR_URL}/bypanel/index.html" -o ${VOLUME_PATH}/webroot/default/index.html 2>&1
@@ -536,13 +666,23 @@ Init_Webroot() {
 }
 
 main() {
-  Download_Panel
-  Check_Env
-  Init_OS
-  Install_Docker
-  Install_Compose
-  Init_Webroot
-  Start_Panel
+  download_bypanel
+  setup_bypanel_env
+  case "${KERNEL_NAME}" in
+  darwin*)
+    install_docker_darwin
+    install_docker_compose_darwin
+    setup_webroot
+    start_bypanel_darwin
+    ;;
+  *)
+    setup_system_linux
+    install_docker_linux
+    install_docker_compose_linux
+    setup_webroot
+    start_bypanel_linux
+    ;;
+  esac
 }
 
 main

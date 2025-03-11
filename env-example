@@ -333,7 +333,7 @@ MOUNT_OPTIONS=
 ###
 ### PHP_MODULES_ENABLE=ioncube, blackfire
 ###
-PHP_MODULES_ENABLE=bcmath,bz2,calendar,dba,enchant,exif,ffi,gd,gettext,gmp,igbinary,intl,ldap,lz4,lzf,mysqli,oauth,opcache,pcntl,pdo_dblib,pdo_firebird,pdo_mysql,shmop,snmp,soap,sockets,sodium,sysvmsg,sysvsem,sysvshm,tidy,xsl,zip,zstd
+PHP_MODULES_ENABLE=bcmath,bz2,calendar,dba,enchant,exif,ffi,gd,gettext,gmp,igbinary,msgpack,intl,ldap,lz4,lzf,mysqli,oauth,opcache,pcntl,pdo_dblib,pdo_firebird,pdo_mysql,shmop,snmp,soap,sockets,sodium,sysvmsg,sysvsem,sysvshm,tidy,xsl,zip,zstd
 
 
 ###
@@ -343,7 +343,7 @@ PHP_MODULES_ENABLE=bcmath,bz2,calendar,dba,enchant,exif,ffi,gd,gettext,gmp,igbin
 ###
 ### PHP_MODULES_DISABLE=xdebug,imagick,swoole
 ###
-PHP_MODULES_DISABLE=ioncube,blackfire,xdebug,imagick,memcache,memcached,redis,mongo,mongodb,msgpack,pgsql,xhprof,uploadprogress,uuid,xlswriter,yaml,amqp,apcu,oci8,pdo_oci,pdo_sqlsrv,pdo_pgsql,sqlsrv,rdkafka,swoole,swoole_loader,psr,imap,solr,pspell,phalcon,pcov,uopz
+PHP_MODULES_DISABLE=ioncube,blackfire,xdebug,imagick,memcache,memcached,redis,mongo,mongodb,pgsql,xhprof,uploadprogress,uuid,xlswriter,yaml,amqp,apcu,oci8,pdo_oci,pdo_sqlsrv,pdo_pgsql,sqlsrv,rdkafka,swoole,swoole_loader,psr,imap,solr,pspell,phalcon,pcov,uopz
 
 
 ###

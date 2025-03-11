@@ -6,25 +6,29 @@
 ### Support OS system
 |             |            |               |            |            |
 |:-----------:|:----------:|:-------------:|:----------:|:----------:|
-| CentOS      | RedHat     | Alpine Linux  | Debian     | Ubuntu     |
+| MacOS       | RedHat     | Alpine Linux  | Debian     | Ubuntu     |
 | AlmaLinux   | Fedora     | Rocky Linux   | openSUSE   | Anolis     |
 | OpencloudOS | TencentOS  | Amazon Linux  | EulerOS    | openEuler  |
 | Kylin       | LinuxMint  | Alibaba Linux | Elementary | Uos        |
 | Deepin      | KylinsecOS | Oracle Linux  | Kali Linux | Arch Linux |
-| ...         |            |               |            |            |
+| CentOS      | ...        |               |            |            |
 
 
 ### Install
 ```
 curl -sSL https://mirrors.linuxeye.com/bypanel/quick_install.sh | bash
 ```
-> Default install path: `/opt/bypanel`
->
-> bypanel binary path: `/usr/bin/bypanel`
+> Linux default install path: `/opt/bypanel`
+> Linux bypanel binary path: `/usr/bin/bypanel`
+> MacOS default install path: `~/bypanel`
+> MacOS bypanel binary path: `~/bypanel/bin/bypanel`
+
 
 bypanel binary download url(quick_install.sh has been automatically installed):
-* AMD64: https://mirrors.linuxeye.com/bypanel/bypanel-linux-amd64
-* AArch64: https://mirrors.linuxeye.com/bypanel/bypanel-linux-arm64
+* Linux AMD64: https://mirrors.linuxeye.com/bypanel/bypanel-linux-amd64
+* Linux AArch64: https://mirrors.linuxeye.com/bypanel/bypanel-linux-arm64
+* MacOS AMD64: https://mirrors.linuxeye.com/bypanel/bypanel-darwin-amd64
+* MacOS AArch64: https://mirrors.linuxeye.com/bypanel/bypanel-darwin-arm64
 
 
 ### Arch
@@ -39,7 +43,9 @@ bypanel help
 ```
 bypanel configure
 ```
-> Configuration of deployment parameters for bypanel
+Configuration of deployment parameters for bypanel
+* Linux: `/opt/bypanel/.env`
+* MacOS: `~/bypanel/.env`
 
 ### Pull service images
 ```
@@ -135,11 +141,6 @@ bypanel stop
 ### Upgrade
 ```
 bypanel upgrade
-```
-Upgrade bypctl to bypanel, execute `bypctl upgrade` twice
-```
-bypctl upgrade
-bypctl upgrade
 ```
 
 ### Version

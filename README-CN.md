@@ -5,25 +5,28 @@
 ### 支持操作系统版本
 |             |            |               |            |            |
 |:-----------:|:----------:|:-------------:|:----------:|:----------:|
-| CentOS      | RedHat     | Alpine Linux  | Debian     | Ubuntu     |
+| MacOS       | RedHat     | Alpine Linux  | Debian     | Ubuntu     |
 | AlmaLinux   | Fedora     | Rocky Linux   | openSUSE   | Anolis     |
 | OpencloudOS | TencentOS  | Amazon Linux  | EulerOS    | openEuler  |
 | Kylin       | LinuxMint  | Alibaba Linux | Elementary | Uos        |
 | Deepin      | KylinsecOS | Oracle Linux  | Kali Linux | Arch Linux |
-| ...         |            |               |            |            |
+| CentOS      | ...        |               |            |            |
 
 
 ### 安装
 ```
 curl -sSL https://mirrors.linuxeye.com/bypanel/quick_install.sh | bash
 ```
-> 默认安装路径: `/opt/bypanel`
->
-> bypanel二进制路径: `/usr/bin/bypanel`
+> Linux 默认安装路径: `/opt/bypanel`
+> Linux bypanel二进制路径: `/usr/bin/bypanel`
+> MacOS 默认安装路径: `~/bypanel`
+> MacOS bypanel二进制路径: `~/bypanel/bin/bypanel`
 
 bypanel二进制下载地址(quick_install.sh已自动安装)
-* AMD64: https://mirrors.linuxeye.com/bypanel/bypanel-linux-amd64
-* AArch64: https://mirrors.linuxeye.com/bypanel/bypanel-linux-arm64
+* Linux AMD64: https://mirrors.linuxeye.com/bypanel/bypanel-linux-amd64
+* Linux AArch64: https://mirrors.linuxeye.com/bypanel/bypanel-linux-arm64
+* MacOS AMD64: https://mirrors.linuxeye.com/bypanel/bypanel-darwin-amd64
+* MacOS AArch64: https://mirrors.linuxeye.com/bypanel/bypanel-darwin-arm64
 
 ### 架构图
 ![alt bypanel-arch-cn](https://linuxeye.com/wp-content/uploads/2025/01/bypanel-arch-cn.png)
@@ -38,7 +41,9 @@ bypanel help
 ```
 bypanel configure
 ```
-配置部署bypanel参数，即修改`/opt/bypanel/.env`
+配置部署bypanel参数，即修改配置文件
+* Linux: `/opt/bypanel/.env`
+* MacOS: `~/bypanel/.env`
 
 ### 镜像拉取
 ```
@@ -129,11 +134,6 @@ bypanel stop
 ### 升级命令
 ```
 bypanel upgrade
-```
-bypctl升级为bypanel, 2次执行`bypctl upgrade`
-```
-bypctl upgrade
-bypctl upgrade
 ```
 
 ### 版本显示
