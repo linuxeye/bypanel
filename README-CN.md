@@ -17,9 +17,13 @@
 ```
 curl -sSL https://mirrors.linuxeye.com/bypanel/quick_install.sh | bash
 ```
+
 > Linux 默认安装路径: `/opt/bypanel`
+>
 > Linux bypanel二进制路径: `/usr/bin/bypanel`
+>
 > MacOS 默认安装路径: `~/bypanel`
+>
 > MacOS bypanel二进制路径: `~/bypanel/bin/bypanel`
 
 bypanel二进制下载地址(quick_install.sh已自动安装)

@@ -96,7 +96,7 @@ setup_bypanel_env() {
       fi
       ;;
     *)
-      sed -i "s@^BASE_PATH=.*@BASE_PATH=${VOLUME_PATH}@" ${BASE_PATH}/.env
+      sed -i "s@^BASE_PATH=.*@BASE_PATH=${BASE_PATH}@" ${BASE_PATH}/.env
       sed -i "s@^VOLUME_PATH=.*@VOLUME_PATH=${VOLUME_PATH}@" ${BASE_PATH}/.env
       sed -i "s@^NEW_UID=.*@NEW_UID=${NEW_UID}@" ${BASE_PATH}/.env
       sed -i "s@^NEW_GID=.*@NEW_GID=${NEW_GID}@" ${BASE_PATH}/.env

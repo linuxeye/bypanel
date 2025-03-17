@@ -4,7 +4,6 @@
 
 
 ### Support OS system
-|             |            |               |            |            |
 |:-----------:|:----------:|:-------------:|:----------:|:----------:|
 | MacOS       | RedHat     | Alpine Linux  | Debian     | Ubuntu     |
 | AlmaLinux   | Fedora     | Rocky Linux   | openSUSE   | Anolis     |
@@ -18,9 +17,13 @@
 ```
 curl -sSL https://mirrors.linuxeye.com/bypanel/quick_install.sh | bash
 ```
+
 > Linux default install path: `/opt/bypanel`
+>
 > Linux bypanel binary path: `/usr/bin/bypanel`
+>
 > MacOS default install path: `~/bypanel`
+>
 > MacOS bypanel binary path: `~/bypanel/bin/bypanel`
 
 
