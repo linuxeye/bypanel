@@ -4,6 +4,7 @@
 
 
 ### Support OS system
+|             |            |               |            |            |
 |:-----------:|:----------:|:-------------:|:----------:|:----------:|
 | MacOS       | RedHat     | Alpine Linux  | Debian     | Ubuntu     |
 | AlmaLinux   | Fedora     | Rocky Linux   | openSUSE   | Anolis     |
