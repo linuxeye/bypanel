@@ -470,7 +470,12 @@ EOF
       yum -y install docker-ce
     else
       printf "\033[33mDownloading get-docker.sh... \033[0m\n"
-      curl -# https://get.docker.com -o get-docker.sh 2>&1
+      if [ "${IP_COUNTRY}x" = "CN"x ]; then
+        curl -# https://ghfast.top/https://raw.githubusercontent.com/docker/docker-install/master/install.sh -o get-docker.sh 2>&1
+      else
+        curl -# https://get.docker.com -o get-docker.sh 2>&1
+      fi
+
       if [ -e "get-docker.sh" ]; then
         if [ "${IP_COUNTRY}x" = "CN"x ]; then
           sh get-docker.sh --mirror Aliyun 2>&1
