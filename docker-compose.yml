@@ -232,6 +232,57 @@ services:
       - ${VOLUME_PATH}/logs/caddy:/var/log/caddy:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
+  # Tomcat
+  # ------------------------------------------------------------
+  tomcat:
+    image: bypanel/tomcat:${TOMCAT_SERVER}
+    # Always pull docker image
+    #pull_policy: always
+    restart: always
+    hostname: tomcat
+    profiles:
+      - tomcat
+    command: [ "gosu", "www-data", "catalina.sh", "run" ]
+
+    environment:
+
+      ##
+      ## Debug/Logging
+      ##
+      - DEBUG_ENTRYPOINT=${DEBUG_ENTRYPOINT:-2}
+      - DEBUG_RUNTIME=1
+      - DOCKER_LOGS
+
+      ##
+      ## Adjust timezone
+      ##
+      - TIMEZONE
+
+      ##
+      ## UserID and GroupID
+      ##
+      - NEW_UID
+      - NEW_GID
+
+    ports:
+      # ---- Format: ----
+      # [HOST-ADDR : ] HOST-PORT : DOCKER-PORT
+      - "${HOST_PORT_TOMCAT}:8080"
+
+    volumes:
+      # ---- Format: ----
+      # HOST-DIRECTORY : DOCKER-DIRECTORY
+
+      # Mount custom intranet
+      - ${VOLUME_PATH}/webroot:/data/webroot:rw${MOUNT_OPTIONS}
+
+      # Mount custom web server config directory
+      - ${BASE_PATH}/cfg/tomcat/server.xml:/usr/local/tomcat/conf/server.xml:rw${MOUNT_OPTIONS}
+
+      # Mount logs
+      - ${VOLUME_PATH}/logs/tomcat:/usr/local/tomcat/logs:rw${MOUNT_OPTIONS}
+
+  # ------------------------------------------------------------
   # MySQL Database
   # ------------------------------------------------------------
   mysql:

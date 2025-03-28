@@ -503,6 +503,7 @@ EOF
         cat >/etc/docker/daemon.json <<EOF
 {
   "registry-mirrors": [
+    "https://docker.1ms.run",
     "https://u79eurfi.mirror.aliyuncs.com"
   ]
 }
@@ -511,7 +512,8 @@ EOF
         cat >/etc/docker/daemon.json <<EOF
 {
   "registry-mirrors": [
-    "https://mirror.ccs.tencentyun.com"
+    "https://mirror.ccs.tencentyun.com",
+    "https://docker.1ms.run"
   ]
 }
 EOF
@@ -519,6 +521,7 @@ EOF
         cat >/etc/docker/daemon.json <<EOF
 {
   "registry-mirrors": [
+    "https://docker.1ms.run",
     "https://44d8ee9edbbf4b07b9f0216b7a8fc0cc.mirror.swr.myhuaweicloud.com"
   ]
 }
@@ -665,7 +668,7 @@ install_docker_compose_darwin() {
 setup_webroot() {
   mkdir -p ${VOLUME_PATH}/webroot/default
   echo "<?php phpinfo() ?>" >${VOLUME_PATH}/webroot/default/phpinfo.php
-  curl -fsSL "${MIRROR_URL}/bypanel/index.html" -o ${VOLUME_PATH}/webroot/default/index.html 2>&1
+  curl -fsSL "${MIRROR_URL}/bypanel/demo.html" -o ${VOLUME_PATH}/webroot/default/index.html 2>&1
   curl -fsSL "${MIRROR_URL}/bypanel/xprober.php" -o ${VOLUME_PATH}/webroot/default/xprober.php 2>&1
   chown -R ${NEW_UID}:${NEW_GID} ${VOLUME_PATH}/webroot
 }
