@@ -45,6 +45,9 @@ services:
       # Mount logs
       - ${VOLUME_PATH}/logs/tomcat:/usr/local/tomcat/logs:rw${MOUNT_OPTIONS}
 
+    networks:
+      - net
+
 networks:
   net:
     name: ${COMPOSE_NETWORK_NAME}

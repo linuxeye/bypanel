@@ -269,6 +269,9 @@ services:
       # [HOST-ADDR : ] HOST-PORT : DOCKER-PORT
       - "${HOST_PORT_TOMCAT}:8080"
 
+    networks:
+      - net
+
     volumes:
       # ---- Format: ----
       # HOST-DIRECTORY : DOCKER-DIRECTORY
