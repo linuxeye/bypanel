@@ -277,7 +277,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount custom intranet
-      - ${VOLUME_PATH}/webroot:/data/webroot:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/webroot:/var/www:rw${MOUNT_OPTIONS}
 
       # Mount custom web server config directory
       - ${BASE_PATH}/cfg/tomcat/server.xml:/usr/local/tomcat/conf/server.xml:rw${MOUNT_OPTIONS}

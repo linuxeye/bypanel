@@ -33,9 +33,9 @@
                 <Realm className="org.apache.catalina.realm.UserDatabaseRealm"
                     resourceName="UserDatabase" />
             </Realm>
-            <Host name="localhost" appBase="/data/webroot/default" unpackWARs="true"
+            <Host name="localhost" appBase="/var/www/default" unpackWARs="true"
                 autoDeploy="true">
-                <Context path="" docBase="/data/webroot/default" reloadable="false"
+                <Context path="" docBase="/var/www/default" reloadable="false"
                     crossContext="true" />
                 <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
                     prefix="localhost_access_log" suffix=".txt"
