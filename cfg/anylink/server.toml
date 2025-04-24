@@ -1,0 +1,57 @@
+#示例配置信息
+
+#其他配置文件,可以使用绝对路径
+#或者相对于 anylink 二进制文件的路径
+
+#数据文件
+db_type = "sqlite3"
+db_source = "./conf/anylink.db"
+#证书文件
+cert_file = "./conf/vpn_cert.pem"
+cert_key = "./conf/vpn_cert.key"
+files_path = "./conf/files"
+
+#日志目录,默认为空写入标准输出
+#log_path = "./log"
+log_level = "debug"
+
+#系统名称
+issuer = "XX公司VPN"
+#后台管理用户
+admin_user = "admin"
+#pass 123456
+admin_pass = "$2a$10$UQ7C.EoPifDeJh6d8.31TeSPQU7hM/NOM2nixmBucJpAuXDQNqNke"
+# 留空表示不开启 otp, 开启otp后密码为  pass + 6位otp
+# 生成 ./anylink tool -o
+admin_otp = ""
+jwt_secret = "abcdef.0123456789.abcdef"
+
+#TCP服务监听地址(任意端口)
+server_addr = ":443"
+#开启 DTLS
+server_dtls = false
+#UDP监听地址(任意端口)
+server_dtls_addr = ":443"
+#后台服务监听地址
+admin_addr = ":8800"
+
+#最大客户端数量
+max_client = 200
+#单个用户同时在线数量
+max_user_client = 3
+
+#虚拟网络类型[tun macvtap]
+link_mode = "tun"
+#客户端分配的ip地址池
+#docker环境一般默认 eth0，其他情况根据实际网卡信息填写
+ipv4_master = "eth0"
+ipv4_cidr = "2.0.1.0/24"
+ipv4_gateway = "2.0.1.254"
+ipv4_start = "2.0.1.100"
+ipv4_end = "2.0.1.200"
+
+#是否自动添加nat
+iptables_nat = true
+
+#客户端显示详细错误信息(线上环境慎开启)
+display_error = true

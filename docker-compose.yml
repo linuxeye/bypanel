@@ -1567,7 +1567,7 @@ services:
   # crproxy
   # ------------------------------------------------------------
   crproxy:
-    image: ghcr.io/daocloud/crproxy/crproxy:v0.12.1
+    image: ghcr.io/daocloud/crproxy/crproxy:v0.12.4
     # Always pull docker image
     #pull_policy: always
     hostname: crproxy
@@ -1583,6 +1583,42 @@ services:
       - /tmp/acme
     networks:
       - net
+
+  # ------------------------------------------------------------
+  # anylink
+  # ------------------------------------------------------------
+  anylink:
+    image: bjdgyc/anylink
+    # Always pull docker image
+    #pull_policy: always
+    hostname: anylink
+    profiles:
+      - anylink
+    ports:
+      - ${HOST_PORT_ANYLINK}:443
+      - ${HOST_PORT_ANYLINK}:443/udp
+      - ${HOST_PORT_ANYLINK_MANAGEMENT}:8800
+
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+
+    environment:
+      - TZ=${TIMEZONE}
+      - LINK_LOG_LEVEL="info"
+      #- IPTABLES_LEGACY="on"
+    command:
+      - --conf=/app/conf/server.toml
+    volumes:
+      # ---- Format: ----
+      # HOST-DIRECTORY : DOCKER-DIRECTORY
+
+      # Mount custom web server config directory
+      - ${BASE_PATH}/cfg/anylink:/app/conf:rw${MOUNT_OPTIONS}
+    networks:
+      - net
+
 
   # ------------------------------------------------------------
   # wp-cli

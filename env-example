@@ -137,7 +137,7 @@ TIMEZONE=Asia/Shanghai
 ### 1.1 Choose Nginx Server Image
 ###
 NGINX_SERVER=latest
-#NGINX_SERVER=1.27.3
+#NGINX_SERVER=1.27.5
 
 ###
 ### 1.2 Choose Tomcat Server Image
@@ -543,3 +543,15 @@ HOST_PORT_ACTIVEMQ=61616
 HOST_PORT_ACTIVEMQ_MANAGEMENT=8161
 ACTIVEMQ_WEB_USER=admin
 ACTIVEMQ_WEB_PASSWORD=bypanel
+
+################################################################################
+###
+### 15. anylink Docker Settings
+###
+################################################################################
+###
+### Node: HOST_PORT_ANYLINK - Expose AnyLink Port to Host
+###       HOST_PORT_ANYLINK_MANAGEMENT - Expose AnyLink Management Port to Host
+###
+HOST_PORT_ANYLINK=6443
+HOST_PORT_ANYLINK_MANAGEMENT=8800

@@ -1,0 +1,36 @@
+services:
+  anylink:
+    image: bjdgyc/anylink
+    # Always pull docker image
+    #pull_policy: always
+    hostname: anylink
+    restart: always
+    ports:
+      - ${HOST_PORT_ANYLINK}:443
+      - ${HOST_PORT_ANYLINK}:443/udp
+      - ${HOST_PORT_ANYLINK_MANAGEMENT}:8800
+
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+
+    environment:
+      - TZ=${TIMEZONE}
+      - LINK_LOG_LEVEL="info"
+      #- IPTABLES_LEGACY="on"
+    command:
+      - --conf=/app/conf/server.toml
+    volumes:
+      # ---- Format: ----
+      # HOST-DIRECTORY : DOCKER-DIRECTORY
+
+      # Mount custom web server config directory
+      - ${BASE_PATH}/cfg/anylink:/app/conf:rw${MOUNT_OPTIONS}
+    networks:
+      - net
+
+networks:
+  net:
+    name: ${COMPOSE_NETWORK_NAME}
+    driver: bridge
