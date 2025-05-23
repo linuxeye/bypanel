@@ -1545,6 +1545,8 @@ services:
     #pull_policy: always
     restart: always
     hostname: activemq
+    profiles:
+      - activemq
     environment:
       - TZ=${TIMEZONE}
       - ACTIVEMQ_WEB_USER=${ACTIVEMQ_WEB_USER}
@@ -1583,6 +1585,39 @@ services:
       - /tmp/acme
     networks:
       - net
+
+  # ------------------------------------------------------------
+  # zookeeper
+  # ------------------------------------------------------------
+
+  zookeeper:
+    image: zookeeper:${ZK_SERVER}
+    # Always pull docker image
+    #pull_policy: always
+    restart: always
+    hostname: zookeeper
+    profiles:
+      - zookeeper
+    environment:
+      - TZ=${TIMEZONE}
+      - ZOO_HEAP_SIZE=2G
+      - ZOO_STANDALONE_ENABLED=true
+
+    ports:
+      # ---- Format: ----
+      # [HOST-ADDR : ] HOST-PORT : DOCKER-PORT
+      - "${HOST_PORT_ZK}:2181"
+
+    networks:
+      - net
+
+    volumes:
+      # ---- Format: ----
+      # HOST-DIRECTORY : DOCKER-DIRECTORY
+
+      # Mount custom intranet
+      - ${VOLUME_PATH}/zookeeper/data:/data:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/zookeeper/datalog:/datalog:rw${MOUNT_OPTIONS}
 
   # ------------------------------------------------------------
   # anylink

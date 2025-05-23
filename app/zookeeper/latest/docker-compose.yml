@@ -1,0 +1,35 @@
+services:
+  zookeeper:
+    image: zookeeper
+    # Always pull docker image
+    #pull_policy: always
+    restart: always
+    hostname: zookeeper
+
+    environment:
+      - TZ=${TIMEZONE}
+      # 设置堆内存大小（根据实际需求调整）
+      - ZOO_HEAP_SIZE=2G
+      # 启用单机模式优化配置
+      - ZOO_STANDALONE_ENABLED=true
+
+    ports:
+      # ---- Format: ----
+      # [HOST-ADDR : ] HOST-PORT : DOCKER-PORT
+      - "${HOST_PORT_ZK}:2181"
+
+    networks:
+      - net
+
+    volumes:
+      # ---- Format: ----
+      # HOST-DIRECTORY : DOCKER-DIRECTORY
+
+      # Mount custom intranet
+      - ${VOLUME_PATH}/zookeeper/data:/data:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/zookeeper/datalog:/datalog:rw${MOUNT_OPTIONS}
+
+networks:
+  net:
+    name: ${COMPOSE_NETWORK_NAME}
+    driver: bridge

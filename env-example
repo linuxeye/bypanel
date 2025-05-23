@@ -290,6 +290,15 @@ RABBITMQ_SERVER=3.13-management-alpine
 ACTIVEMQ_SERVER=latest
 #ACTIVEMQ_SERVER=5.18.6
 
+###
+### 1.13 Choose zookeeper Server Image
+###
+### https://zookeeper.apache.org/
+###
+ZK_SERVER=latest
+#ZK_SERVER=3.9
+#ZK_SERVER=3.8
+
 ################################################################################
 ###
 ### 2. Host Mounts (Your computer)
@@ -546,7 +555,17 @@ ACTIVEMQ_WEB_PASSWORD=bypanel
 
 ################################################################################
 ###
-### 15. anylink Docker Settings
+### 15. ZooKeeper Docker Settings
+###
+################################################################################
+###
+### Node: HOST_PORT_ZK - Expose ZooKeeper Port to Host
+###
+HOST_PORT_ZK=2181
+
+################################################################################
+###
+### 16. anylink Docker Settings
 ###
 ################################################################################
 ###
