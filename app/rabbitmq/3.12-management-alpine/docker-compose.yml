@@ -20,7 +20,7 @@ services:
       # ---- Format: ----
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
-      # Mount var sftpgo
+      # Mount var rabbitmq
       - ${VOLUME_PATH}/rabbitmq:/var/lib/rabbitmq:rw${MOUNT_OPTIONS}
 
     networks:
