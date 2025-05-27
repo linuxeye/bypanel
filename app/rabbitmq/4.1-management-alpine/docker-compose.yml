@@ -1,0 +1,32 @@
+services:
+  rabbitmq:
+    image: rabbitmq:4.1-management-alpine
+    # Always pull docker image
+    #pull_policy: always
+    restart: always
+    hostname: rabbitmq
+    environment:
+      - TZ=${TIMEZONE}
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+      - RABBITMQ_DEFAULT_VHOST=${RABBITMQ_DEFAULT_VHOST}
+    ports:
+      # ---- Format: ----
+      # [HOST-ADDR : ] HOST-PORT : DOCKER-PORT
+      - "${HOST_PORT_RABBITMQ}:5672"
+      - "${HOST_PORT_RABBITMQ_MANAGEMENT}:15672"
+
+    volumes:
+      # ---- Format: ----
+      # HOST-DIRECTORY : DOCKER-DIRECTORY
+
+      # Mount var rabbitmq
+      - ${VOLUME_PATH}/rabbitmq:/var/lib/rabbitmq:rw${MOUNT_OPTIONS}
+
+    networks:
+      - net
+
+networks:
+  net:
+    name: ${COMPOSE_NETWORK_NAME}
+    driver: bridge
