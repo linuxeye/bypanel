@@ -179,7 +179,8 @@ TOMCAT_SERVER=latest
 #MYSQL_SERVER=mariadb-10.9
 #MYSQL_SERVER=mariadb-10.10
 #MYSQL_SERVER=mariadb-10.11
-MYSQL_SERVER=mariadb-11.4
+#MYSQL_SERVER=mariadb-11.4
+MYSQL_SERVER=mariadb-11.8
 
 ###
 ### 1.4 Choose PostgreSQL Server Image
