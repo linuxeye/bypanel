@@ -57,7 +57,7 @@ services:
       # to overwrite the default PHP-FPM configuration
       - ${BASE_PATH}/cfg/php-fpm-7.3:/etc/php-fpm-custom.d:ro${MOUNT_OPTIONS}
 
-      # Mount bypanel user-defined PHP-FPM startup *.sh scripts
+      # Mount bypanel user-defined supplied scripts
       - ${BASE_PATH}/cfg/php-startup-7.3:/startup.1.d:rw${MOUNT_OPTIONS}
       - ${BASE_PATH}/cfg/autostart:/startup.2.d:rw${MOUNT_OPTIONS}
 

@@ -1,0 +1,48 @@
+services:
+  nacos:
+    image: nacos/nacos-server:v2.5.1
+    container_name: nacos
+    environment:
+      - TZ=${TIMEZONE}
+      - SPRING_DATASOURCE_PLATFORM=${SPRING_DATASOURCE_PLATFORM}
+      - MYSQL_SERVICE_HOST=${MYSQL_SERVICE_HOST}
+      - MYSQL_SERVICE_PORT=${MYSQL_SERVICE_PORT}
+      - MYSQL_SERVICE_USER=${MYSQL_SERVICE_USER}
+      - MYSQL_SERVICE_PASSWORD=${MYSQL_SERVICE_PASSWORD}
+      - MYSQL_SERVICE_DB_NAME=${MYSQL_SERVICE_DB_NAME}
+
+      # 2.5.1 特殊数据库连接配置 (MySQL 8.0)
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
+      - MYSQL_SERVICE_DB_PARAM=${MYSQL_SERVICE_DB_PARAM}
+      # 认证配置 (核心参数)
+      - NACOS_AUTH_ENABLE=${NACOS_AUTH_ENABLE}
+      - NACOS_AUTH_TOKEN_EXPIRE_SECONDS=${NACOS_AUTH_TOKEN_EXPIRE_SECONDS}
+      - NACOS_AUTH_CACHE_ENABLE=${NACOS_AUTH_CACHE_ENABLE}
+      - NACOS_AUTH_TOKEN=${NACOS_AUTH_TOKEN}
+      - NACOS_AUTH_IDENTITY_KEY=${NACOS_AUTH_IDENTITY_KEY}
+      - NACOS_AUTH_IDENTITY_VALUE=${NACOS_AUTH_IDENTITY_VALUE}
+      
+      # 服务端配置
+      - MODE=${MODE}
+      - PREFER_HOST_MODE=${PREFER_HOST_MODE}
+      - JVM_XMS=${JVM_XMS}
+      - JVM_XMX=${JVM_XMX}
+      #- NACOS_PROMETHEUS_METRICS_ENABLE="true"
+    ports:
+      - "${HOST_PORT_NACOS}:8848"
+    restart: unless-stopped
+
+    networks:
+      - net
+
+    volumes:
+      # ---- Format: ----
+      # HOST-DIRECTORY : DOCKER-DIRECTORY
+
+      # Mount logs
+      - ${VOLUME_PATH}/logs/nacos:/home/nacos/logs:rw${MOUNT_OPTIONS}
+
+networks:
+  net:
+    name: ${COMPOSE_NETWORK_NAME}
+    driver: bridge
