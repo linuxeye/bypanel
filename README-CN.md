@@ -42,12 +42,24 @@ bypanel help
 ```
 
 ### 配置
+**全局配置文件**: 优先级最低
 ```
 bypanel configure
 ```
-配置部署bypanel参数，即修改配置文件
+配置部署bypanel参数，即修改全局配置文件
+
 * Linux: `/opt/bypanel/.env`
 * MacOS: `~/bypanel/.env`
+
+**应用配置文件**: 优先级次之
+* Linux: `/opt/bypanel/app/{AppName}/.env`
+* MacOS: `~/bypanel/app/{AppName}/.env`
+
+**应用版本配置文件**: 优先级最高
+* Linux: `/opt/bypanel/app/{AppName}/{AppVersion}/.env`
+* MacOS: `~/bypanel/app/{AppName}/{AppVersion}/.env`
+
+当不同配置文件中存在相同变量时，高优先级的配置文件会覆盖低优先级的配置文件。即应用版本配置文件会覆盖应用配置文件，应用配置文件会覆盖全局配置文件。
 
 ### 镜像拉取
 ```

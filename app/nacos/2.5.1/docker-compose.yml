@@ -1,7 +1,7 @@
 services:
   nacos:
     image: nacos/nacos-server:v2.5.1
-    container_name: nacos
+    hostname: nacos
     environment:
       - TZ=${TIMEZONE}
       - SPRING_DATASOURCE_PLATFORM=${SPRING_DATASOURCE_PLATFORM}
@@ -11,9 +11,6 @@ services:
       - MYSQL_SERVICE_PASSWORD=${MYSQL_SERVICE_PASSWORD}
       - MYSQL_SERVICE_DB_NAME=${MYSQL_SERVICE_DB_NAME}
 
-      # 2.5.1 特殊数据库连接配置 (MySQL 8.0)
-      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
-      - MYSQL_SERVICE_DB_PARAM=${MYSQL_SERVICE_DB_PARAM}
       # 认证配置 (核心参数)
       - NACOS_AUTH_ENABLE=${NACOS_AUTH_ENABLE}
       - NACOS_AUTH_TOKEN_EXPIRE_SECONDS=${NACOS_AUTH_TOKEN_EXPIRE_SECONDS}

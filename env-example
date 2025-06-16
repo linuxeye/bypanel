@@ -496,20 +496,7 @@ HOST_PORT_MONGO=27017
 
 ################################################################################
 ###
-### 11. phpMyAdmin Docker Settings
-###
-################################################################################
-
-###
-### Note: PMA_ARBITRARY - when set to 1 connection to the arbitrary server will be allowed
-###       PMA_ABSOLUTE_URI - the full URL to phpMyAdmin. Sometimes needed when used in a reverse-proxy configuration.
-###
-PMA_ARBITRARY=1
-PMA_ABSOLUTE_URI=/phpmyadmin
-
-################################################################################
-###
-### 12. SFTPGO Docker Settings
+### 11. SFTPGO Docker Settings
 ###
 ################################################################################
 
@@ -530,41 +517,33 @@ SFTPGO_FTPD_PASSIVE_PORT_RANGE_END=21100
 
 ################################################################################
 ###
-### 13. rabbitmq Docker Settings
+### 12. rabbitmq Docker Settings
 ###
 ################################################################################
 ###
 ### Node: HOST_PORT_RABBITMQ - Expose RabbitMQ Port to Host
 ###       HOST_PORT_RABBITMQ_MANAGEMENT - Expose RabbitMQ Management Port to Host
-###       RABBITMQ_DEFAULT_USER - RabbitMQ Management default user
-###       RABBITMQ_DEFAULT_PASS - RabbitMQ Management default password
-###       RABBITMQ_DEFAULT_VHOST - RabbitMQ  Management default vhost
+###       Other: app/rabbitmq/.env
 ###
 HOST_PORT_RABBITMQ=5672
 HOST_PORT_RABBITMQ_MANAGEMENT=15672
-RABBITMQ_DEFAULT_USER=admin
-RABBITMQ_DEFAULT_PASS=bypanel
-RABBITMQ_DEFAULT_VHOST=/
 
 ################################################################################
 ###
-### 14. activemq Docker Settings
+### 13. activemq Docker Settings
 ###
 ################################################################################
 ###
 ### Node: HOST_PORT_ACTIVEMQ - Expose ActiveMQ Port to Host
 ###       HOST_PORT_ACTIVEMQ_MANAGEMENT - Expose ActiveMQ Management Port to Host
-###       ACTIVEMQ_WEB_USER - ActiveMQ Management user
-###       ACTIVEMQ_WEB_PASSWORD - ActiveMQ Management password
+###       Other: app/activemq/.env
 ###
 HOST_PORT_ACTIVEMQ=61616
 HOST_PORT_ACTIVEMQ_MANAGEMENT=8161
-ACTIVEMQ_WEB_USER=admin
-ACTIVEMQ_WEB_PASSWORD=bypanel
 
 ################################################################################
 ###
-### 15. ZooKeeper Docker Settings
+### 13. ZooKeeper Docker Settings
 ###
 ################################################################################
 ###
@@ -574,7 +553,7 @@ HOST_PORT_ZK=2181
 
 ################################################################################
 ###
-### 16. Nacos Docker Settings
+### 15. Nacos Docker Settings
 ###
 ################################################################################
 ###
@@ -584,7 +563,7 @@ HOST_PORT_NACOS=8848
 
 ################################################################################
 ###
-### 17. anylink Docker Settings
+### 16. anylink Docker Settings
 ###
 ################################################################################
 ###
