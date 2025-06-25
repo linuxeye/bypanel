@@ -24,7 +24,7 @@ services:
       # Mount bypanel user-defined cnf files in order
       # to overwrite the MySQL server configuration
       #- ${BASE_PATH}/cfg/mysql.cnf:/etc/mysql/conf.d/bypanel.cnf:ro${MOUNT_OPTIONS}
-      - ${BASE_PATH}/cfg/mariadb-10.8:/etc/mysql/docker-default.d:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/mysql/mariadb-10.8:/etc/mysql/docker-default.d:ro${MOUNT_OPTIONS}
 
       # Mount MySQL Data directory
       - ${VOLUME_PATH}/mariadb-10.8:/var/lib/mysql:rw${MOUNT_OPTIONS}
