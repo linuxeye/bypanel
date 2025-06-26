@@ -24,6 +24,7 @@ services:
       # ---- Format: ----
       # HOST-DIRECTORY : DOCKER-DIRECTORY
       - ${VOLUME_PATH}/activemq:/opt/apache-activemq/data:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/activemq/latest/jetty.xml:/opt/apache-activemq/conf/jetty.xml:ro${MOUNT_OPTIONS}
 
     networks:
       - net

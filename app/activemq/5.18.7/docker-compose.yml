@@ -12,8 +12,6 @@ services:
       - ACTIVEMQ_CONNECTION_PASSWORD=${ACTIVEMQ_CONNECTION_PASSWORD}
       - ACTIVEMQ_JMX_USER=${ACTIVEMQ_JMX_USER}
       - ACTIVEMQ_JMX_PASSWORD=${ACTIVEMQ_JMX_PASSWORD}
-      - ACTIVEMQ_WEB_USER=${ACTIVEMQ_WEB_USER}
-      - ACTIVEMQ_WEB_PASSWORD=${ACTIVEMQ_WEB_PASSWORD}
     ports:
       # ---- Format: ----
       # [HOST-ADDR : ] HOST-PORT : DOCKER-PORT
@@ -24,6 +22,8 @@ services:
       # ---- Format: ----
       # HOST-DIRECTORY : DOCKER-DIRECTORY
       - ${VOLUME_PATH}/activemq:/opt/apache-activemq/data:rw${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/activemq/5.18.7/jetty.xml:/opt/apache-activemq/conf/jetty.xml:ro${MOUNT_OPTIONS}
+      - ${BASE_PATH}/cfg/activemq/5.18.7/jetty-realm.properties:/opt/apache-activemq/conf/jetty-realm.properties:ro${MOUNT_OPTIONS}
 
     networks:
       - net

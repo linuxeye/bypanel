@@ -18,9 +18,9 @@ case "${KERNEL_NAME}" in
 darwin*)
   NEW_UID=${NEW_UID:-$(id -u)}
   NEW_GID=${NEW_GID:-$(id -g)}
-  BASE_PATH=${BASE_PATH:-~/bypanel}
-  VOLUME_PATH=${VOLUME_PATH:-~/bypanel/data}
-  BYPANEL_PATH=${BYPANEL_PATH:-~/bypanel/bin/bypanel}
+  BASE_PATH=${BASE_PATH:-$HOME/bypanel}
+  VOLUME_PATH=${VOLUME_PATH:-$HOME/bypanel/data}
+  BYPANEL_PATH=${BYPANEL_PATH:-$HOME/bypanel/bin/bypanel}
   ;;
 *)
   NEW_UID=${NEW_UID:-1000}

@@ -23,9 +23,9 @@ curl -sSL https://mirrors.linuxeye.com/bypanel/quick_install.sh | bash
 >
 > Linux bypanel binary path: `/usr/bin/bypanel`
 >
-> MacOS default install path: `~/bypanel`
+> MacOS default install path: `$HOME/bypanel`
 >
-> MacOS bypanel binary path: `~/bypanel/bin/bypanel`
+> MacOS bypanel binary path: `$HOME/bypanel/bin/bypanel`
 
 
 bypanel binary download url(quick_install.sh has been automatically installed):
@@ -59,16 +59,16 @@ bypanel configure
 Configure deployment parameters for bypanel, which modifies the global configuration file
 
 * Linux: `/opt/bypanel/.env`
-* MacOS: `~/bypanel/.env`
+* MacOS: `$HOME/bypanel/.env`
 
 **Application Configuration File**: Medium priority
 
 * Linux: `/opt/bypanel/app/{AppName}/.env`
-* MacOS: `~/bypanel/app/{AppName}/.env`
+* MacOS: `$HOME/bypanel/app/{AppName}/.env`
 
 **Application Version Configuration File**: Highest priority
 * Linux: `/opt/bypanel/app/{AppName}/{AppVersion}/.env`
-* MacOS: `~/bypanel/app/{AppName}/{AppVersion}/.env`
+* MacOS: `$HOME/bypanel/app/{AppName}/{AppVersion}/.env`
 
 When different configuration files exist, the configuration file with the highest priority will override the configuration file with the lowest priority. That is, the application version configuration file will override the application configuration file, and the application configuration file will override the global configuration file.
 

@@ -22,9 +22,9 @@ curl -sSL https://mirrors.linuxeye.com/bypanel/quick_install.sh | bash
 >
 > Linux bypanel二进制路径: `/usr/bin/bypanel`
 >
-> MacOS 默认安装路径: `~/bypanel`
+> MacOS 默认安装路径: `$HOME/bypanel`
 >
-> MacOS bypanel二进制路径: `~/bypanel/bin/bypanel`
+> MacOS bypanel二进制路径: `$HOME/bypanel/bin/bypanel`
 
 bypanel二进制下载地址(quick_install.sh已自动安装)
 * Linux AMD64: https://mirrors.linuxeye.com/bypanel/bypanel-linux-amd64
@@ -49,15 +49,15 @@ bypanel configure
 配置部署bypanel参数，即修改全局配置文件
 
 * Linux: `/opt/bypanel/.env`
-* MacOS: `~/bypanel/.env`
+* MacOS: `$HOME/bypanel/.env`
 
 **应用配置文件**: 优先级次之
 * Linux: `/opt/bypanel/app/{AppName}/.env`
-* MacOS: `~/bypanel/app/{AppName}/.env`
+* MacOS: `$HOME/bypanel/app/{AppName}/.env`
 
 **应用版本配置文件**: 优先级最高
 * Linux: `/opt/bypanel/app/{AppName}/{AppVersion}/.env`
-* MacOS: `~/bypanel/app/{AppName}/{AppVersion}/.env`
+* MacOS: `$HOME/bypanel/app/{AppName}/{AppVersion}/.env`
 
 当不同配置文件中存在相同变量时，高优先级的配置文件会覆盖低优先级的配置文件。即应用版本配置文件会覆盖应用配置文件，应用配置文件会覆盖全局配置文件。
 
