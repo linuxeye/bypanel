@@ -1,6 +1,6 @@
 services:
   nginx:
-    image: bypanel/nginx:1.27.5
+    image: bypanel/nginx:mainline
     # Always pull docker image
     #pull_policy: always
     restart: always

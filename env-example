@@ -137,7 +137,7 @@ TIMEZONE=Asia/Shanghai
 ### 1.1 Choose Nginx Server Image
 ###
 NGINX_SERVER=latest
-#NGINX_SERVER=1.27.5
+#NGINX_SERVER=mainline
 
 ###
 ### 1.2 Choose Tomcat Server Image
