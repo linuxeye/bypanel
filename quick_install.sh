@@ -443,7 +443,7 @@ install_docker_linux() {
       cat >/etc/yum.repos.d/docker-ce.repo <<EOF
 [docker-ce-stable]
 name=Docker CE Stable - \$basearch
-baseurl=${DOCKER_REPO_URL}/linux/centos/\$releasever/\$basearch/stable
+baseurl=${DOCKER_REPO_URL}/linux/rhel/\$releasever/\$basearch/stable
 enabled=1
 gpgcheck=0
 EOF
@@ -462,7 +462,7 @@ EOF
       cat >/etc/yum.repos.d/docker-ce.repo <<EOF
 [docker-ce-stable]
 name=Docker CE Stable - \$basearch
-baseurl=${DOCKER_REPO_URL}/linux/centos/$releasever/\$basearch/stable
+baseurl=${DOCKER_REPO_URL}/linux/rhel/$releasever/\$basearch/stable
 enabled=1
 gpgcheck=0
 EOF
