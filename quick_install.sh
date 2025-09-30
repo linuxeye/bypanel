@@ -57,7 +57,7 @@ download_bypanel() {
   if [ ! -e ${BASE_PATH}/env-example ]; then
     printf "\033[33mDownloading bypanel.tar.gz... \033[0m\n"
     [ -e /tmp/bypanel.tar.gz ] && rm -rf /tmp/{bypanel.tar.gz,bypanel}
-    curl -# ${MIRROR_URL}/bypanel.tar.gz -o /tmp/bypanel.tar.gz 2>&1
+    curl -L -# ${MIRROR_URL}/bypanel.tar.gz -o /tmp/bypanel.tar.gz 2>&1
     LOCAL_PANEL_MD5=$(md5sum /tmp/bypanel.tar.gz | awk '{print $1}')
     REMOTE_PANEL_MD5=$(curl --connect-timeout 3 -m 5 -s ${MIRROR_URL}/md5sum.txt | grep bypanel.tar.gz | awk '{print $1}')
     if [ "${LOCAL_PANEL_MD5}" != "${REMOTE_PANEL_MD5}" ]; then
@@ -73,7 +73,7 @@ download_bypanel() {
 
   if [ ! -e ${BYPANEL_PATH} ]; then
     printf "\033[33mDownloading ${BYPANEL_PATH}... \033[0m\n"
-    curl -# ${MIRROR_URL}/bypanel/${BYPANEL_BIN} -o ${BYPANEL_PATH}
+    curl -L -# ${MIRROR_URL}/bypanel/${BYPANEL_BIN} -o ${BYPANEL_PATH}
     chmod +x ${BYPANEL_PATH}
   else
     printf "\033[33m${BYPANEL_PATH} is already installed! \033[0m\n"
@@ -471,9 +471,9 @@ EOF
     else
       printf "\033[33mDownloading get-docker.sh... \033[0m\n"
       if [ "${IP_COUNTRY}x" = "CN"x ]; then
-        curl -# https://ghfast.top/https://raw.githubusercontent.com/docker/docker-install/master/install.sh -o get-docker.sh 2>&1
+        curl -L -# https://ghfast.top/https://raw.githubusercontent.com/docker/docker-install/master/install.sh -o get-docker.sh 2>&1
       else
-        curl -# https://get.docker.com -o get-docker.sh 2>&1
+        curl -L -# https://get.docker.com -o get-docker.sh 2>&1
       fi
 
       if [ -e "get-docker.sh" ]; then
