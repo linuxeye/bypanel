@@ -1,6 +1,6 @@
 services:
   crproxy:
-    image: ghcr.io/daocloud/crproxy/crproxy:v0.12.4
+    image: ghcr.io/daocloud/crproxy/crproxy:v0.12.6
     # Always pull docker image
     #pull_policy: always
     hostname: crproxy

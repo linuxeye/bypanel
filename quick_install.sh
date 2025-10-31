@@ -490,7 +490,7 @@ EOF
 
     if ! command -v docker >/dev/null 2>&1; then
       if [ "${IP_COUNTRY}x" = "CN"x ]; then
-        curl -fsSL https://ghfast.top/https://raw.githubusercontent.com/dyrnq/install-docker/main/install-docker.sh | bash -s docker --mirror aliyun --with-compose --compose-mirror daocloud --systemd-mirror "ghproxy"
+        curl -fsSL https://ghfast.top/https://raw.githubusercontent.com/dyrnq/install-docker/main/install-docker.sh | bash -s docker --mirror aliyun --with-compose --compose-mirror daocloud --systemd-mirror "daocloud"
       else
         curl -fsSL https://raw.githubusercontent.com/dyrnq/install-docker/main/install-docker.sh | bash -s docker --with-compose
       fi
