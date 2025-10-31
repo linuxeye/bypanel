@@ -164,7 +164,7 @@ setup_system_linux() {
     exit 1
   fi
   PLATFORM=$(printf "${ID}" | tr '[:upper:]' '[:lower:]')
-  PLATFORM_RHEL="centos rhel almalinux rocky fedora amzn ol alinux anolis tencentos opencloudos euleros openeuler kylin uos kylinsecos"
+  PLATFORM_RHEL="centos rhel almalinux rocky fedora amzn ol alinux anolis tencentos opencloudos hce openeuler kylin uos kylinsecos"
   PLATFORM_DEBIAN="debian deepin kali"
   PLATFORM_UBUNTU="ubuntu linuxmint elementary"
   if [ "${PLATFORM}" = "alpine" ]; then
@@ -222,7 +222,7 @@ alias grep='grep --color'
 alias egrep='egrep --color'
 alias fgrep='fgrep --color'
 EOF
-    PLATFORM_EULER="euleros openeuler"
+    PLATFORM_EULER="hce openeuler"
     [ -n "$(echo ${PLATFORM_EULER} | grep -w ${PLATFORM})" ] && sed -i '/HISTTIMEFORMAT=/d' /etc/profile.d/bypanel.sh
 
     [ -z "$(echo ${PLATFORM_EULER} | grep -w ${PLATFORM})" ] && [ -z "$(grep ^'PROMPT_COMMAND=' /etc/bashrc)" ] && cat >>/etc/bashrc <<EOF
