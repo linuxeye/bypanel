@@ -172,3 +172,7 @@ bypanel upgrade
 ```
 bypanel version
 ```
+### Uninstall
+```
+curl -sSL https://mirrors.linuxeye.com/bypanel/uninstall.sh | bash
+```

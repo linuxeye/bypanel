@@ -9,6 +9,8 @@
 
 export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/opt/homebrew/bin:$PATH
 
+DOCKER_VERSION=${DOCKER_VERSION:-"28.5.1 "}
+DOCKER_COMPOSE_VERSION=${DOCKER_COMPOSE_VERSION:-"2.40.3"}
 MIRROR_URL=${MIRROR_URL:-http://mirrors.linuxeye.com}
 KERNEL_NAME=$(uname -s | tr '[:upper:]' '[:lower:]')
 ARCH=$(uname -m)
@@ -490,7 +492,7 @@ EOF
 
     if ! command -v docker >/dev/null 2>&1; then
       if [ "${IP_COUNTRY}x" = "CN"x ]; then
-        curl -fsSL https://ghfast.top/https://raw.githubusercontent.com/dyrnq/install-docker/main/install-docker.sh | bash -s docker --mirror aliyun --version 28.5.1 --with-compose --compose-version 2.40.3 --compose-mirror daocloud --systemd-mirror "daocloud"
+        curl -fsSL https://ghfast.top/https://raw.githubusercontent.com/dyrnq/install-docker/main/install-docker.sh | bash -s docker --mirror aliyun --version ${DOCKER_VERSION} --with-compose --compose-version ${DOCKER_COMPOSE_VERSION} --compose-mirror daocloud --systemd-mirror "daocloud"
       else
         curl -fsSL https://raw.githubusercontent.com/dyrnq/install-docker/main/install-docker.sh | bash -s docker --with-compose
       fi
