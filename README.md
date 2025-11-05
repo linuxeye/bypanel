@@ -16,7 +16,7 @@
 
 ### Install
 ```
-curl -sSL https://mirrors.linuxeye.com/bypanel/quick_install.sh | bash
+bash -c "$(curl -sSL https://mirrors.linuxeye.com/bypanel/quick_install.sh)"
 ```
 
 > Linux default install path: `/opt/bypanel`
@@ -174,5 +174,5 @@ bypanel version
 ```
 ### Uninstall
 ```
-curl -sSL https://mirrors.linuxeye.com/bypanel/uninstall.sh | bash
+bash -c "$(curl -sSL https://mirrors.linuxeye.com/bypanel/uninstall.sh)"
 ```

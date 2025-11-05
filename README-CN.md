@@ -15,7 +15,7 @@
 
 ### 安装
 ```
-curl -sSL https://mirrors.linuxeye.com/bypanel/quick_install.sh | bash
+bash -c "$(curl -sSL https://mirrors.linuxeye.com/bypanel/quick_install.sh)"
 ```
 
 > Linux 默认安装路径: `/opt/bypanel`
@@ -159,5 +159,5 @@ bypanel version
 
 ### 卸载
 ```
-curl -sSL https://mirrors.linuxeye.com/bypanel/uninstall.sh | bash
+bash -c "$(curl -sSL https://mirrors.linuxeye.com/bypanel/uninstall.sh)"
 ```

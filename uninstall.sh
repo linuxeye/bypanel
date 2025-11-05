@@ -64,8 +64,9 @@ show_warning() {
 
 # User confirmation
 confirm_uninstall() {
+  echo
   while true; do
-    read -p "Confirm to continue uninstalling ByPanel? (y/N): " confirm
+    read -e -p "Confirm to continue uninstalling ByPanel? (y/n): " confirm
     case "${confirm}" in
       [Yy]* ) return 0 ;;
       [Nn]* | "" ) echo_red "Uninstall operation cancelled" && exit 1 ;;
@@ -124,9 +125,10 @@ clean_bypanel() {
 # Clean webroot directory (requires user confirmation)
 clean_webroot() {
   if [ -d "${WEBROOT_PATH}" ]; then
+    echo
     echo_yellow "Note: Webroot directory ${WEBROOT_PATH} contains your website files"
     while true; do
-      read -p "Do you want to delete the webroot directory and all its contents? This operation is irreversible! (y/N): " confirm
+      read -e -p "Do you want to delete the webroot directory and all its contents? This operation is irreversible! (y/n): " confirm
       case "${confirm}" in
         [Yy]* )
           rm -rf "${WEBROOT_PATH}"
@@ -151,6 +153,7 @@ clean_app_data() {
   APP_DIRS=$(ls ${VOLUME_PATH} 2>/dev/null | grep -E '^(pgsql-|mariadb-|mysql-|percona-|mongo-|redis|rabbitmq|activemq|sftpgo|zookeeper)')
 
   if [ -n "${APP_DIRS}" ]; then
+    echo
     echo_yellow "Note: The following app data directories contain your data:"
     echo_yellow "${APP_DIRS}"
     
@@ -158,7 +161,7 @@ clean_app_data() {
     for dir in ${APP_DIRS}; do
       dir_path="${VOLUME_PATH}/${dir}"
       while true; do
-        read -p "Do you want to delete the directory '${dir}' and all its contents? This operation is irreversible! (y/N): " confirm
+        read -e -p "Do you want to delete the directory '${dir}' and all its contents? This operation is irreversible! (y/n): " confirm
         case "${confirm}" in
           [Yy]* )
             rm -rf "${dir_path}"
@@ -181,9 +184,10 @@ clean_app_data() {
 # Clean logs directory (requires user confirmation)
 clean_logs() {
   if [ -d "${LOGS_PATH}" ]; then
+    echo
     echo_yellow "Note: Logs directory ${LOGS_PATH} contains app logs"
     while true; do
-      read -p "Do you want to delete the logs directory and all its contents? This operation is irreversible! (y/N): " confirm
+      read -e -p "Do you want to delete the logs directory and all its contents? This operation is irreversible! (y/n): " confirm
       case "${confirm}" in
         [Yy]* )
           rm -rf "${LOGS_PATH}"
@@ -205,9 +209,10 @@ clean_logs() {
 # stop Docker (requires user confirmation)
 stop_docker() {
   if command -v docker > /dev/null; then
+    echo
     echo_yellow "Note: Docker may be used by other applications"
     while true; do
-      read -p "Do you want to stop the Docker service? (y/N): " confirm
+      read -e -p "Do you want to stop the Docker service? (y/n): " confirm
       case "${confirm}" in
         [Yy]* )
           echo "Stopping Docker service..."
