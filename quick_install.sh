@@ -9,7 +9,7 @@
 
 export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/opt/homebrew/bin:$PATH
 
-DOCKER_VERSION=${DOCKER_VERSION:-"28.5.1 "}
+DOCKER_VERSION=${DOCKER_VERSION:-"28.5.2"}
 DOCKER_COMPOSE_VERSION=${DOCKER_COMPOSE_VERSION:-"2.40.3"}
 MIRROR_URL=${MIRROR_URL:-http://mirrors.linuxeye.com}
 KERNEL_NAME=$(uname -s | tr '[:upper:]' '[:lower:]')
