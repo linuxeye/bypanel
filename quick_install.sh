@@ -9,7 +9,8 @@
 
 export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/opt/homebrew/bin:$PATH
 
-DOCKER_VERSION=${DOCKER_VERSION:-"28.5.2"}
+AUTO_SWAP=${AUTO_SWAP:-0}
+DOCKER_VERSION=${DOCKER_VERSION:-"29.0.0"}
 DOCKER_COMPOSE_VERSION=${DOCKER_COMPOSE_VERSION:-"2.40.3"}
 MIRROR_URL=${MIRROR_URL:-http://mirrors.linuxeye.com}
 KERNEL_NAME=$(uname -s | tr '[:upper:]' '[:lower:]')
@@ -675,6 +676,17 @@ setup_webroot() {
   chown -R ${NEW_UID}:${NEW_GID} ${VOLUME_PATH}/webroot
 }
 
+setup_swap() {
+  if [ "${AUTO_SWAP}" = "1" ]; then
+    printf "Setup swap...\n"
+    sudo fallocate -l 2G /swapfile
+    sudo chmod 600 /swapfile
+    sudo mkswap /swapfile
+    sudo swapon /swapfile
+    printf "/swapfile none swap sw 0 0\n" | sudo tee -a /etc/fstab
+  fi
+}
+
 main() {
   download_bypanel
   setup_bypanel_env
@@ -686,6 +698,7 @@ main() {
     start_bypanel_darwin
     ;;
   *)
+    setup_swap
     setup_system_linux
     install_docker_linux
     install_docker_compose_linux
