@@ -1,5 +1,5 @@
 services:
-  php84:
+  php85:
     image: bypanel/php-fpm:8.5-prod
     # Always pull docker image
     #pull_policy: always
