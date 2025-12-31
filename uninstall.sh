@@ -55,8 +55,9 @@ show_warning() {
   echo_yellow "3. Delete ByPanel"
   echo_yellow "4. Optional: Delete website root directory (requires user confirmation)"
   echo_yellow "5. Optional: Delete app data directory (requires user confirmation)"
-  echo_yellow "6. Optional: Delete logs directory (requires user confirmation)"
-  echo_yellow "7. Optional: Stop Docker (requires user confirmation)"
+  echo_yellow "6. Optional: Stop Docker (requires user confirmation)"
+  echo_yellow "7. Optional: Completely uninstall Docker (requires user confirmation)"
+  echo_yellow "8. Optional: Delete logs directory (requires user confirmation)"
   echo_yellow ""
   echo_red   "This operation is irreversible, please ensure you have backed up all important data!"
   echo_yellow "========================================================"
@@ -237,6 +238,99 @@ stop_docker() {
   fi
 }
 
+# Clean Docker completely (requires user confirmation)
+clean_docker() {
+  # Only process Docker uninstallation on Linux
+  if [ "${KERNEL_NAME}" != "linux" ]; then
+    return
+  fi
+
+  # Check if Docker is installed (binary or package)
+  if command -v docker > /dev/null || [ -f /usr/bin/docker ] || [ -f /usr/local/bin/docker ] || [ -d /etc/docker ]; then
+    echo
+    echo_yellow "Note: Docker and its related components are installed"
+
+    while true; do
+      read -e -p "Do you want to completely uninstall Docker? This operation is irreversible! (y/n): " confirm
+      case "${confirm}" in
+        [Yy]* )
+          # Ask about Docker data removal
+          while true; do
+            read -e -p "Do you want to delete Docker data (containers, images, volumes, networks, etc.)? This operation is irreversible! (y/n): " data_confirm
+            case "${data_confirm}" in
+              [Yy]* )
+                echo "Deleting Docker data..."
+                # Stop any remaining Docker processes
+                pkill -f docker > /dev/null 2>&1 || true
+                pkill -f containerd > /dev/null 2>&1 || true
+                pkill -f dockerd > /dev/null 2>&1 || true
+                # Delete Docker data directories
+                rm -rf /var/lib/docker /var/lib/containerd /etc/docker /run/docker* /var/run/docker* /var/cache/docker /usr/local/lib/docker > /dev/null 2>&1 || true
+                echo_green "Docker data deleted"
+                break
+                ;;
+              [Nn]* | "" )
+                echo_yellow "Retained Docker data"
+                break
+                ;;
+              * )
+                echo "Please enter y or n"
+                ;;
+            esac
+          done
+
+          echo "Uninstalling Docker..."
+          # Uninstall Docker based on package manager
+          if command -v apt > /dev/null; then
+            # Debian/Ubuntu
+            apt-get remove -y docker docker-engine docker.io containerd runc docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin > /dev/null 2>&1 || true
+            apt-get purge -y docker docker-engine docker.io containerd runc docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin > /dev/null 2>&1 || true
+          elif command -v yum > /dev/null; then
+            # CentOS/RHEL 7
+            yum remove -y docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin > /dev/null 2>&1 || true
+          elif command -v dnf > /dev/null; then
+            # CentOS/RHEL 8+, Fedora
+            dnf remove -y docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin > /dev/null 2>&1 || true
+          elif command -v zypper > /dev/null; then
+            # SUSE/openSUSE
+            zypper remove -y docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin > /dev/null 2>&1 || true
+          fi
+
+          # Manual cleanup for binary installations
+          echo "Cleaning up Docker binary files..."
+          # Remove Docker binaries
+          rm -f /usr/bin/docker /usr/bin/dockerd /usr/bin/docker-init /usr/bin/docker-proxy /usr/bin/containerd /usr/bin/containerd-shim /usr/bin/containerd-shim-runc-v2 /usr/bin/runc > /dev/null 2>&1 || true
+          rm -f /usr/local/bin/docker /usr/local/bin/dockerd /usr/local/bin/docker-init /usr/local/bin/docker-proxy /usr/local/bin/containerd /usr/local/bin/containerd-shim /usr/local/bin/containerd-shim-runc-v2 /usr/local/bin/runc > /dev/null 2>&1 || true
+
+          # Remove Docker compose binaries if installed
+          rm -f /usr/bin/docker-compose /usr/local/bin/docker-compose /usr/bin/docker-compose-v2 /usr/local/bin/docker-compose-v2 > /dev/null 2>&1 || true
+
+          # Remove Docker systemd service files
+          rm -f /etc/systemd/system/docker.service /etc/systemd/system/docker.socket /etc/systemd/system/docker.service.d/* > /dev/null 2>&1 || true
+          rm -f /etc/systemd/system/containerd.service /etc/systemd/system/containerd.socket /etc/systemd/system/containerd.service.d/* > /dev/null 2>&1 || true
+          systemctl daemon-reload > /dev/null 2>&1 || true
+
+          # Remove Docker environment variables file
+          rm -f /etc/profile.d/docker.sh /etc/profile.d/docker-compose.sh > /dev/null 2>&1 || true
+
+          # Remove Docker group if it exists
+          grep -q docker /etc/group && groupdel docker > /dev/null 2>&1 || true
+
+          echo_green "Docker uninstalled completely"
+          break
+          ;;
+        [Nn]* | "" )
+          echo_yellow "Retained Docker installation"
+          break
+          ;;
+        * )
+          echo "Please enter y or n"
+          ;;
+      esac
+    done
+  fi
+}
+
 # Main function
 main() {
   # Show warning and confirmation
@@ -249,6 +343,7 @@ main() {
   clean_webroot
   clean_app_data
   stop_docker
+  clean_docker
   clean_logs
   
   # Clean empty directories
