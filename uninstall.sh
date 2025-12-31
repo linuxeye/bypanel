@@ -254,31 +254,6 @@ clean_docker() {
       read -e -p "Do you want to completely uninstall Docker? This operation is irreversible! (y/n): " confirm
       case "${confirm}" in
         [Yy]* )
-          # Ask about Docker data removal
-          while true; do
-            read -e -p "Do you want to delete Docker data (containers, images, volumes, networks, etc.)? This operation is irreversible! (y/n): " data_confirm
-            case "${data_confirm}" in
-              [Yy]* )
-                echo "Deleting Docker data..."
-                # Stop any remaining Docker processes
-                pkill -f docker > /dev/null 2>&1 || true
-                pkill -f containerd > /dev/null 2>&1 || true
-                pkill -f dockerd > /dev/null 2>&1 || true
-                # Delete Docker data directories
-                rm -rf /var/lib/docker /var/lib/containerd /etc/docker /run/docker* /var/run/docker* /var/cache/docker /usr/local/lib/docker > /dev/null 2>&1 || true
-                echo_green "Docker data deleted"
-                break
-                ;;
-              [Nn]* | "" )
-                echo_yellow "Retained Docker data"
-                break
-                ;;
-              * )
-                echo "Please enter y or n"
-                ;;
-            esac
-          done
-
           echo "Uninstalling Docker..."
           # Uninstall Docker based on package manager
           if command -v apt > /dev/null; then

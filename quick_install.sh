@@ -11,7 +11,7 @@ export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/opt/ho
 
 AUTO_SWAP=${AUTO_SWAP:-0}
 DOCKER_VERSION=${DOCKER_VERSION:-"29.1.3"}
-DOCKER_COMPOSE_VERSION=${DOCKER_COMPOSE_VERSION:-"5.0.1"}
+DOCKER_COMPOSE_VERSION=${DOCKER_COMPOSE_VERSION:-"2.40.3"}
 MIRROR_URL=${MIRROR_URL:-http://mirrors.linuxeye.com}
 KERNEL_NAME=$(uname -s | tr '[:upper:]' '[:lower:]')
 ARCH=$(uname -m)
