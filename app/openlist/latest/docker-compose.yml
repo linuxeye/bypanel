@@ -1,0 +1,31 @@
+services:
+  openlist:
+    image: openlistteam/openlist
+    # Always pull docker image
+    #pull_policy: always
+    restart: always
+    hostname: openlist
+    user: '0:0'
+    environment:
+      - TZ=${TIMEZONE}
+      - UMASK=022
+      - OPENLIST_ADMIN_PASSWORD=${OPENLIST_ADMIN_PASSWORD}
+    ports:
+      # ---- Format: ----
+      # [HOST-ADDR : ] HOST-PORT : DOCKER-PORT
+      - "${OPENLIST_PORT}:5244"
+
+    volumes:
+      # ---- Format: ----
+      # HOST-DIRECTORY : DOCKER-DIRECTORY
+
+      # Mount var openlist
+      - ${VOLUME_PATH}/openlist:/opt/openlist/data:rw${MOUNT_OPTIONS}
+
+    networks:
+      - net
+
+networks:
+  net:
+    name: ${COMPOSE_NETWORK_NAME}
+    driver: bridge
