@@ -1,6 +1,7 @@
 services:
   halo:
-    image: registry.fit2cloud.com/halo/halo-pro:2.22
+    image: halohub/halo:2       
+   #image: registry.fit2cloud.com/halo/halo:2   ## 国内镜像--社区版
     pull_policy: always  # 如需每次拉取最新镜像，取消注释
     restart: always
     hostname: halo
