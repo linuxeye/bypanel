@@ -9,7 +9,7 @@ services:
       - TZ=${TIMEZONE}
       - JVM_OPTS=-Xmx256m -Xms256m
     command:
-      - --spring.r2dbc.url=r2dbc:pool:${R2DBC_DB_TYPE}://bypanel-postgresql-1/halo
+      - --spring.r2dbc.url=r2dbc:pool:${R2DBC_DB_TYPE}://${PGSQL_HOST}/halo
       - --spring.r2dbc.username=${PGSQL_ROOT_USER}
       - --spring.r2dbc.password=${PGSQL_ROOT_PASSWORD}
       - --spring.sql.init.platform=${R2DBC_DB_TYPE}
