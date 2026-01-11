@@ -1,6 +1,7 @@
 services:
   halo:
-    image: registry.fit2cloud.com/halo/halo-pro:2.22
+    image: halohub/halo:2       
+   #image: registry.fit2cloud.com/halo/halo:2   ## 国内镜像--社区版
     pull_policy: always  # 如需每次拉取最新镜像，取消注释
     restart: always
     hostname: halo
@@ -8,7 +9,7 @@ services:
       - TZ=${TIMEZONE}
       - JVM_OPTS=-Xmx256m -Xms256m
     command:
-      - --spring.r2dbc.url=r2dbc:pool:${R2DBC_DB_TYPE}://bypanel-postgresql-1/halo
+      - --spring.r2dbc.url=r2dbc:pool:${R2DBC_DB_TYPE}://${PGSQL_HOST}/halo
       - --spring.r2dbc.username=${PGSQL_ROOT_USER}
       - --spring.r2dbc.password=${PGSQL_ROOT_PASSWORD}
       - --spring.sql.init.platform=${R2DBC_DB_TYPE}
