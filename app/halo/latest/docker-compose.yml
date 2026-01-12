@@ -1,30 +1,29 @@
 services:
   halo:
-    image: halohub/halo:2       
-   #image: registry.fit2cloud.com/halo/halo:2   ## 国内镜像--社区版
-    pull_policy: always  # 如需每次拉取最新镜像，取消注释
+    image: halohub/halo:2
+    pull_policy: always # 如需每次拉取最新镜像，取消注释
     restart: always
     hostname: halo
     environment:
       - TZ=${TIMEZONE}
-      - JVM_OPTS=-Xmx256m -Xms256m
+      - JVM_OPTS=${JVM_OPTS}
     command:
-      - --spring.r2dbc.url=r2dbc:pool:${R2DBC_DB_TYPE}://${PGSQL_HOST}/halo
+      - --spring.r2dbc.url=${R2DBC_URL}
       - --spring.r2dbc.username=${PGSQL_ROOT_USER}
       - --spring.r2dbc.password=${PGSQL_ROOT_PASSWORD}
       - --spring.sql.init.platform=${R2DBC_DB_TYPE}
       # 修复external-url：改为宿主机IP/域名（替换为你的实际地址）
-      - --halo.external-url=http://你的服务器IP:${HALO_PORT}/
+      - --halo.external-url=${HALO_EXTERNAL_URL}
     ports:
       - "${HALO_PORT}:8090"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8090/actuator/health/readiness"]
+      test: [ "CMD", "curl", "-f", "http://localhost:8090/actuator/health/readiness" ]
       interval: 30s
       timeout: 5s
       retries: 5
       start_period: 30s
     volumes:
-      - ${VOLUME_PATH}/webroot/halo2:/root/.halo2:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/halo:/root/.halo2:rw${MOUNT_OPTIONS}
     networks:
       - net
 
