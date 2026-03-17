@@ -1,18 +1,23 @@
 services:
-  redis:
-    image: redis:8.0-alpine
+  redis-stack:
+    image: redis/redis-stack 
     # Always pull docker image
     #pull_policy: always
     restart: always
-    hostname: redis
+    hostname: redis-stack 
 
     environment:
       - TZ=${TIMEZONE}
       - REDIS_ARGS=${REDIS_ARGS:- }
+      - REDISEARCH_ARGS=${REDISEARCH_ARGS:- }
+      - REDISJSON_ARGS=${REDISJSON_ARGS:- }
+      - REDISTIMESERIES_ARGS=${REDISTIMESERIES_ARGS:- }
+      - REDISBLOOM_ARGS=${REDISBLOOM_ARGS:- }
 
     ports:
       # [local-machine:]local-port:docker-port
       - "${LOCAL_LISTEN_ADDR}${HOST_PORT_REDIS}:6379"
+      - "${LOCAL_LISTEN_ADDR}${HOST_PORT_REDISINSIGHT}:8001"
 
     networks:
       - net
@@ -22,7 +27,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount Redis Data directory
-      - ${VOLUME_PATH}/redis-8.0:/data:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/redis-stack-latest:/data:rw${MOUNT_OPTIONS}
 
 networks:
   net:
