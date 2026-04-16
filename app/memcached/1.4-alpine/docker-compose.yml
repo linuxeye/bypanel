@@ -9,6 +9,9 @@ services:
     environment:
       - TZ=${TIMEZONE}
 
+    volumes:
+      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
+
     ports:
       # [local-machine:]local-port:docker-port
       - "${LOCAL_LISTEN_ADDR}${HOST_PORT_MEMCACHED}:11211"
