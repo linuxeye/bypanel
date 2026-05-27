@@ -88,7 +88,14 @@ bypanel up -d
 bypanel exec SERVICE COMMAND
 ```
 
+### Set website root directory permissions
+```
+sudo chown -R 1000:1000 /data/webroot
+sudo find /data/webroot -type d -print0 | sudo xargs -0 chmod 755
+sudo find /data/webroot -type f -print0 | sudo xargs -0 chmod 644
+```
 ### Setting up virtual hosts on HTTP Server
+
 #### Add
 ```
 bypanel vhost add
