@@ -115,6 +115,7 @@ Description=Systemd ByPanel
 After=network.target
 
 [Service]
+EnvironmentFile=-/etc/sysconfig/bypanel.env
 # Execute \$(systemctl daemon-reload) after ExecStart= is changed.
 ExecStart=${BYPANEL_PATH}
 

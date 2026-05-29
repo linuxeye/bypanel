@@ -12,7 +12,7 @@ services:
 
     ports:
       # [local-machine:]local-port:docker-port
-      - "${HOST_PORT_MYSQL}:3306"
+      - "${LOCAL_LISTEN_ADDR}${HOST_PORT_MYSQL}:3306"
 
     networks:
       - net

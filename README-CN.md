@@ -131,7 +131,7 @@ bypanel logs -f
 ```
 bypanel ps
 ```
-> 查看容器状态, 或执行命令 `bypanel status` 作用相同
+> 查看容器状态
 
 ### 停止、删除容器和网络
 ```

@@ -144,7 +144,7 @@ bypanel logs
 ```
 bypanel ps
 ```
-> List containers, or `bypanel status`
+> List containers
 
 ### Down
 ```
