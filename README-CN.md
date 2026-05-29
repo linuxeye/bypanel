@@ -76,6 +76,12 @@ bypanel up -d
 ```
 bypanel exec SERVICE COMMAND
 ```
+### 站点根目录权限
+```
+sudo chown -R 1000:1000 /data/webroot
+sudo find /data/webroot -type d -print0 | sudo xargs -0 chmod 755
+sudo find /data/webroot -type f -print0 | sudo xargs -0 chmod 644
+```
 
 ### 虚拟主机
 #### 添加
