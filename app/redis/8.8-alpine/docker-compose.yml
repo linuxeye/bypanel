@@ -1,6 +1,6 @@
 services:
   redis:
-    image: redis:7.2-alpine
+    image: redis:8.8-alpine
     # Always pull docker image
     #pull_policy: always
     restart: always
@@ -25,7 +25,7 @@ services:
       # HOST-DIRECTORY : DOCKER-DIRECTORY
 
       # Mount Redis Data directory
-      - ${VOLUME_PATH}/redis-7.2:/data:rw${MOUNT_OPTIONS}
+      - ${VOLUME_PATH}/redis-8.8:/data:rw${MOUNT_OPTIONS}
 
 networks:
   net:
