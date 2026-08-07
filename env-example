@@ -182,7 +182,8 @@ TOMCAT_SERVER=latest
 #MYSQL_SERVER=mariadb-11.4
 #MYSQL_SERVER=mariadb-11.8
 #MYSQL_SERVER=mariadb-12.1
-MYSQL_SERVER=mariadb-12.2
+#MYSQL_SERVER=mariadb-12.2
+MYSQL_SERVER=mariadb-12.3
 
 ###
 ### 1.4 Choose PostgreSQL Server Image
@@ -214,7 +215,9 @@ PGSQL_SERVER=14-alpine
 #REDIS_SERVER=6.2-alpine
 #REDIS_SERVER=7.0-alpine
 #REDIS_SERVER=7.2-alpine
-REDIS_SERVER=7.4-alpine
+#REDIS_SERVER=7.4-alpine
+#REDIS_SERVER=8.0-alpine
+REDIS_SERVER=8.8-alpine
 
 ###
 ### 1.6 Choose Memcached Server Image
