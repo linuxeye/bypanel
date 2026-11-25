@@ -1,10 +1,10 @@
 services:
-  php85:
+  php86:
     image: bypanel/php-fpm:8.6-prod
     # Always pull docker image
     #pull_policy: always
     restart: always
-    hostname: php85
+    hostname: php86
     environment:
       ##
       ## Debug/Logging
